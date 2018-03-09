@@ -21,3 +21,25 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::resource('parameters', 'ParameterController');
+
+Route::resource('users', 'UserController');
+
+Route::resource('users', 'UserController');
+
+Route::resource('categories', 'CategoryController');
+
+Route::resource('categories', 'CategoryController');
+
+Route::resource('attributes', 'AttributeController');
+
+Route::resource('products', 'ProductController');
+
+Route::resource('orders', 'OrderController');
+
+Route::resource('orderDetails', 'OrderDetailController');
+
+Route::resource('categoryAttributes', 'CategoryAttributeController');
+
+Route::resource('categoryProducts', 'CategoryProductController');
+
+Route::resource('categories', 'CategoryController');

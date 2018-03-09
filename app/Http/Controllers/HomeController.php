@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Parameter;
+use App\Repositories\ParameterRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    private $parameterRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ParameterRepository $parameterRepo)
     {
         $this->middleware('auth');
+
+        $this->parameterRepository = $parameterRepo;
     }
 
     /**
@@ -23,6 +30,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $parameter = Parameter::where('field','=','CANTIDAD_REGISTROS_HISTORICO')->first()->value;
+
+        $parameter = $this->parameterRepository->all();
+
         return view('home');
     }
 }
