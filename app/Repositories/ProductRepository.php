@@ -28,7 +28,6 @@ class ProductRepository extends BaseRepository
         'order',
         'visible',
         'stock',
-        'remember_token',
         'user_id'
     ];
 

@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer order
  * @property boolean visible
  * @property integer stock
- * @property string remember_token
  * @property integer user_id
  */
 class Product extends Model
@@ -47,7 +46,6 @@ class Product extends Model
         'order',
         'visible',
         'stock',
-        'remember_token',
         'user_id'
     ];
 
@@ -66,7 +64,6 @@ class Product extends Model
         'order' => 'integer',
         'visible' => 'boolean',
         'stock' => 'integer',
-        'remember_token' => 'string',
         'user_id' => 'integer'
     ];
 
