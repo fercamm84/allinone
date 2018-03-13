@@ -43,3 +43,17 @@ Route::resource('categoryAttributes', 'CategoryAttributeController');
 Route::resource('categoryProducts', 'CategoryProductController');
 
 Route::resource('categories', 'CategoryController');
+
+Route::get('/homePage', 'HomePageController@index');
+
+Route::resource('images', 'ImageController');
+
+Route::resource('imageCategories', 'ImageCategoryController');
+
+Route::resource('imageProducts', 'ImageProductController');
+
+Route::resource('sections', 'SectionController');
+
+Route::resource('sectionCategories', 'SectionCategoryController');
+
+Route::resource('sectionProducts', 'SectionProductController');

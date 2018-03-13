@@ -34,3 +34,27 @@
     <a href="{!! route('categories.index') !!}"><i class="fa fa-edit"></i><span>Categories</span></a>
 </li>
 
+<li class="{{ Request::is('images*') ? 'active' : '' }}">
+    <a href="{!! route('images.index') !!}"><i class="fa fa-edit"></i><span>Images</span></a>
+</li>
+
+<li class="{{ Request::is('imageCategories*') ? 'active' : '' }}">
+    <a href="{!! route('imageCategories.index') !!}"><i class="fa fa-edit"></i><span>Image Categories</span></a>
+</li>
+
+<li class="{{ Request::is('imageProducts*') ? 'active' : '' }}">
+    <a href="{!! route('imageProducts.index') !!}"><i class="fa fa-edit"></i><span>Image Products</span></a>
+</li>
+
+<li class="{{ Request::is('sections*') ? 'active' : '' }}">
+    <a href="{!! route('sections.index') !!}"><i class="fa fa-edit"></i><span>Sections</span></a>
+</li>
+
+<li class="{{ Request::is('sectionCategories*') ? 'active' : '' }}">
+    <a href="{!! route('sectionCategories.index') !!}"><i class="fa fa-edit"></i><span>Section Categories</span></a>
+</li>
+
+<li class="{{ Request::is('sectionProducts*') ? 'active' : '' }}">
+    <a href="{!! route('sectionProducts.index') !!}"><i class="fa fa-edit"></i><span>Section Products</span></a>
+</li>
+

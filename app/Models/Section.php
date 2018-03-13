@@ -6,22 +6,25 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Category
+ * Class Section
  * @package App\Models
- * @version March 9, 2018, 5:33 am UTC
+ * @version March 12, 2018, 7:57 pm UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection CategoryAttribute
- * @property \Illuminate\Database\Eloquent\Collection CategoryProduct
+ * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
+ * @property \Illuminate\Database\Eloquent\Collection categoryProducts
+ * @property \Illuminate\Database\Eloquent\Collection imageCategories
+ * @property \Illuminate\Database\Eloquent\Collection imageProducts
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
- * @property string description
- * @property integer order
- * @property integer parent_id
+ * @property \Illuminate\Database\Eloquent\Collection SectionCategory
+ * @property \Illuminate\Database\Eloquent\Collection SectionProduct
+ * @property string type
+ * @property string name
  */
-class Category extends Model
+class Section extends Model
 {
     use SoftDeletes;
 
-    public $table = 'categories';
+    public $table = 'sections';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -31,10 +34,8 @@ class Category extends Model
 
 
     public $fillable = [
-        'description',
-        'order',
         'type',
-        'parent_id'
+        'name'
     ];
 
     /**
@@ -44,10 +45,8 @@ class Category extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'description' => 'string',
-        'order' => 'integer',
         'type' => 'string',
-        'parent_id' => 'integer'
+        'name' => 'string'
     ];
 
     /**
@@ -62,16 +61,16 @@ class Category extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function categoryAttributes()
+    public function sectionCategories()
     {
-        return $this->hasMany(\App\Models\CategoryAttribute::class);
+        return $this->hasMany(\App\Models\SectionCategory::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function categoryProducts()
+    public function sectionProducts()
     {
-        return $this->hasMany(\App\Models\CategoryProduct::class);
+        return $this->hasMany(\App\Models\SectionProduct::class);
     }
 }
