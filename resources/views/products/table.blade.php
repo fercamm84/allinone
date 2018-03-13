@@ -25,7 +25,6 @@
             <td>{!! $product->order !!}</td>
             <td>{!! $product->visible !!}</td>
             <td>{!! $product->stock !!}</td>
-            <td>{!! $product->remember_token !!}</td>
             <td>{!! $product->user_id !!}</td>
             <td>
                 {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'delete']) !!}
