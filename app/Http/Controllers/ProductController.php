@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Repositories\ProductRepository;
+use App\Repositories\ImageProductRepository;
+use App\Repositories\ImageRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -16,9 +18,17 @@ class ProductController extends AppBaseController
     /** @var  ProductRepository */
     private $productRepository;
 
-    public function __construct(ProductRepository $productRepo)
+    /** @var  ImageProductRepository */
+    private $imageProductRepository;
+
+    /** @var  ImageRepository */
+    private $imageRepository;
+
+    public function __construct(ProductRepository $productRepo, ImageProductRepository $imageProductRepo, ImageRepository $imageRepo)
     {
         $this->productRepository = $productRepo;
+        $this->imageProductRepository = $imageProductRepo;
+        $this->imageRepository = $imageRepo;
     }
 
     /**
@@ -123,6 +133,23 @@ class ProductController extends AppBaseController
         }
 
         $product = $this->productRepository->update($request->all(), $id);
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagen = $request->file('image');
+
+            $imagen->move('/Users/Kayathire/Desktop/', $imagen->getClientOriginalName());
+
+            $image = array();
+            $image['type'] = 'normal';
+            $image['name'] = $imagen->getClientOriginalName();
+            $image = $this->imageRepository->create($image);
+
+            $imageProduct = array();
+            $imageProduct['product_id'] = $product->id;
+            $imageProduct['image_id'] = $image->id;
+            $imageProduct['active'] = 1;
+            $this->imageProductRepository->create($imageProduct);
+        }
 
         Flash::success('Product updated successfully.');
 

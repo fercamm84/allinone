@@ -1,11 +1,7 @@
 @extends('home.layouts.home')
 
 @section('content')
-<div class="container">
-    <div class="row">
 
-        fer
+    @include('home.components.categories')
 
-    </div>
-</div>
 @endsection
