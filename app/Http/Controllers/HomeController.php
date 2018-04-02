@@ -30,9 +30,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $parameter = Parameter::where('field','=','CANTIDAD_REGISTROS_HISTORICO')->first()->value;
-
-        $parameter = $this->parameterRepository->all();
+//        $parameter = Parameter::where('field','=','CANTIDAD_REGISTROS_HISTORICO')->first()->value;
+//
+//        $parameter = $this->parameterRepository->all();
 
         return view('home');
     }

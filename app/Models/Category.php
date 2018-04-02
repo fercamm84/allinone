@@ -74,4 +74,13 @@ class Category extends Model
     {
         return $this->hasMany(\App\Models\CategoryProduct::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function imageCategories()
+    {
+        return $this->hasMany(\App\Models\ImageCategory::class);
+    }
+
 }

@@ -95,6 +95,14 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+    public function imageProducts()
+    {
+        return $this->hasMany(\App\Models\ImageProduct::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
     public function orderDetails()
     {
         return $this->hasMany(\App\Models\OrderDetail::class);

@@ -16,6 +16,12 @@
     {!! Form::number('parent_id', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- ProductImage -->
+<div class="form-group col-sm-6">
+    {!! Form::label('image', 'New image:') !!}
+    {!! Form::file('image') !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

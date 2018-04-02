@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
+use App\Repositories\ImageCategoryRepository;
+use App\Repositories\ImageRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -16,9 +18,17 @@ class CategoryController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepo)
+    /** @var  ImageCategoryRepository */
+    private $imageCategoryRepository;
+
+    /** @var  ImageRepository */
+    private $imageRepository;
+
+    public function __construct(CategoryRepository $categoryRepo, ImageCategoryRepository $imageCategoryRepo, ImageRepository $imageRepo)
     {
         $this->categoryRepository = $categoryRepo;
+        $this->imageCategoryRepository = $imageCategoryRepo;
+        $this->imageRepository = $imageRepo;
     }
 
     /**
@@ -123,6 +133,23 @@ class CategoryController extends AppBaseController
         }
 
         $category = $this->categoryRepository->update($request->all(), $id);
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagen = $request->file('image');
+
+            $imagen->move('/public/images/', $imagen->getClientOriginalName());
+
+            $image = array();
+            $image['type'] = 'normal';
+            $image['name'] = $imagen->getClientOriginalName();
+            $image = $this->imageRepository->create($image);
+
+            $imageCategory = array();
+            $imageCategory['category_id'] = $category->id;
+            $imageCategory['image_id'] = $image->id;
+            $imageCategory['active'] = 1;
+            $this->imageCategoryRepository->create($imageCategory);
+        }
 
         Flash::success('Category updated successfully.');
 
