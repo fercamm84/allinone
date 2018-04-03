@@ -46,6 +46,14 @@ Route::resource('categories', 'CategoryController');
 
 Route::get('/homePage', 'HomePageController@index');
 
+Route::get('/cat/{id}', 'CategoryShowController@index');
+
+Route::get('/prod/{id}', 'ProductShowController@index');
+
+Route::post('basket.add', 'BasketController@add');
+
+Route::resource('basket', 'BasketController');
+
 Route::resource('images', 'ImageController');
 
 Route::resource('imageCategories', 'ImageCategoryController');

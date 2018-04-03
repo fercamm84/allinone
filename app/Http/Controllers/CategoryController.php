@@ -137,7 +137,8 @@ class CategoryController extends AppBaseController
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $imagen = $request->file('image');
 
-            $imagen->move('/public/images/', $imagen->getClientOriginalName());
+//            $imagen->move('/public/images/', $imagen->getClientOriginalName());
+            $imagen->move('/Users/Kayathire/Trabajo/allinoneportals/public/images/', $imagen->getClientOriginalName());
 
             $image = array();
             $image['type'] = 'normal';
