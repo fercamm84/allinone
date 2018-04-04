@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Auth;
+use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 
@@ -38,11 +40,20 @@ class BasketController extends Controller
             $order = $this->orderRepository->create($order);
         }
 
-        $order_detail = array();
-        $order_detail['volume'] = 1;
-        $order_detail['order_id'] = $order->id;
-        $order_detail['product_id'] = $product->id;
-        $this->orderDetailRepository->create($order_detail);
+        //busco si hay un orden del mismo producto. en ese caso sumo el stock solicitado
+        $orderDetail = OrderDetail::where([['order_id', '=', $order['id']], ['product_id', '=', $request->input('product_id')]])->first();
+
+//        if($orderDetail->isEmpty()){//esto es cuando se hace un ->get(); y se quiere ver si el listado obtenido es vacio o no
+        if(empty($orderDetail)){
+            $orderDetail = array();
+            $orderDetail['volume'] = $request->input('stock');
+            $orderDetail['order_id'] = $order->id;
+            $orderDetail['product_id'] = $product->id;
+            $this->orderDetailRepository->create($orderDetail);
+        }else{
+            $orderDetail->volume = $orderDetail->volume + $request->input('stock');
+            $orderDetail->save();
+        }
 
         return redirect(route('basket.index'));
     }

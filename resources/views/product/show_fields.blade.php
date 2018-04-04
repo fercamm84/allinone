@@ -1,9 +1,3 @@
-<!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $product->id !!}</p>
-</div>
-
 <!-- Description Field -->
 <div class="form-group">
     {!! Form::label('description', 'Description:') !!}
@@ -34,51 +28,22 @@
     <p>{!! $product->name !!}</p>
 </div>
 
-<!-- Order Field -->
-<div class="form-group">
-    {!! Form::label('order', 'Order:') !!}
-    <p>{!! $product->order !!}</p>
-</div>
-
-<!-- Visible Field -->
-<div class="form-group">
-    {!! Form::label('visible', 'Visible:') !!}
-    <p>{!! $product->visible !!}</p>
-</div>
-
 <!-- Stock Field -->
 <div class="form-group">
     {!! Form::label('stock', 'Stock:') !!}
-    <p>{!! $product->stock !!}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="form-group">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $product->updated_at !!}</p>
-</div>
-
-<!-- Created At Field -->
-<div class="form-group">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $product->created_at !!}</p>
-</div>
-
-<!-- Deleted At Field -->
-<div class="form-group">
-    {!! Form::label('deleted_at', 'Deleted At:') !!}
-    <p>{!! $product->deleted_at !!}</p>
+    <p>{!! $product->stock - $stock_solicitado !!}</p>
 </div>
 
 <!-- User Id Field -->
 <div class="form-group">
-    {!! Form::label('user_id', 'User Id:') !!}
-    <p>{!! $product->user_id !!}</p>
+    {!! Form::label('user_id', 'Vendedor:') !!}
+    <p>{!! $product->user->nickname !!}</p>
 </div>
 
 {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
     {{ Form::hidden('product_id', $product->id) }}
-    {{ Form::submit('Agregar 1 al carrito', ['class' => 'btn btn-primary']) }}
+    {{ Form::number('stock', 1, ['class' => 'form-control', 'min' => '1', 'max' => $product->stock - $stock_solicitado, 'required' => true]) }}
+    {{ Form::submit('Comprar', ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
 
 
