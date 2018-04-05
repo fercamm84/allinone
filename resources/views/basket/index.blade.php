@@ -15,6 +15,8 @@
                         <table>
                             <thead>
                                 <th>
+                                </th>
+                                <th>
                                     Nombre
                                 </th>
                                 <th>
