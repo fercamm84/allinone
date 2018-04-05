@@ -12,9 +12,27 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @if(!empty($order))
-                        @foreach($order->orderDetails as $orderDetail)
-                            @include('basket.components.show_order')
-                        @endforeach
+                        <table>
+                            <thead>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Cantidad
+                                </th>
+                                <th>
+                                    Precio unitario
+                                </th>
+                                <th>
+                                    Precio total
+                                </th>
+                            </thead>
+                            <tbody>
+                                @foreach($order->orderDetails as $orderDetail)
+                                    @include('basket.components.show_order')
+                                @endforeach
+                            </tbody>
+                        </table>
                     @endif
                 </div>
             </div>

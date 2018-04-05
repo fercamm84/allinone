@@ -10,6 +10,9 @@ use Auth;
 use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Session;
+use Laracasts\Flash\Flash;
 
 class BasketController extends Controller
 {
@@ -55,6 +58,8 @@ class BasketController extends Controller
             $orderDetail->save();
         }
 
+        Flash::success('Item agregado al carrito.');
+
         return redirect(route('basket.index'));
     }
 
@@ -65,6 +70,19 @@ class BasketController extends Controller
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
         return view('basket.index', array('order' => $order));
+    }
+
+    public function destroyOrderDetail($orderDetail_id)
+    {
+        $this->orderDetailRepository->delete($orderDetail_id);
+
+        Flash::success('Item eliminado.');
+
+//        Flash::success('Product updated successfully.');
+//        Flash::error('Product not found');
+//        Flash::warning('Item agregado al carrito.');
+
+        return redirect(route('basket.index'));
     }
 
 }

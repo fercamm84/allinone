@@ -4,7 +4,7 @@
             @foreach($sectionCategory->category->categoryProducts as $productCategory)
                 <a href="/cat/{!! $productCategory->category->id !!}">{!! $productCategory->category->description !!}</a>
                 @foreach($productCategory->category->imageCategories as $categoryImage)
-                    <img src="{{ asset('images/'.$categoryImage->image->name) }}">
+                    <img src="{{ asset('images/'.$categoryImage->image->name) }}" width="500px" height="500px">
                 @endforeach
                 {{--@foreach($productCategory->product->imageProducts as $productImage)--}}
                     {{--<img src="{{ asset('images/'.$productImage->image->name) }}">--}}

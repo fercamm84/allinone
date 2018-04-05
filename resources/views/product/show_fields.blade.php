@@ -40,10 +40,5 @@
     <p>{!! $product->user->nickname !!}</p>
 </div>
 
-{{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
-    {{ Form::hidden('product_id', $product->id) }}
-    {{ Form::number('stock', 1, ['class' => 'form-control', 'min' => '1', 'max' => $product->stock - $stock_solicitado, 'required' => true]) }}
-    {{ Form::submit('Comprar', ['class' => 'btn btn-primary']) }}
-{{ Form::close() }}
 
 

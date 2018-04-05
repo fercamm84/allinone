@@ -32,6 +32,7 @@
 <body class="skin-blue">
 
     <div class="content-wrapper">
+        @include('flash::message')
         @yield('content')
     </div>
 
