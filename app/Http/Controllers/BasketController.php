@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Auth;
 use App;
@@ -64,12 +65,31 @@ class BasketController extends Controller
     }
 
     public function index(){
+        $sections = Section::all();
+        foreach($sections as $section){
+            if($section->type == 'home_principal'){
+                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
+//                print_r($sectionCategory->section->name);//nombre de la seccion//
+//                print_r($sectionCategory->category->description);//nombre de la categoria
+                    foreach($sectionCategory->category->categoryProducts as $productCategory){
+//                    print_r($productCategory->product->name);//nombre del producto
+                        foreach($productCategory->category->imageCategories as $categoryImage){
+//                            print_r($categoryImage->image->name);//src imagen del producto
+                        }
+                        foreach($productCategory->product->imageProducts as $productImage){
+//                        print_r($productImage->image->name);//src imagen del producto
+                        }
+                    }
+                }
+            }
+        }
+
         $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        return view('basket.index', array('order' => $order));
+        return view('basket.index', array('order' => $order, 'sections' => $sections));
     }
 
     public function destroyOrderDetail($orderDetail_id)

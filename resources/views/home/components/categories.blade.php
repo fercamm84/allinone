@@ -65,7 +65,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <a href="detail.html" class="invisible">
+                    <a href="/cat/{!! $productCategory->category->id !!}" class="invisible">
                         <img src="img/product1.jpg" alt="" class="img-responsive">
                     </a>
                     <div class="text">
