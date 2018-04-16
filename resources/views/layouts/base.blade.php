@@ -146,7 +146,7 @@ _________________________________________________________ -->
         <div class="navbar-collapse collapse" id="navigation">
 
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="/homePage">Home</a>
+                <li class="active"><a href="/">Home</a>
                 </li>
                 @foreach($sections as $section)
                     @if($section->type == 'home_principal')
@@ -168,7 +168,7 @@ _________________________________________________________ -->
                                     <div class="col-sm-3">
                                         <h5>Shop</h5>
                                         <ul>
-                                            <li><a href="homePage">Homepage</a>
+                                            <li><a href="/">Homepage</a>
                                             </li>
                                             <li><a href="category.html">Category - sidebar left</a>
                                             </li>
