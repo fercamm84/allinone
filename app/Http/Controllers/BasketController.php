@@ -14,6 +14,8 @@ use App\Repositories\OrderDetailRepository;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
+use SantiGraviano\LaravelMercadoPago\Facades\MP;
 
 class BasketController extends Controller
 {
@@ -89,7 +91,34 @@ class BasketController extends Controller
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        return view('basket.index', array('order' => $order, 'sections' => $sections));
+        //Creo preferencia de Mercadopago:
+        $myJobPreference_data = array(
+            "external_reference" => 'order_' . $order->id,
+            "items" => array(
+                array(
+                    "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
+                    "quantity" => 1,
+                    "currency_id" => 'ARS',
+                    "unit_price" => floatval('123')
+                )
+//            ),
+//            "back_urls" => array(
+//                'success' => $back_url . 'jobs/' . $url_active . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id'],
+//                'pending' => $back_url . 'jobs/' . $url_inactive . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id'],
+//                'failure' => $back_url . 'jobs/' . $url_inactive . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id']
+            )
+        );
+        try
+        {
+            $myJobPreference = MP::create_preference($myJobPreference_data);
+        }
+        catch (\Exception $exc)
+        {
+            $myJobPreference = null;
+            throw new InternalErrorException($exc->getMessage() . ' - Order id: ' . $order->id);
+        }
+
+        return view('basket.index', array('order' => $order, 'sections' => $sections, 'preference' => $myJobPreference['response']['init_point']));
     }
 
     public function destroyOrderDetail($orderDetail_id)
