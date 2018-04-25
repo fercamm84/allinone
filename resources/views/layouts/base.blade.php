@@ -151,11 +151,9 @@ _________________________________________________________ -->
                 @foreach($sections as $section)
                     @if($section->type == 'home_principal')
                         @foreach($section->sectionCategories as $sectionCategory)
-                            @foreach($sectionCategory->category->categoryProducts as $productCategory)
                                 <li class="dropdown yamm-fw">
-                                    <a href="/cat/{!! $productCategory->category->id !!}">{!! $productCategory->category->description !!}</a>
+                                    <a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!}</a>
                                 </li>
-                            @endforeach
                         @endforeach
                     @endif
                 @endforeach

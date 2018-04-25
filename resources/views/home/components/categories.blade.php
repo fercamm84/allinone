@@ -50,32 +50,30 @@
             @foreach($sections as $section)
                 @if($section->type == 'home_principal')
                     @foreach($section->sectionCategories as $sectionCategory)
-                        @foreach($sectionCategory->category->categoryProducts as $productCategory)
 
             <div class="item">
                 <div class="product">
                     <div class="flip-container">
                         <div class="flipper">
-                            @foreach($productCategory->category->imageCategories as $categoryImage)
+                            @foreach($sectionCategory->category->imageCategories as $categoryImage)
                                 <div class="front">
-                                    <a href="/cat/{!! $productCategory->category->id !!}">
+                                    <a href="/cat/{!! $sectionCategory->category->id !!}">
                                         <img src="{{ asset('images/'.$categoryImage->image->name) }}" class="img-responsive">
                                     </a>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                    <a href="detail.html" class="invisible">
+                    <a href="/cat/{!! $sectionCategory->category->id !!}" class="invisible">
                         <img src="img/product1.jpg" alt="" class="img-responsive">
                     </a>
                     <div class="text">
-                        <h3><a href="/cat/{!! $productCategory->category->id !!}">{!! $productCategory->category->description !!} </a></h3>
+                        <h3><a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!} </a></h3>
                     </div>
                     <!-- /.text -->
                 </div>
                 <!-- /.product -->
             </div>
-                        @endforeach
                     @endforeach
                 @endif
             @endforeach

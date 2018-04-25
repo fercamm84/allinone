@@ -29,11 +29,9 @@ _________________________________________________________ -->
                             @foreach($sections as $section)
                                 @if($section->type == 'home_principal')
                                     @foreach($section->sectionCategories as $sectionCategory)
-                                        @foreach($sectionCategory->category->categoryProducts as $productCategory)
                                             <li class="dropdown yamm-fw">
-                                                <a href="/cat/{!! $productCategory->category->id !!}">{!! $productCategory->category->description !!}</a>
+                                                <a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!}</a>
                                             </li>
-                                        @endforeach
                                     @endforeach
                                 @endif
                             @endforeach
@@ -45,11 +43,11 @@ _________________________________________________________ -->
 
                 <div class="panel panel-default sidebar-menu">
 
-                    <div class="panel-heading">
+                    <!-- div class="panel-heading">
                         <h3 class="panel-title">Brands <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
-                    </div>
+                    </div -->
 
-                    <div class="panel-body">
+                    <!-- div class="panel-body">
 
                         <form>
                             <div class="form-group">
@@ -79,12 +77,12 @@ _________________________________________________________ -->
 
                         </form>
 
-                    </div>
+                    </div -->
                 </div>
 
                 <div class="panel panel-default sidebar-menu">
 
-                    <div class="panel-heading">
+                    <!-- div class="panel-heading">
                         <h3 class="panel-title">Colours <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
                     </div>
 
@@ -123,7 +121,7 @@ _________________________________________________________ -->
 
                         </form>
 
-                    </div>
+                    </div -->
                 </div>
 
                 <!-- *** MENUS AND FILTERS END *** -->
