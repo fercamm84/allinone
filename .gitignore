@@ -12,3 +12,4 @@ yarn-error.log
 /config/database.php
 .env
 composer.lock
+/public/images/*
