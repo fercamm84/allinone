@@ -91,6 +91,12 @@ class BasketController extends Controller
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
+        //Busco el precio total a pagar para generar la preferencia de pago:
+        $total = 0;
+        foreach($order->orderDetails as $orderDetail){
+            $total = floatval($orderDetail->volume * $orderDetail->product->price);
+        }
+
         //Creo preferencia de Mercadopago:
         $myJobPreference_data = array(
             "external_reference" => 'order_' . $order->id,
@@ -99,13 +105,13 @@ class BasketController extends Controller
                     "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
                     "quantity" => 1,
                     "currency_id" => 'ARS',
-                    "unit_price" => floatval('123')
+                    "unit_price" => $total
                 )
-//            ),
-//            "back_urls" => array(
-//                'success' => $back_url . 'jobs/' . $url_active . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id'],
-//                'pending' => $back_url . 'jobs/' . $url_inactive . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id'],
-//                'failure' => $back_url . 'jobs/' . $url_inactive . '/' . $newJob['Job']['user_id'] . '/' . $newJob['Job']['id']
+            ),
+            "back_urls" => array(
+                'success' => 'http://allinoneportals.local/' . 'basket/success',
+                'pending' => 'http://allinoneportals.local/' . 'basket/pending',
+                'failure' => 'http://allinoneportals.local/' . 'basket/failure',
             )
         );
         try
@@ -119,6 +125,117 @@ class BasketController extends Controller
         }
 
         return view('basket.index', array('order' => $order, 'sections' => $sections, 'preference' => $myJobPreference['response']['init_point']));
+    }
+
+    public function buscarPago($valor = 0, $field = 'external_reference'){
+        $filters = array (
+            $field => 'order_'.$valor
+        );
+
+        return MP::search_payment($filters, 0, 1000);
+    }
+
+    public function pending(){
+        $sections = Section::all();
+        foreach($sections as $section){
+            if($section->type == 'home_principal'){
+                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
+//                print_r($sectionCategory->section->name);//nombre de la seccion//
+//                print_r($sectionCategory->category->description);//nombre de la categoria
+                    foreach($sectionCategory->category->categoryProducts as $productCategory){
+//                    print_r($productCategory->product->name);//nombre del producto
+                        foreach($productCategory->category->imageCategories as $categoryImage){
+//                            print_r($categoryImage->image->name);//src imagen del producto
+                        }
+                        foreach($productCategory->product->imageProducts as $productImage){
+//                        print_r($productImage->image->name);//src imagen del producto
+                        }
+                    }
+                }
+            }
+        }
+
+        $user = Auth::user();
+        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        $pago = $this->buscarPago($order->id);
+
+        if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
+            return view('basket.success', array('order' => $order, 'sections' => $sections));
+        }else if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='rejected'){
+            Flash::error('No se pudo realizar el pago. Por favor, intente nuevamente.');
+            return redirect(route('basket.index'));
+        }else{
+            Flash::warning('El pago se encuentra pendiente. Le informaremos cuando se haya confirmado.');
+            return redirect(route('basket.index'));
+        }
+    }
+
+    public function failure(){
+        $sections = Section::all();
+        foreach($sections as $section){
+            if($section->type == 'home_principal'){
+                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
+//                print_r($sectionCategory->section->name);//nombre de la seccion//
+//                print_r($sectionCategory->category->description);//nombre de la categoria
+                    foreach($sectionCategory->category->categoryProducts as $productCategory){
+//                    print_r($productCategory->product->name);//nombre del producto
+                        foreach($productCategory->category->imageCategories as $categoryImage){
+//                            print_r($categoryImage->image->name);//src imagen del producto
+                        }
+                        foreach($productCategory->product->imageProducts as $productImage){
+//                        print_r($productImage->image->name);//src imagen del producto
+                        }
+                    }
+                }
+            }
+        }
+
+        $user = Auth::user();
+        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        $pago = $this->buscarPago($order->id);
+
+        if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
+            return view('basket.success', array('order' => $order, 'sections' => $sections));
+        }else{
+            Flash::error('No se pudo realizar el pago. Por favor, intente nuevamente.');
+            return redirect(route('basket.index'));
+        }
+    }
+
+    public function success(){
+        $sections = Section::all();
+        foreach($sections as $section){
+            if($section->type == 'home_principal'){
+                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
+//                print_r($sectionCategory->section->name);//nombre de la seccion//
+//                print_r($sectionCategory->category->description);//nombre de la categoria
+                    foreach($sectionCategory->category->categoryProducts as $productCategory){
+//                    print_r($productCategory->product->name);//nombre del producto
+                        foreach($productCategory->category->imageCategories as $categoryImage){
+//                            print_r($categoryImage->image->name);//src imagen del producto
+                        }
+                        foreach($productCategory->product->imageProducts as $productImage){
+//                        print_r($productImage->image->name);//src imagen del producto
+                        }
+                    }
+                }
+            }
+        }
+
+        $user = Auth::user();
+        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        $pago = $this->buscarPago($order->id);
+
+        if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
+            //TODO: Tomar el pago y poner orden pagada!
+            return view('basket.success', array('order' => $order, 'sections' => $sections));
+        }else{
+            Flash::error('No se pudo obtener la respuesta del pago.');
+            return redirect(route('basket.index'));
+        }
     }
 
     public function destroyOrderDetail($orderDetail_id)
