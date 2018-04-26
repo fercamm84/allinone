@@ -5,7 +5,7 @@
     <div class="col-md-9">
         <div class="box">
             <h1>{!! $category->description !!}</h1>
-            <p>In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide.</p>
+            <p>Descripcion Categoria</p>
         </div>
 
         <div class="box info-bar">
