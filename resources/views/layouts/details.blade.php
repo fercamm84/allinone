@@ -9,7 +9,7 @@
 
             <div class="col-md-12">
                 <ul class="breadcrumb">
-                    <li><a href="/homePage">Home</a>
+                    <li><a href="/">Home</a>
                     </li>
                     <li>{!! $category->description!!}</li>
                 </ul>

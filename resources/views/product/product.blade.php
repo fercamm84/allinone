@@ -16,12 +16,19 @@
             <div class="col-sm-6">
                 <div class="box">
                     <h1 class="text-center">{!! $product->title !!}</h1>
-                    <p class="goToDescription"><a href="#details" class="scroll-to">Ir a ver detalle del producto</a>
+                    <p class="goToDescription">
+                        <a href="#details" class="scroll-to">Ir a ver detalle del producto</a>
                     </p>
                     <p class="price">${!! $product->price !!}</p>
 
                     <p class="text-center buttons">
-                        <a href="/basket" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
+                        {{ Form::hidden('product_id', $product->id) }}
+                        {{ Form::number('stock', 1, ['class' => 'form-control', 'min' => '1', 'max' => $product->stock - $stock_solicitado, 'required' => true]) }}
+                        <button class='btn btn-primary' type='submit' value='submit'>
+                            <i class='fa fa-shopping-cart'></i> Add to cart
+                        </button>
+                        {{ Form::close() }}
                     </p>
 
 

@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('/home');
-});
-
+//Route::get('/', function () {
+//    return view('/homePage');
+//});
 
 Auth::routes();
 
@@ -44,7 +43,7 @@ Route::resource('categoryProducts', 'CategoryProductController');
 
 Route::resource('categories', 'CategoryController');
 
-Route::get('/homePage', 'HomePageController@index');
+Route::get('/', 'HomePageController@index');
 
 Route::get('/cat/{id}', 'CategoryShowController@index');
 

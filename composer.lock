@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0092d987a2c2964e69a2d7e229146d60",
+    "content-hash": "9c8b1ba9a4830d0c960010813de549bd",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1951,6 +1951,47 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "santigraviano/laravel-mercadopago",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/santigraviano/laravel-mercadopago.git",
+                "reference": "42e25efcd85d7d576ac5f8cd56046a1a76dbdd67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/santigraviano/laravel-mercadopago/zipball/42e25efcd85d7d576ac5f8cd56046a1a76dbdd67",
+                "reference": "42e25efcd85d7d576ac5f8cd56046a1a76dbdd67",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SantiGraviano\\LaravelMercadoPago\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Santiago Graviano",
+                    "email": "santiago.graviano@gmail.com"
+                }
+            ],
+            "description": "Mercado Pago SDK v0.5.2 for Laravel",
+            "keywords": [
+                "laravel",
+                "mercadopago",
+                "sdk"
+            ],
+            "time": "2016-03-22T09:44:27+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

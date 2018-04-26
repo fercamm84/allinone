@@ -182,6 +182,9 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
+
+        SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class,
+
     ],
 
     /*
@@ -234,6 +237,8 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+
+        'MP' => SantiGraviano\LaravelMercadoPago\Facades\MP::class,
 
     ],
 
