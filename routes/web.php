@@ -64,3 +64,5 @@ Route::resource('sectionProducts', 'SectionProductController');
 Route::resource('payments', 'PaymentController');
 
 Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
+
+Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
