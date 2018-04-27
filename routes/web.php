@@ -60,3 +60,7 @@ Route::resource('sections', 'SectionController');
 Route::resource('sectionCategories', 'SectionCategoryController');
 
 Route::resource('sectionProducts', 'SectionProductController');
+
+Route::resource('payments', 'PaymentController');
+
+Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
