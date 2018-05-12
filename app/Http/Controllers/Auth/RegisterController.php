@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Repositories\RoleUserRepository;
+use App\Repositories\UserRepository;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
 
 class RegisterController extends Controller
 {
@@ -29,13 +34,20 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
+    /** @var  RoleUserRepository */
+    private $roleUserRepository;
+
+    /** @var  UserRepository */
+    private $userRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(RoleUserRepository $roleUserRepo, UserRepository     $userRepo){
+        $this->roleUserRepository = $roleUserRepo;
+        $this->userRepository = $userRepo;
         $this->middleware('guest');
     }
 
@@ -48,7 +60,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -63,9 +76,43 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->redirectTo = '/';
+
+        try{
+            $this->validator($request->all())->validate();
+        }catch(\Exception $e){
+            Flash::error(trans('auth.register.error'));
+            throw $e;
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        $roleUser = array();
+        $roleUser['user_id'] = $user->id;
+        $roleUser['role_id'] = 2;
+        $this->roleUserRepository->create($roleUser);
+
+        Flash::success(trans('auth.register.ok'));
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
 }

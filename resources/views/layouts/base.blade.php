@@ -51,7 +51,7 @@ _________________________________________________________ -->
             <ul class="menu">
                 <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                 </li>
-                <li><a href="/register">Register</a>
+                <li><a href="#" data-toggle="modal" data-target="#register-modal">Register</a>
                 </li>
             </ul>
         </div>
@@ -65,7 +65,7 @@ _________________________________________________________ -->
                     <h4 class="modal-title" id="Login">Customer login</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ url('/login') }}">
+                    <form method="post" action="{{ url('/loginSite') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
@@ -106,6 +106,94 @@ _________________________________________________________ -->
 
                     <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
                     <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="Register">Register a new membership</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ url('/register') }}">
+                        {!! csrf_field() !!}
+
+                        <div class="form-group has-feedback{{ $errors->has('firstname') ? ' has-error' : '' }}">
+                            <input type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" placeholder="First Name">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                            @if ($errors->has('firstname'))
+                                <span class="help-block">
+                        <strong>{{ $errors->first('firstname') }}</strong>
+                    </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group has-feedback{{ $errors->has('lastname') ? ' has-error' : '' }}">
+                            <input type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" placeholder="Last Name">
+                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                            @if ($errors->has('lastname'))
+                                <span class="help-block">
+                        <strong>{{ $errors->first('lastname') }}</strong>
+                    </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                            @if ($errors->has('password_confirmation'))
+                                <span class="help-block">
+                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                    </span>
+                            @endif
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox"> I agree to the <a href="#" style="color: blue;">terms</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-xs-4">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
 
                 </div>
             </div>

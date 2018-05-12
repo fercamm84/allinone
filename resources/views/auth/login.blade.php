@@ -42,7 +42,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">{{ trans('messages.common.login.title.sign_in') }}</p>
 
-        <form method="post" action="{{ url('/login') }}">
+        <form method="post" action="{{ url('/loginAdmin') }}">
             {!! csrf_field() !!}
 
             <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">

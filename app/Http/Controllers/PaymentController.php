@@ -155,9 +155,6 @@ class PaymentController extends AppBaseController
     }
 
     public function getPayments(){
-        header("HTTP/1.1 200 OK");
-        http_response_code(200);
-        return;
         try {
             //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
             $pago = MP::get_payment(3662769330);
