@@ -23,10 +23,6 @@ Route::resource('parameters', 'ParameterController');
 
 Route::resource('users', 'UserController');
 
-Route::resource('users', 'UserController');
-
-Route::resource('categories', 'CategoryController');
-
 Route::resource('categories', 'CategoryController');
 
 Route::resource('attributes', 'AttributeController');
@@ -40,8 +36,6 @@ Route::resource('orderDetails', 'OrderDetailController');
 Route::resource('categoryAttributes', 'CategoryAttributeController');
 
 Route::resource('categoryProducts', 'CategoryProductController');
-
-Route::resource('categories', 'CategoryController');
 
 Route::get('/', 'HomePageController@index');
 
@@ -66,3 +60,13 @@ Route::resource('payments', 'PaymentController');
 Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
 
 Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
+
+Route::resource('roles', 'RoleController');
+
+Route::resource('roleUsers', 'RoleUserController');
+
+Route::post('/loginSite', array('as' => 'loginSite', 'uses' => 'Auth\LoginController@loginSite'));
+
+Route::post('/loginAdmin', array('as' => 'loginAdmin', 'uses' => 'Auth\LoginController@loginAdmin'));
+
+//Route::post('/register', array('as' => 'register', 'uses' => 'Auth\RegisterController@register'));

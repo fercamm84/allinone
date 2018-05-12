@@ -14,6 +14,9 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
+    'permission' => 'You do not have permission to login.',
+    'register.error' => 'Registration error.',
+    'register.ok' => 'Successfully registered!',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

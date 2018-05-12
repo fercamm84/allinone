@@ -78,5 +78,12 @@ class User extends Model
         
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function roleUsers()
+    {
+        return $this->hasMany(\App\Models\RoleUser::class);
+    }
     
 }
