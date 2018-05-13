@@ -47,13 +47,34 @@ _________________________________________________________ -->
         <div class="col-md-6 offer" data-animate="fadeInDown">
 
         </div>
-        <div class="col-md-6" data-animate="fadeInDown">
-            <ul class="menu">
-                <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-                </li>
-                <li><a href="#" data-toggle="modal" data-target="#register-modal">Register</a>
-                </li>
-            </ul>
+        <div class="col-md-6 offer" data-animate="fadeInDown">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <ul class="menu">
+                            <li>
+                                Hola, {{ Auth::user()->firstname }}!
+                            </li>
+                            <li>
+                                <a href="{!! url('/logout') !!}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Sign out
+                                </a>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        </ul>
+                    @else
+                        <ul class="menu">
+                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            </li>
+                            <li><a href="#" data-toggle="modal" data-target="#register-modal">Register</a>
+                            </li>
+                        </ul>
+                    @endauth
+                </div>
+            @endif
         </div>
     </div>
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
