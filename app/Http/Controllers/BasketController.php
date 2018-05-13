@@ -91,37 +91,39 @@ class BasketController extends Controller
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        //Busco el precio total a pagar para generar la preferencia de pago:
-        $total = 0;
-        foreach($order->orderDetails as $orderDetail){
-            $total = floatval($orderDetail->volume * $orderDetail->product->price);
-        }
+        if(!empty($order) && !empty($order->orderDetails)){
+            //Busco el precio total a pagar para generar la preferencia de pago:
+            $total = 0;
+            foreach($order->orderDetails as $orderDetail){
+                $total = floatval($orderDetail->volume * $orderDetail->product->price);
+            }
 
-        //Creo preferencia de Mercadopago:
-        $myJobPreference_data = array(
-            "external_reference" => 'order_' . $order->id,
-            "items" => array(
-                array(
-                    "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
-                    "quantity" => 1,
-                    "currency_id" => 'ARS',
-                    "unit_price" => $total
+            //Creo preferencia de Mercadopago:
+            $myJobPreference_data = array(
+                "external_reference" => 'order_' . $order->id,
+                "items" => array(
+                    array(
+                        "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
+                        "quantity" => 1,
+                        "currency_id" => 'ARS',
+                        "unit_price" => $total
+                    )
+                ),
+                "back_urls" => array(
+                    'success' => 'http://allinoneportals.local/' . 'basket/success',
+                    'pending' => 'http://allinoneportals.local/' . 'basket/pending',
+                    'failure' => 'http://allinoneportals.local/' . 'basket/failure',
                 )
-            ),
-            "back_urls" => array(
-                'success' => 'http://allinoneportals.local/' . 'basket/success',
-                'pending' => 'http://allinoneportals.local/' . 'basket/pending',
-                'failure' => 'http://allinoneportals.local/' . 'basket/failure',
-            )
-        );
-        try
-        {
-            $myJobPreference = MP::create_preference($myJobPreference_data);
-        }
-        catch (\Exception $exc)
-        {
-            $myJobPreference = null;
-            throw new InternalErrorException($exc->getMessage() . ' - Order id: ' . $order->id);
+            );
+            try
+            {
+                $myJobPreference = MP::create_preference($myJobPreference_data);
+            }
+            catch (\Exception $exc)
+            {
+                $myJobPreference = null;
+//            throw new InternalErrorException($exc->getMessage() . ' - Order id: ' . $order->id);
+            }
         }
 
         return view('basket.index', array('order' => $order, 'sections' => $sections, 'preference' => $myJobPreference['response']['init_point']));
