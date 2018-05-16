@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Auth;
 use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
+use App\Repositories\PaymentRepository;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
@@ -26,9 +28,13 @@ class BasketController extends Controller
     /** @var  OrderDetailRepository */
     private $orderDetailRepository;
 
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo){
+    /** @var  PaymentRepository */
+    private $paymentRepository;
+
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo){
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
+        $this->paymentRepository = $paymentRepo;
     }
 
     public function add(Request $request){
@@ -39,7 +45,7 @@ class BasketController extends Controller
 
         //obtengo la orden creada, sino, la creo
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
-        if(empty($order)){
+        if(count($order) == 0){
             $order = array();
             $order['user_id'] = $user->id;
             $order['state'] = 1;
@@ -50,7 +56,7 @@ class BasketController extends Controller
         $orderDetail = OrderDetail::where([['order_id', '=', $order['id']], ['product_id', '=', $request->input('product_id')]])->first();
 
 //        if($orderDetail->isEmpty()){//esto es cuando se hace un ->get(); y se quiere ver si el listado obtenido es vacio o no
-        if(empty($orderDetail)){
+        if(count($orderDetail) == 0){
             $orderDetail = array();
             $orderDetail['volume'] = $request->input('stock');
             $orderDetail['order_id'] = $order->id;
@@ -91,7 +97,9 @@ class BasketController extends Controller
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        if(!empty($order) && !empty($order->orderDetails)){
+        $myJobPreference = null;
+
+        if(count($order) > 0 && count($order->orderDetails) > 0){
             //Busco el precio total a pagar para generar la preferencia de pago:
             $total = 0;
             foreach($order->orderDetails as $orderDetail){
@@ -115,12 +123,19 @@ class BasketController extends Controller
                     'failure' => 'http://allinoneportals.local/' . 'basket/failure',
                 )
             );
-            try
-            {
+            try{
                 $myJobPreference = MP::create_preference($myJobPreference_data);
+
+                $payment = Payment::where([['order_id', '=', $order->id]])->first();
+                if(count($payment) == 0){
+                    $payment = array();
+                    $payment['state'] = 'TO_PAY';
+                    $payment['order_id'] = $order->id;
+                    $payment['amount'] = $total;
+                    $this->paymentRepository->create($payment);
+                }
             }
-            catch (\Exception $exc)
-            {
+            catch (\Exception $exc){
                 $myJobPreference = null;
 //            throw new InternalErrorException($exc->getMessage() . ' - Order id: ' . $order->id);
             }
@@ -162,6 +177,12 @@ class BasketController extends Controller
 
         $pago = $this->buscarPago($order->id);
 
+        $payment = Payment::where([['order_id', '=', $order->id]])->first();
+        if(count($payment) > 0 && isset($pago['response']['results']['0']['collection']['status'])){
+            $payment->state = $pago['response']['results']['0']['collection']['status'];
+            $payment->save();
+        }
+
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
             return view('basket.success', array('order' => $order, 'sections' => $sections));
         }else if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='rejected'){
@@ -198,6 +219,12 @@ class BasketController extends Controller
 
         $pago = $this->buscarPago($order->id);
 
+        $payment = Payment::where([['order_id', '=', $order->id]])->first();
+        if(count($payment) > 0 && isset($pago['response']['results']['0']['collection']['status'])){
+            $payment->state = $pago['response']['results']['0']['collection']['status'];
+            $payment->save();
+        }
+
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
             return view('basket.success', array('order' => $order, 'sections' => $sections));
         }else{
@@ -231,8 +258,13 @@ class BasketController extends Controller
 
         $pago = $this->buscarPago($order->id);
 
+        $payment = Payment::where(['order_id', '=', $order->id])->first();
+        if(count($payment) > 0 && isset($pago['response']['results']['0']['collection']['status'])){
+            $payment->state = $pago['response']['results']['0']['collection']['status'];
+            $payment->save();
+        }
+
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
-            //TODO: Tomar el pago y poner orden pagada!
             return view('basket.success', array('order' => $order, 'sections' => $sections));
         }else{
             Flash::error('No se pudo obtener la respuesta del pago.');

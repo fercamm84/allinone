@@ -11,7 +11,7 @@
         <div class="box info-bar">
             <div class="row">
                 <div class="col-sm-12 col-md-4 products-showing">
-                    Showing <strong>12</strong> of <strong>25</strong> products
+                    Showing <strong>{{ count($categoryProducts) }}</strong> of <strong>25</strong> products
                 </div>
 
                 <div class="col-sm-12 col-md-8  products-number-sort">
@@ -19,7 +19,11 @@
                         <form class="form-inline">
                             <div class="col-md-6 col-sm-6">
                                 <div class="products-number">
-                                    <strong>Show</strong>  <a href="#" class="btn btn-default btn-sm btn-primary">12</a>  <a href="#" class="btn btn-default btn-sm">24</a>  <a href="#" class="btn btn-default btn-sm">All</a> products
+                                    <strong>Show</strong>
+                                        <a href="#" class="btn btn-default btn-sm btn-primary">12</a>
+                                        <a href="#" class="btn btn-default btn-sm">24</a>
+                                        <a href="#" class="btn btn-default btn-sm">All</a>
+                                    products
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
@@ -64,7 +68,6 @@
                             <p class="price">${!! $categoryProduct->product->price !!}</p>
                             <p class="buttons">
                                 <a href="/prod/{!! $categoryProduct->product->id !!}" class="btn btn-default">View detail</a>
-                                <a href="/basket" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </p>
                         </div>
                         <!-- /.text -->
