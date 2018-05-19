@@ -1,12 +1,17 @@
 @extends('home.layouts.home')
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <section class="content-header">
         <h1>
             Carrito
         </h1>
     </section>
+    {{ Form::open(array('id'=>'formularioMP', 'route' => array('basket.paymentResult'))) }}
+    {!! Form::hidden('payment_state', false, array('id' => 'payment_state')) !!}
+    {!! Form::hidden('payment_task', false, array('id' => 'payment_task')) !!}
+    {{ Form::close() }}
     <div class="content">
         <div class="box box-primary">
             <div class="box-body">
@@ -35,7 +40,8 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">
+                        <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn btn-primary boton-mobile" style="width:250px;">PAGAR</a>
+                        {{--<input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">--}}
                     @endif
                 </div>
             </div>
@@ -44,6 +50,7 @@
 
 @endsection
 
+<script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>
 <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
 <script>
     (function () {
@@ -63,9 +70,9 @@
     })();
 
     function execute_my_onreturn (json) {
-//        document.getElementById('state').value=json.collection_status;
-//        document.getElementById('task').value=json.external_reference;
-//        location.href='/users/index';
+        $('#payment_state').val(json.collection_status);
+        $('#payment_task').val(json.external_reference);
+        $('#formularioMP').submit();
     }
 
     function mobileCheck() {
@@ -76,15 +83,37 @@
         return check;
     }
 
-    function redirigirMercadoPago(urlMercadoPago) {
-        if (!mobileCheck()) {
-            redirigirMercadoPagoWeb(urlMercadoPago);
-        } else {
-            redirigirMercadoPagoSmartphone(urlMercadoPago);
-        }
+    function solicitarMercadoPago() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: "/basket/solicitar",
+            cache: false,
+            success: function (html) {
+                if (html != '') {
+                    var obj = null;
+                    try {
+                        obj = JSON.parse(html);
+                    } catch (err) {
+                    }
+                    if (obj) {
+                        redirigirMercadoPago(obj.preference);
+                    } else {
+                        alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
+                    }
+                } else {
+                    alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
+            }
+        });
     }
 
-    function redirigirMercadoPagoWeb(urlMercadoPago) {
+    function redirigirMercadoPago(urlMercadoPago){
         $MPC.openCheckout({
             url: urlMercadoPago,
             mode: "modal",
@@ -92,21 +121,4 @@
         });
     }
 
-    function redirigirMercadoPagoSmartphone(urlMercadoPago) {
-        var myUrl = '/pages/redirigir_mercadopago';
-        $.fancybox({
-            'autoScale': true,
-            'type': 'iframe',
-            'href': myUrl,
-            'autoDimensions': true,
-            'onComplete': function () {
-                setTimeout(function () {
-                    $.fancybox.close();
-                }, 5000);
-            },
-            'onClosed': function () {
-                window.open(urlMercadoPago, '_self');
-            }
-        });
-    }
 </script>
