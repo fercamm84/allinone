@@ -1,5 +1,9 @@
 <?php
 
+Route::post('basket/solicitar', 'BasketController@solicitarMercadoPago');
+
+Route::post('/basket/paymentResult', array('as' => 'basket.paymentResult', 'uses' => 'BasketController@paymentResult'));
+
 Route::post('basket.add', 'BasketController@add');
 
 Route::post('/basket/delete/item/{orderDetail_id}', array('as' => 'basket.delete.item', 'uses' => 'BasketController@destroyOrderDetail'));
