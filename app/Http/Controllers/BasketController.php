@@ -160,23 +160,6 @@ class BasketController extends Controller
 //        $user->notify(new App\Notifications\TemplateEmail());
 //        die;
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
 
@@ -196,23 +179,6 @@ class BasketController extends Controller
 
     public function pending(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -238,23 +204,6 @@ class BasketController extends Controller
 
     public function failure(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -277,23 +226,6 @@ class BasketController extends Controller
 
     public function success(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
