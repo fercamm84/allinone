@@ -232,7 +232,7 @@ _________________________________________________________ -->
     <div class="container">
         <div class="navbar-header">
 
-            <a class="navbar-brand home" href="index.html" data-animate-hover="bounce">
+            <a class="navbar-brand home" href="/" data-animate-hover="bounce">
                 <img src="{{ asset('img/logo.png') }}" alt="Obaju logo" class="hidden-xs">
                 <img src="{{ asset('img/logo-small.png') }}" alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
             </a>
@@ -365,16 +365,14 @@ _________________________________________________________ -->
 
         <div class="collapse clearfix" id="search">
 
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                        <span class="input-group-btn">
-
-			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-
-		    </span>
-                </div>
-            </form>
+            {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
+            <div class="input-group">
+                {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
+                <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+            </div>
+            {{ Form::close() }}
 
         </div>
         <!--/.nav-collapse -->
