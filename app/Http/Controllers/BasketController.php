@@ -265,7 +265,7 @@ class BasketController extends Controller
         $user = Auth::user();
 
         //obtengo la orden creada
-        $orders = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->get();
+        $orders = Order::where([['user_id', '=', $user->id], ['state', '<>', 1]])->get();
 
         return view('basket.history', array('orders' => $orders, 'sections' => $sections));
     }

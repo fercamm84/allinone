@@ -17,25 +17,25 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @if(!empty($orders))
-                        <table>
-                            <thead>
-                                <th>
-                                </th>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-                                    Cantidad
-                                </th>
-                                <th>
-                                    Precio unitario
-                                </th>
-                                <th>
-                                    Precio total
-                                </th>
-                            </thead>
-                            <tbody>
-                                @foreach($orders as $order)
+                        @foreach($orders as $order)
+                            <table>
+                                <thead>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Cantidad
+                                    </th>
+                                    <th>
+                                        Precio unitario
+                                    </th>
+                                    <th>
+                                        Precio total
+                                    </th>
+                                </thead>
+                                <tbody>
                                     @foreach($order->orderDetails as $orderDetail)
                                         <tr>
                                             <td>
@@ -56,11 +56,20 @@
                                                 <p>{{ $orderDetail->volume * $orderDetail->product->price }}</p>
                                             </td>
                                         </tr>
-
                                     @endforeach
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <p>Estado: </p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $order->state }}</p>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                            </table>
+                        @endforeach
                     @endif
                 </div>
             </div>
