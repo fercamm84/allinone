@@ -70,3 +70,5 @@ Route::post('/loginSite', array('as' => 'loginSite', 'uses' => 'Auth\LoginContro
 Route::post('/loginAdmin', array('as' => 'loginAdmin', 'uses' => 'Auth\LoginController@loginAdmin'));
 
 //Route::post('/register', array('as' => 'register', 'uses' => 'Auth\RegisterController@register'));
+
+Route::get('/cat-orderby/{id}/orderBy/{orderby}', 'CategoryShowController@order');

@@ -28,11 +28,11 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="products-sort-by">
-                                    <strong>Sort by</strong>
-                                    <select name="sort-by" class="form-control">
-                                        <option>Price</option>
-                                        <option>Name</option>
-                                        <option>Sales first</option>
+                                    <strong>Ordenar Por</strong>
+                                    <select name="sort-by" id="sort-by" class="form-control" onchange="ordernarProductos();">
+                                        <option value="0">Menor Precio</option>
+                                        <option value="1">Mayor Precio</option>
+                                        <option value="2">Nombre</option>
                                     </select>
                                 </div>
                             </div>
@@ -107,5 +107,17 @@
     </div>
     <!-- /.col-md-9 -->
 
+<script language="javascript">
 
+    function ordernarProductos(){
+        var id = $( "#sort-by").val();
+        alert(id);
+//        $.get('/pppppppppppppppp/' + id);
+
+
+        $('.form-inline').attr('action', '/cat-orderby/' + {!! $category->id !!} + '/orderBy/' + id);
+        $('.form-inline').submit()
+    }
+
+</script>
 @endsection
