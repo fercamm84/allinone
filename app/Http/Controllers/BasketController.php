@@ -259,4 +259,15 @@ class BasketController extends Controller
         return redirect(route('basket.index'));
     }
 
+    public function history(){
+        $sections = Section::all();
+
+        $user = Auth::user();
+
+        //obtengo la orden creada
+        $orders = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->get();
+
+        return view('basket.history', array('orders' => $orders, 'sections' => $sections));
+    }
+
 }

@@ -16,7 +16,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @if(!empty($order))
+                    @if(!empty($orders))
                         <table>
                             <thead>
                                 <th>
@@ -35,18 +35,37 @@
                                 </th>
                             </thead>
                             <tbody>
-                                @foreach($order->orderDetails as $orderDetail)
-                                    @include('basket.components.show_order')
+                                @foreach($orders as $order)
+                                    @foreach($order->orderDetails as $orderDetail)
+                                        <tr>
+                                            <td>
+                                                @foreach($orderDetail->product->imageProducts as $imageProduct)
+                                                    <img src="{{ asset('images/'.$imageProduct->image->name) }}" width="100px" height="100px">
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->product->name }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->volume }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->product->price }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->volume * $orderDetail->product->price }}</p>
+                                            </td>
+                                        </tr>
+
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>
-                        <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn btn-primary boton-mobile" style="width:250px;">PAGAR</a>
-                        {{--<input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">--}}
                     @endif
                 </div>
             </div>
             <div>
-                <a href="/basket/history">Histórico de pedidos</a>
+                <a href="/basket">Pedido en curso</a>
             </div>
         </div>
     </div>
