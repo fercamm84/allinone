@@ -3,15 +3,15 @@
 @section('details')
 
     <div class="col-md-9">
-        <div class="box">
-            <h1>{!! $category->description !!}</h1>
-            <p>Descripcion Categoria</p>
-        </div>
+        {{--<div class="box">--}}
+            {{--<h1>{!! $category->description !!}</h1>--}}
+            {{--<p>Descripcion Categoria</p>--}}
+        {{--</div>--}}
 
         <div class="box info-bar">
             <div class="row">
                 <div class="col-sm-12 col-md-4 products-showing">
-                    Showing <strong>{{ count($categoryProducts) }}</strong> of <strong>25</strong> products
+                    Showing <strong>{{ count($products) }}</strong> of <strong>25</strong> products
                 </div>
 
                 <div class="col-sm-12 col-md-8  products-number-sort">
@@ -44,30 +44,30 @@
 
         <div class="row products">
 
-            @foreach($categoryProducts as $categoryProduct)
+            @foreach($products as $product)
 
                 <div class="col-md-4 col-sm-6">
                     <div class="product">
                         <div class="flip-container">
                             <div class="flipper">
-                                <a href="/prod/{!! $categoryProduct->product->id !!}"></a>
-                                @foreach($categoryProduct->product->imageProducts as $imageProduct)
+                                <a href="/prod/{!! $product->id !!}"></a>
+                                @foreach($product->imageProducts as $imageProduct)
                                     <div class="front">
                                         <img src="{{ asset('images/'.$imageProduct->image->name) }}" class="img-responsive">
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-                        <a href="/prod/{!! $categoryProduct->product->id !!}" class="invisible">
-                            @foreach($categoryProduct->product->imageProducts as $imageProduct)
+                        <a href="/prod/{!! $product->id !!}" class="invisible">
+                            @foreach($product->imageProducts as $imageProduct)
                                 <img src="{{ asset('images/'.$imageProduct->image->name) }}" class="img-responsive">
                             @endforeach
                         </a>
                         <div class="text">
-                            <h3><a href="/prod/{!! $categoryProduct->product->id !!}">{!! $categoryProduct->product->name !!}</a></h3>
-                            <p class="price">${!! $categoryProduct->product->price !!}</p>
+                            <h3><a href="/prod/{!! $product->id !!}">{!! $product->name !!}</a></h3>
+                            <p class="price">${!! $product->price !!}</p>
                             <p class="buttons">
-                                <a href="/prod/{!! $categoryProduct->product->id !!}" class="btn btn-default">View detail</a>
+                                <a href="/prod/{!! $product->id !!}" class="btn btn-default">View detail</a>
                             </p>
                         </div>
                         <!-- /.text -->

@@ -7,13 +7,15 @@
     <div id="content">
         <div class="container">
 
-            <div class="col-md-12">
-                <ul class="breadcrumb">
-                    <li><a href="/">Home</a>
-                    </li>
-                    <li>{!! $category->description!!}</li>
-                </ul>
-            </div>
+            @if(isset($category))
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="/">Home</a>
+                        </li>
+                        <li>{!! $category->description!!}</li>
+                    </ul>
+                </div>
+            @endif
 
             <div class="col-md-3">
                 <!-- *** MENUS AND FILTERS ***
@@ -26,16 +28,23 @@ _________________________________________________________ -->
 
                     <div class="panel-body">
                         <ul class="nav nav-pills nav-stacked category-menu">
-                            @foreach($sections as $section)
-                                @if($section->type == 'home_principal')
-                                    @foreach($section->sectionCategories as $sectionCategory)
+                            @if(isset($categories))
+                                @foreach($categories as $category)
+                                    <li class="dropdown yamm-fw">
+                                        <a href="/cat/{!! $category->id !!}">{!! $category->description !!}</a>
+                                    </li>
+                                @endforeach
+                            @else
+                                @foreach($sections as $section)
+                                    @if($section->type == 'home_principal')
+                                        @foreach($section->sectionCategories as $sectionCategory)
                                             <li class="dropdown yamm-fw">
                                                 <a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!}</a>
                                             </li>
-                                    @endforeach
-                                @endif
-                            @endforeach
-
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            @endif
                         </ul>
 
                     </div>

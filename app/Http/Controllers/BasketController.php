@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use SantiGraviano\LaravelMercadoPago\Facades\MP;
+use Illuminate\Notifications\Notifiable;
 
 class BasketController extends Controller
 {
@@ -35,6 +36,86 @@ class BasketController extends Controller
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
+    }
+
+    public function solicitarMercadoPago(Request $request){
+        $myJobPreference = null;
+
+        $user = Auth::user();
+
+        //obtengo la orden creada
+        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        if(count($order) > 0 && count($order->orderDetails) > 0){
+            //Busco el precio total a pagar para generar la preferencia de pago:
+            $total = 0;
+            foreach($order->orderDetails as $orderDetail){
+                $total = floatval($orderDetail->volume * $orderDetail->product->price);
+            }
+
+            //Creo preferencia de Mercadopago:
+            $myJobPreference_data = array(
+                "external_reference" => 'order_' . $order->id,
+                "items" => array(
+                    array(
+                        "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
+                        "quantity" => 1,
+                        "currency_id" => 'ARS',
+//                        "unit_price" => $total
+                        "unit_price" => 1
+                    )
+                ),
+                "back_urls" => array(
+                    'success' => 'http://allinoneportals.local/' . 'basket/success',
+                    'failure' => 'http://allinoneportals.local/' . 'basket/failure',
+                )
+            );
+            try{
+                $myJobPreference = MP::create_preference($myJobPreference_data);
+
+                $payment = Payment::where([['order_id', '=', $order->id]])->first();
+                if(count($payment) == 0){
+                    $payment = array();
+                    $payment['state'] = 'TO_PAY';
+                    $payment['order_id'] = $order->id;
+                    $payment['amount'] = $total;
+                    $this->paymentRepository->create($payment);
+                }
+            }
+            catch (\Exception $exc){
+                $myJobPreference = null;
+            }
+
+            $arrayEnvio = array();
+            $arrayEnvio = array_merge($arrayEnvio, array('preference' => $myJobPreference['response']['init_point']));
+            echo json_encode($arrayEnvio);
+            exit();
+        }
+    }
+
+    public function paymentResult(Request $request){
+        $user = Auth::user();
+
+        if (strpos($request->input('payment_task'), 'order_')!== false){
+            $order_id = str_replace("order_", "", $request->input('payment_task'));
+        }
+
+        $order = $this->orderRepository->findWithoutFail($order_id);
+
+        $payment = Payment::where([['order_id', '=', $order->id]])->first();
+        if($request->input('payment_state') != null){
+            if($request->input('payment_state') == 'approved'){
+                Flash::success('Compra efectuada satisfactoriamente..');
+            }else if($request->input('payment_state') == 'rejected'){
+                Flash::error('El pago fue rechazado. Por favor, intente nuevamente.');
+            }else if($request->input('payment_state') == 'pending'){
+                Flash::warning('Pago pendiente. Al completar el proceso del pago verá la transacción finalizada.');
+            }
+            $payment->state = $request->input('payment_state');
+            $payment->save();
+        }
+
+        return redirect(route('basket.index'));
     }
 
     public function add(Request $request){
@@ -73,75 +154,19 @@ class BasketController extends Controller
     }
 
     public function index(){
+//TODO: Con esto se envia un email:
+//        $user = new App\User();
+//        $user->email = 'fercamm@gmail.com';// This is the email you want to send to.
+//        $user->notify(new App\Notifications\TemplateEmail());
+//        die;
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        $myJobPreference = null;
-
-        if(count($order) > 0 && count($order->orderDetails) > 0){
-            //Busco el precio total a pagar para generar la preferencia de pago:
-            $total = 0;
-            foreach($order->orderDetails as $orderDetail){
-                $total = floatval($orderDetail->volume * $orderDetail->product->price);
-            }
-
-            //Creo preferencia de Mercadopago:
-            $myJobPreference_data = array(
-                "external_reference" => 'order_' . $order->id,
-                "items" => array(
-                    array(
-                        "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
-                        "quantity" => 1,
-                        "currency_id" => 'ARS',
-                        "unit_price" => $total
-                    )
-                ),
-                "back_urls" => array(
-                    'success' => 'http://allinoneportals.local/' . 'basket/success',
-                    'pending' => 'http://allinoneportals.local/' . 'basket/pending',
-                    'failure' => 'http://allinoneportals.local/' . 'basket/failure',
-                )
-            );
-            try{
-                $myJobPreference = MP::create_preference($myJobPreference_data);
-
-                $payment = Payment::where([['order_id', '=', $order->id]])->first();
-                if(count($payment) == 0){
-                    $payment = array();
-                    $payment['state'] = 'TO_PAY';
-                    $payment['order_id'] = $order->id;
-                    $payment['amount'] = $total;
-                    $this->paymentRepository->create($payment);
-                }
-            }
-            catch (\Exception $exc){
-                $myJobPreference = null;
-//            throw new InternalErrorException($exc->getMessage() . ' - Order id: ' . $order->id);
-            }
-        }
-
-        return view('basket.index', array('order' => $order, 'sections' => $sections, 'preference' => $myJobPreference['response']['init_point']));
+        return view('basket.index', array('order' => $order, 'sections' => $sections));
     }
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
@@ -154,23 +179,6 @@ class BasketController extends Controller
 
     public function pending(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -196,23 +204,6 @@ class BasketController extends Controller
 
     public function failure(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -235,23 +226,6 @@ class BasketController extends Controller
 
     public function success(){
         $sections = Section::all();
-        foreach($sections as $section){
-            if($section->type == 'home_principal'){
-                foreach($section->sectionCategories as $sectionCategory){//tambien se puede obtener $section->sectionProducts
-//                print_r($sectionCategory->section->name);//nombre de la seccion//
-//                print_r($sectionCategory->category->description);//nombre de la categoria
-                    foreach($sectionCategory->category->categoryProducts as $productCategory){
-//                    print_r($productCategory->product->name);//nombre del producto
-                        foreach($productCategory->category->imageCategories as $categoryImage){
-//                            print_r($categoryImage->image->name);//src imagen del producto
-                        }
-                        foreach($productCategory->product->imageProducts as $productImage){
-//                        print_r($productImage->image->name);//src imagen del producto
-                        }
-                    }
-                }
-            }
-        }
 
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -283,6 +257,17 @@ class BasketController extends Controller
 //        Flash::warning('Item agregado al carrito.');
 
         return redirect(route('basket.index'));
+    }
+
+    public function history(){
+        $sections = Section::all();
+
+        $user = Auth::user();
+
+        //obtengo la orden creada
+        $orders = Order::where([['user_id', '=', $user->id], ['state', '<>', 1]])->get();
+
+        return view('basket.history', array('orders' => $orders, 'sections' => $sections));
     }
 
 }
