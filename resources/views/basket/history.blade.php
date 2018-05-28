@@ -16,37 +16,65 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @if(!empty($order))
-                        <table>
-                            <thead>
-                                <th>
-                                </th>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-                                    Cantidad
-                                </th>
-                                <th>
-                                    Precio unitario
-                                </th>
-                                <th>
-                                    Precio total
-                                </th>
-                            </thead>
-                            <tbody>
-                                @foreach($order->orderDetails as $orderDetail)
-                                    @include('basket.components.show_order')
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn btn-primary boton-mobile" style="width:250px;">PAGAR</a>
-                        {{--<input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">--}}
+                    @if(!empty($orders))
+                        @foreach($orders as $order)
+                            <table>
+                                <thead>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Cantidad
+                                    </th>
+                                    <th>
+                                        Precio unitario
+                                    </th>
+                                    <th>
+                                        Precio total
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    @foreach($order->orderDetails as $orderDetail)
+                                        <tr>
+                                            <td>
+                                                @foreach($orderDetail->product->imageProducts as $imageProduct)
+                                                    <img src="{{ asset('images/'.$imageProduct->image->name) }}" width="100px" height="100px">
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->product->name }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->volume }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->product->price }}</p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $orderDetail->volume * $orderDetail->product->price }}</p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <p>Estado: </p>
+                                            </td>
+                                            <td>
+                                                <p>{{ $order->state }}</p>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                            </table>
+                        @endforeach
                     @endif
                 </div>
             </div>
             <div>
-                <a href="/basket/history">Histórico de pedidos</a>
+                <a href="/basket">Pedido en curso</a>
             </div>
         </div>
     </div>

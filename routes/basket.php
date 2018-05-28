@@ -14,4 +14,6 @@ Route::get('/basket/pending', array('as' => 'basket.pending', 'uses' => 'BasketC
 
 Route::get('/basket/failure', array('as' => 'basket.failure', 'uses' => 'BasketController@failure'));
 
+Route::get('/basket/history', array('as' => 'basket.history', 'uses' => 'BasketController@history'));
+
 Route::resource('basket', 'BasketController');
