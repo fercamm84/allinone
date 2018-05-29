@@ -20,7 +20,7 @@ use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use SantiGraviano\LaravelMercadoPago\Facades\MP;
 use Illuminate\Notifications\Notifiable;
 
-class BasketController extends Controller
+class BasketController extends FrontController
 {
 
     /** @var  OrderRepository */
@@ -33,6 +33,7 @@ class BasketController extends Controller
     private $paymentRepository;
 
     public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo){
+        parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
