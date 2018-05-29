@@ -37,7 +37,7 @@ Route::resource('categoryAttributes', 'CategoryAttributeController');
 
 Route::resource('categoryProducts', 'CategoryProductController');
 
-Route::get('/', 'HomePageController@index');
+Route::get('/', 'HomePageController@index')->name('index');;
 
 Route::get('/cat/{id}', 'CategoryShowController@index');
 

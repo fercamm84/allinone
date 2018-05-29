@@ -137,7 +137,7 @@ _________________________________________________________ -->
 
                 <div class="banner">
                     <a href="#">
-                        <img src="{{ asset('img/banner.jpg')}}" alt="sales 2014" class="img-responsive">
+                        {{--<img src="{{ asset('img/banner.jpg')}}" alt="sales 2014" class="img-responsive">--}}
                     </a>
                 </div>
             </div>
