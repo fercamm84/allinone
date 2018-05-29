@@ -6,9 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Laracasts\Flash\Flash;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class LoginController extends Controller
 {
@@ -91,6 +93,22 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        $intendedUrl = Session::get('url.intended', url('/'));
+
+        if(strpos($intendedUrl, 'basket.add') !== false){
+            Session::forget('url.intended');
+        }
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath());
     }
 
 }
