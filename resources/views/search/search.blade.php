@@ -10,14 +10,14 @@
 
         <div class="box info-bar">
             <div class="row">
-                <div class="col-sm-12 col-md-4 products-showing">
+                <!-- div class="col-sm-12 col-md-4 products-showing">
                     Showing <strong>{{ count($products) }}</strong> of <strong>25</strong> products
-                </div>
+                </div -->
 
                 <div class="col-sm-12 col-md-8  products-number-sort">
                     <div class="row">
                         <form class="form-inline">
-                            <div class="col-md-6 col-sm-6">
+                            <!-- div class="col-md-6 col-sm-6">
                                 <div class="products-number">
                                     <strong>Show</strong>
                                         <a href="#" class="btn btn-default btn-sm btn-primary">12</a>
@@ -25,8 +25,8 @@
                                         <a href="#" class="btn btn-default btn-sm">All</a>
                                     products
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
+                            </div-->
+                            <div class="col-md-12 col-sm-6">
                                 <div class="products-sort-by">
                                     <strong>Ordenar Por</strong>
                                     <select name="sort-by" id="sort-by" class="form-control" onchange="ordernarProductos();">
@@ -53,15 +53,13 @@
                                 <a href="/prod/{!! $product->id !!}"></a>
                                 @foreach($product->imageProducts as $imageProduct)
                                     <div class="front">
-                                        <img src="{{ asset('images/'.$imageProduct->image->name) }}" class="img-responsive">
+                                        <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" class="img-responsive">
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                         <a href="/prod/{!! $product->id !!}" class="invisible">
-                            @foreach($product->imageProducts as $imageProduct)
-                                <img src="{{ asset('images/'.$imageProduct->image->name) }}" class="img-responsive">
-                            @endforeach
+                                <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}" class="img-responsive">
                         </a>
                         <div class="text">
                             <h3><a href="/prod/{!! $product->id !!}">{!! $product->name !!}</a></h3>
@@ -79,7 +77,7 @@
         </div>
         <!-- /.products -->
 
-        <div class="pages">
+        <!-- div class="pages">
 
             <p class="loadMore">
                 <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
@@ -101,7 +99,7 @@
                 <li><a href="#">&raquo;</a>
                 </li>
             </ul>
-        </div>
+        </div -->
 
 
     </div>
@@ -110,13 +108,7 @@
 <script language="javascript">
 
     function ordernarProductos(){
-        var id = $( "#sort-by").val();
-        alert(id);
-//        $.get('/pppppppppppppppp/' + id);
 
-
-        $('.form-inline').attr('action', '/cat-orderby/' + {!! $category->id !!} + '/orderBy/' + id);
-        $('.form-inline').submit()
     }
 
 </script>
