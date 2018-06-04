@@ -69,7 +69,7 @@ _________________________________________________________ -->
                         <ul class="menu">
                             <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                             </li>
-                            <li><a href="#" data-toggle="modal" data-target="#register-modal">Register</a>
+                            <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
                             </li>
                         </ul>
                     @endauth
@@ -83,7 +83,7 @@ _________________________________________________________ -->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="Login">Customer login</h4>
+                    <h4 class="modal-title" id="Login">Login</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ url('/loginSite') }}">
@@ -113,20 +113,20 @@ _________________________________________________________ -->
                             <div class="col-xs-8">
                                 <div class="checkbox icheck">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+                                        <input type="checkbox" name="remember"> Recordarme
                                     </label>
                                 </div>
                             </div>
                             <!-- /.col -->
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
                             </div>
                             <!-- /.col -->
                         </div>
                     </form>
 
-                    <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
-                    <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+                    <a href="{{ url('/password/reset') }}">Olvide mi password</a><br>
+                    <a href="{{ url('/register') }}" class="text-center">Registrarse</a>
 
                 </div>
             </div>
@@ -139,7 +139,7 @@ _________________________________________________________ -->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="Register">Register a new membership</h4>
+                    <h4 class="modal-title" id="Register">Registrarse</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ url('/register') }}">
@@ -210,7 +210,7 @@ _________________________________________________________ -->
                             </div>
                             <!-- /.col -->
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -266,7 +266,7 @@ _________________________________________________________ -->
                         @endforeach
                     @endif
                 @endforeach
-                <li class="dropdown yamm-fw">
+                <!-- li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Template <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
@@ -338,8 +338,8 @@ _________________________________________________________ -->
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.yamm-content -->
-                        </li>
+
+                        </li -->
                     </ul>
                 </li>
             </ul>
@@ -395,8 +395,8 @@ _________________________________________________________ -->
     <div id="footer" data-animate="fadeInUp">
         <div class="container">
             <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <h4>Pages</h4>
+                <div class="col-md-4 col-sm-6">
+                    <!-- h4>Pages</h4>
 
                     <ul>
                         <li><a href="text.html">About us</a>
@@ -409,14 +409,14 @@ _________________________________________________________ -->
                         </li>
                     </ul>
 
-                    <hr>
+                    <hr -->
 
-                    <h4>User section</h4>
+                    <h4>Seccion Usuarios</h4>
 
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
-                        <li><a href="/register">Regiter</a>
+                        <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
                         </li>
                     </ul>
 
@@ -425,7 +425,7 @@ _________________________________________________________ -->
                 </div>
                 <!-- /.col-md-3 -->
 
-                <div class="col-md-3 col-sm-6">
+                <!-- div class="col-md-3 col-sm-6">
 
                     <h4>Top categories</h4>
 
@@ -454,23 +454,23 @@ _________________________________________________________ -->
 
                     <hr class="hidden-md hidden-lg">
 
-                </div>
+                </div -->
                 <!-- /.col-md-3 -->
 
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-6">
 
-                    <h4>Where to find us</h4>
+                    <h4>Donde Encontrarnos</h4>
 
                     <p><strong>Obaju Ltd.</strong>
                         <br>13/25 New Avenue
                         <br>New Heaven
                         <br>45Y 73J
-                        <br>England
+                        <br>Buenos Aires
                         <br>
-                        <strong>Great Britain</strong>
+                        <strong>Argentina</strong>
                     </p>
 
-                    <a href="contact.html">Go to contact page</a>
+                    <!-- a href="contact.html">Pagina de Contacto</a -->
 
                     <hr class="hidden-md hidden-lg">
 
@@ -479,9 +479,9 @@ _________________________________________________________ -->
 
 
 
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-6">
 
-                    <h4>Get the news</h4>
+                    <!-- h4>Get the news</h4>
 
                     <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 
@@ -497,18 +497,15 @@ _________________________________________________________ -->
 			</span>
 
                         </div>
-                        <!-- /input-group -->
                     </form>
 
-                    <hr>
+                    <hr -->
 
-                    <h4>Stay in touch</h4>
+                    <h4>Mantente en Contacto</h4>
 
                     <p class="social">
                         <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                        <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
                         <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                        <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
                         <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
                     </p>
 
@@ -534,11 +531,11 @@ _________________________________________________________ -->
     <div id="copyright">
         <div class="container">
             <div class="col-md-6">
-                <p class="pull-left">© 2015 Your name goes here.</p>
+                <p class="pull-left">© 2018 FAS fas@serugiran.tech</p>
 
             </div>
             <div class="col-md-6">
-                <p class="pull-right">Template by <a href="https://bootstrapious.com/e-commerce-templates">Bootstrapious</a> & <a href="https://fity.cz">Fity</a>
+                <p class="pull-right">
                     <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
                 </p>
             </div>

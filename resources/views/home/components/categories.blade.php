@@ -7,7 +7,7 @@
                     <img src="{{ asset('images/'.$categoryImage->image->name) }}" width="500px" height="500px">
                 @endforeach
                 {{--@foreach($productCategory->product->imageProducts as $productImage)--}}
-                    {{--<img src="{{ asset('images/'.$productImage->image->name) }}">--}}
+                    {{--<img src="{{ asset('imagenes/'.$productImage->image->name) }}">--}}
                 {{--@endforeach--}}
 {{--           @endforeach
        @endforeach
@@ -49,13 +49,11 @@
                 <div class="product">
                     <div class="flip-container">
                         <div class="flipper">
-                            @foreach($sectionCategory->category->imageCategories as $categoryImage)
                                 <div class="front">
                                     <a href="/cat/{!! $sectionCategory->category->id !!}">
-                                        <img src="{{ asset('images/'.$categoryImage->image->name) }}" class="img-responsive">
+                                        <img src="{{ asset('imagenes/'.$sectionCategory->category->imageCategories{0}->image->name) }}" class="img-responsive">
                                     </a>
                                 </div>
-                            @endforeach
                         </div>
                     </div>
                     <a href="/cat/{!! $sectionCategory->category->id !!}" class="invisible">

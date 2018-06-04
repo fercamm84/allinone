@@ -507,9 +507,9 @@ h1 {
 }
 #content .product .front,
 #content .product .back {
-  -webkit-backface-visibility: hidden;
+/*  -webkit-backface-visibility: hidden; */
   -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
+/*  backface-visibility: hidden; */
   -webkit-transition: 0.6s;
   transition: 0.6s;
   -webkit-transform-style: preserve-3d;

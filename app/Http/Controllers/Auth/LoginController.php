@@ -45,19 +45,19 @@ class LoginController extends Controller
     }
 
     public function loginSite(Request $request){
-        $this->redirectTo = '/';
-        return $this->login($request, 2);
+      //  $this->redirectTo = '/';
+        return $this->login($request, 2, '/');
     }
 
     public function loginAdmin(Request $request){
-        $this->redirectTo = '/home';
-        return $this->login($request, 1);
+      //  $this->redirectTo = '/products';
+        return $this->login($request, 1, '/home');
     }
 
-    public function login(Request $request, $role){
+    public function login(Request $request, $role, $path){
         $this->validateLogin($request);
 
-        $this->redirectTo = '/';
+        $this->redirectTo = $path;
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and

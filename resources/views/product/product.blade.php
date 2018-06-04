@@ -7,9 +7,7 @@
         <div class="row" id="productMain">
             <div class="col-sm-6">
                 <div id="mainImage">
-                    @foreach($product->imageProducts as $imageProduct)
-                        <img src="{{ asset('images/'.$imageProduct->image->name) }}"alt="" class="img-responsive">
-                    @endforeach
+                    <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}"alt="" class="img-responsive">
                 </div>
 
             </div>
@@ -37,8 +35,8 @@
                 <div class="row" id="thumbs">
                     @foreach($product->imageProducts as $imageProduct)
                         <div class="col-xs-4">
-                            <a href="{{ asset('images/'.$imageProduct->image->name) }}" class="thumb">
-                                <img src="{{ asset('images/'.$imageProduct->image->name) }}" alt="" class="img-responsive">
+                            <a href="{{ asset('imagenes/'.$imageProduct->image->name) }}" class="thumb">
+                                <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" alt="" class="img-responsive">
                             </a>
                         </div>
                     @endforeach
@@ -96,7 +94,7 @@
                 <div class="row" style="padding-left: 20px">
                     @include('product.show_fields')
                     @foreach($product->imageProducts as $imageProduct)
-                        <img src="{{ asset('images/'.$imageProduct->image->name) }}" width="500px" height="500px">
+                        <img src="{{ asset(imageness/'.$imageProduct->image->name) }}" width="500px" height="500px">
                     @endforeach
                     {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
                         {{ Form::hidden('product_id', $product->id) }}
