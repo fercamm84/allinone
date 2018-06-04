@@ -70,3 +70,9 @@ Route::post('/loginSite', array('as' => 'loginSite', 'uses' => 'Auth\LoginContro
 Route::post('/loginAdmin', array('as' => 'loginAdmin', 'uses' => 'Auth\LoginController@loginAdmin'));
 
 //Route::post('/register', array('as' => 'register', 'uses' => 'Auth\RegisterController@register'));
+
+Route::get('/myAccount/changePassword', array('as' => 'myAccount.changePassword', 'uses' => 'AccountController@changePassword'));
+
+Route::post('/myAccount/updatePassword', array('as' => 'myAccount.updatePassword', 'uses' => 'AccountController@updatePassword'));
+
+Route::resource('myAccount', 'AccountController');
