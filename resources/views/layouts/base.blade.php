@@ -56,10 +56,10 @@ _________________________________________________________ -->
                                 Hola, {{ Auth::user()->firstname }}!
                             </li>
                             <li>
-                                <a href="{!! url('/logout') !!}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Sign out
-                                </a>
+                                <a href="{!! url('/myAccount') !!}">My account</a>
+                            </li>
+                            <li>
+                                <a href="{!! url('/logout') !!}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
                                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
