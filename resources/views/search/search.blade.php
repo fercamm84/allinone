@@ -48,18 +48,37 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="product">
-                        <div class="flip-container">
-                            <div class="flipper">
-                                <a href="/prod/{!! $product->id !!}"></a>
-                                @foreach($product->imageProducts as $imageProduct)
+                        @if(sizeof($product->imageProducts)>0)
+                            <div class="flip-container">
+                                <div class="flipper">
                                     <div class="front">
-                                        <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" class="img-responsive">
+                                        <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}" class="img-responsive">
                                     </div>
-                                @endforeach
+                                    @if(sizeof($product->imageProducts)>1)
+                                        <div class="back">
+                                            <a href="/prod/{!! $product->id !!}">
+                                                <img src="{{ asset('imagenes/'.$product->imageProducts{1}->image->name) }}" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <a href="/prod/{!! $product->id !!}" class="invisible">
-                                <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}" class="img-responsive">
+                        @else
+                            <div class="flip-container">
+                                <div class="front">
+                                    <a href="/prod/{!! $product->id !!}">
+                                        <img src="/img/default-no-image.png" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="back">
+                                    <a href="/prod/{!! $product->id !!}">
+                                        <img src="/img/default-no-image.png" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        <a href="/prod/{!! $product->id !!}" class="invisible" >
+                            <img src="/img/default-no-image.png" alt="" class="img-responsive">
                         </a>
                         <div class="text">
                             <h3><a href="/prod/{!! $product->id !!}">{!! $product->name !!}</a></h3>
@@ -68,9 +87,7 @@
                                 <a href="/prod/{!! $product->id !!}" class="btn btn-default">View detail</a>
                             </p>
                         </div>
-                        <!-- /.text -->
                     </div>
-                    <!-- /.product -->
                 </div>
             @endforeach
 
