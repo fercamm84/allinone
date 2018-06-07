@@ -78,3 +78,16 @@ Route::get('/myAccount/changePassword', array('as' => 'myAccount.changePassword'
 Route::post('/myAccount/updatePassword', array('as' => 'myAccount.updatePassword', 'uses' => 'AccountController@updatePassword'));
 
 Route::resource('myAccount', 'AccountController');
+
+Route::resource('countries', 'CountryController');
+
+Route::resource('zones', 'ZoneController');
+
+Route::resource('cities', 'CityController');
+
+Route::resource('locations', 'LocationController');
+
+Route::resource('addresses', 'AddressController');
+
+Route::resource('userAddresses', 'UserAddressController');
+
