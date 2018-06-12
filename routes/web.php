@@ -87,7 +87,12 @@ Route::resource('cities', 'CityController');
 
 Route::resource('locations', 'LocationController');
 
-Route::resource('addresses', 'AddressController');
+Route::resource('addresses', 'AddressesController');
 
 Route::resource('userAddresses', 'UserAddressController');
 
+Route::resource('address', 'AddressController');
+
+Route::get('address/zone/{zone}/cities', 'AddressController@getCitiesFromZone');
+
+Route::get('address/city/{city}/locations', 'AddressController@getLocationsFromCity');

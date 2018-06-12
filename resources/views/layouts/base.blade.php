@@ -36,6 +36,27 @@
     <link rel="shortcut icon" href="favicon.png">
 
     @yield('css')
+
+    <!-- jQuery 3.1.1 -->
+
+    <!-- AdminLTE App -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="{{asset('js/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{asset('js/jquery.cookie.js') }}"></script>
+    <script src="{{asset('js/waypoints.min.js') }}"></script>
+    <script src="{{asset('js/modernizr.js') }}"></script>
+    <script src="{{asset('js/bootstrap-hover-dropdown.js') }}"></script>
+    <script src="{{asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{asset('js/front.js') }}"></script>
+
+    @yield('scripts')
 </head>
 
 <body>
@@ -544,24 +565,6 @@ _________________________________________________________ -->
     <!-- *** COPYRIGHT END *** -->
 
 </div>
-<!-- jQuery 3.1.1 -->
 
-<!-- AdminLTE App -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-
-<script src="{{asset('js/jquery-1.11.0.min.js') }}"></script>
-<script src="{{asset('js/bootstrap.min.js') }}"></script>
-<script src="{{asset('js/jquery.cookie.js') }}"></script>
-<script src="{{asset('js/waypoints.min.js') }}"></script>
-<script src="{{asset('js/modernizr.js') }}"></script>
-<script src="{{asset('js/bootstrap-hover-dropdown.js') }}"></script>
-<script src="{{asset('js/owl.carousel.min.js') }}"></script>
-<script src="{{asset('js/front.js') }}"></script>
-
-@yield('scripts')
 </body>
 </html>

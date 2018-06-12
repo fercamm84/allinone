@@ -39,7 +39,7 @@ class Country extends Model
 
 
     public $fillable = [
-        'country',
+        'description',
         'currency',
         'language',
         'shortname'
@@ -52,7 +52,7 @@ class Country extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'country' => 'string',
+        'description' => 'string',
         'currency' => 'string',
         'language' => 'string',
         'shortname' => 'string'

@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use App\Models\Address;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Location;
+use App\Models\Section;
+use App\Models\UserAddress;
+use App\Models\Zone;
 use App\Repositories\AddressRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\UserAddressRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Auth;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -16,9 +25,13 @@ class AddressController extends AppBaseController
     /** @var  AddressRepository */
     private $addressRepository;
 
-    public function __construct(AddressRepository $addressRepo)
+    /** @var  UserAddressRepository */
+    private $userAddressRepository;
+
+    public function __construct(AddressRepository $addressRepo, UserAddressRepository $userAddressRepo)
     {
         $this->addressRepository = $addressRepo;
+        $this->userAddressRepository = $userAddressRepo;
     }
 
     /**
@@ -29,11 +42,13 @@ class AddressController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->addressRepository->pushCriteria(new RequestCriteria($request));
-        $addresses = $this->addressRepository->all();
+        $sections = Section::all();
 
-        return view('addresses.index')
-            ->with('addresses', $addresses);
+        $user = Auth::user();
+
+        $userAddresses = UserAddress::where([['user_id', '=', $user->id]])->get();
+
+        return view('address.list', array('sections' => $sections, 'userAddresses' => $userAddresses));
     }
 
     /**
@@ -43,7 +58,13 @@ class AddressController extends AppBaseController
      */
     public function create()
     {
-        return view('addresses.create');
+        $sections = Section::all();
+
+        $zones = Zone::where('country_id','=',1)->get()->pluck('description', 'id');
+        $cities = array();
+        $locations = array();
+
+        return view('address.create', array('sections' => $sections, 'locations' => $locations, 'cities' => $cities, 'zones' => $zones));
     }
 
     /**
@@ -59,9 +80,16 @@ class AddressController extends AppBaseController
 
         $address = $this->addressRepository->create($input);
 
+        $user = Auth::user();
+
+        $userAddress = array();
+        $userAddress['user_id'] = $user->id;
+        $userAddress['address_id'] = $address->id;
+        $this->userAddressRepository->create($userAddress);
+
         Flash::success('Address saved successfully.');
 
-        return redirect(route('addresses.index'));
+        return redirect(route('address.index'));
     }
 
     /**
@@ -78,10 +106,10 @@ class AddressController extends AppBaseController
         if (empty($address)) {
             Flash::error('Address not found');
 
-            return redirect(route('addresses.index'));
+            return redirect(route('address.index'));
         }
 
-        return view('addresses.show')->with('address', $address);
+        return view('address.show')->with('address', $address);
     }
 
     /**
@@ -93,15 +121,22 @@ class AddressController extends AppBaseController
      */
     public function edit($id)
     {
+        $sections = Section::all();
+
         $address = $this->addressRepository->findWithoutFail($id);
+
+        $zones = Zone::where('country_id','=',$address->location->city->zone->country->id)->get()->pluck('description', 'id');
+        $cities = City::where('zone_id','=',$address->location->city->zone->id)->get()->pluck('description', 'id');
+        $locations = Location::where('city_id','=',$address->location->city->id)->get()->pluck('description', 'id');
 
         if (empty($address)) {
             Flash::error('Address not found');
 
-            return redirect(route('addresses.index'));
+            return redirect(route('address.index'));
         }
 
-        return view('addresses.edit')->with('address', $address);
+        return view('address.edit', array('sections' => $sections, 'address' => $address, 'locations' => $locations,
+            'cities' => $cities, 'zones' => $zones));
     }
 
     /**
@@ -119,14 +154,14 @@ class AddressController extends AppBaseController
         if (empty($address)) {
             Flash::error('Address not found');
 
-            return redirect(route('addresses.index'));
+            return redirect(route('address.index'));
         }
 
         $address = $this->addressRepository->update($request->all(), $id);
 
         Flash::success('Address updated successfully.');
 
-        return redirect(route('addresses.index'));
+        return redirect(route('address.index'));
     }
 
     /**
@@ -143,13 +178,32 @@ class AddressController extends AppBaseController
         if (empty($address)) {
             Flash::error('Address not found');
 
-            return redirect(route('addresses.index'));
+            return redirect(route('address.index'));
         }
 
-        $this->addressRepository->delete($id);
+        $user = Auth::user();
+
+        $userAddress = UserAddress::where([['user_id','=',$user->id], ['address_id','=',$id]])->first();
+
+        $this->userAddressRepository->delete($userAddress->id);
+
+        $userAddress = UserAddress::where('address_id','=',$id)->get();
+
+        if(count($userAddress)==0){
+            $this->addressRepository->delete($id);
+        }
 
         Flash::success('Address deleted successfully.');
 
-        return redirect(route('addresses.index'));
+        return redirect(route('address.index'));
     }
+
+    public function getCitiesFromZone(Zone $zone){
+        return $zone->cities()->pluck('description', 'id');
+    }
+
+    public function getLocationsFromCity(City $city){
+        return $city->locations()->pluck('description', 'id');
+    }
+
 }

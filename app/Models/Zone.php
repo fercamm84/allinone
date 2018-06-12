@@ -38,7 +38,7 @@ class Zone extends Model
 
 
     public $fillable = [
-        'zone',
+        'description',
         'country_id'
     ];
 
@@ -49,7 +49,7 @@ class Zone extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'zone' => 'string',
+        'description' => 'string',
         'country_id' => 'integer'
     ];
 
