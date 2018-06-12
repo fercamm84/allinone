@@ -35,6 +35,7 @@
                     <div class="form-group col-sm-12">
                         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                         <a href="{!! route('myAccount.changePassword') !!}" class="btn btn-default">Change password</a>
+                        <a href="{!! route('address.index') !!}" class="btn btn-default">Addresses</a>
                     </div>
 
                     {!! Form::close() !!}
