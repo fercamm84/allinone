@@ -16,9 +16,6 @@ class ProductShowController extends Controller
     }
 
     public function index($id = null){
-
-        $sections = Section::all();
-
         $product = Product::find($id);
 
         $user = Auth::user();
@@ -31,7 +28,7 @@ class ProductShowController extends Controller
         }
 */
         $categories = $product->categoryProducts();
-        return view('product.product', array('product' => $product, 'stock_solicitado' => $stock_solicitado, 'sections' => $sections, 'category' => new Category() ));
+        return view('product.product', array('product' => $product, 'stock_solicitado' => $stock_solicitado, 'category' => new Category() ));
     }
 
 }

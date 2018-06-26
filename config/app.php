@@ -185,6 +185,8 @@ return [
 
         SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class,
 
+        App\Providers\ComposerServiceProvider::class,
+
     ],
 
     /*

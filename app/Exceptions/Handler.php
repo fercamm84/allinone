@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Laracasts\Flash\Flash;
 
 class Handler extends ExceptionHandler
 {
@@ -54,9 +55,12 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return $request->expectsJson()
-            ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest(route('index'));
+        if($request->expectsJson()){
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }else{
+            Flash::warning(trans('auth.'.$exception->getMessage()));
+            return redirect()->guest(route('index'));
+        }
     }
 
 }
