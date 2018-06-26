@@ -42,9 +42,7 @@ class SearchController extends Controller
             }
         }
 
-        $sections = Section::all();
-
-        return view('search.search', array('sections' => $sections, 'products' => $products, 'categories' => $categories));
+        return view('search.search', array('products' => $products, 'categories' => $categories));
     }
 
 }

@@ -42,13 +42,11 @@ class AddressController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $sections = Section::all();
-
         $user = Auth::user();
 
         $userAddresses = UserAddress::where([['user_id', '=', $user->id]])->get();
 
-        return view('address.list', array('sections' => $sections, 'userAddresses' => $userAddresses));
+        return view('address.list', array('userAddresses' => $userAddresses));
     }
 
     /**
@@ -58,13 +56,11 @@ class AddressController extends AppBaseController
      */
     public function create()
     {
-        $sections = Section::all();
-
         $zones = Zone::where('country_id','=',1)->get()->pluck('description', 'id');
         $cities = array();
         $locations = array();
 
-        return view('address.create', array('sections' => $sections, 'locations' => $locations, 'cities' => $cities, 'zones' => $zones));
+        return view('address.create', array('locations' => $locations, 'cities' => $cities, 'zones' => $zones));
     }
 
     /**
@@ -121,8 +117,6 @@ class AddressController extends AppBaseController
      */
     public function edit($id)
     {
-        $sections = Section::all();
-
         $address = $this->addressRepository->findWithoutFail($id);
 
         $zones = Zone::where('country_id','=',$address->location->city->zone->country->id)->get()->pluck('description', 'id');
@@ -135,7 +129,7 @@ class AddressController extends AppBaseController
             return redirect(route('address.index'));
         }
 
-        return view('address.edit', array('sections' => $sections, 'address' => $address, 'locations' => $locations,
+        return view('address.edit', array('address' => $address, 'locations' => $locations,
             'cities' => $cities, 'zones' => $zones));
     }
 

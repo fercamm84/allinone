@@ -23,11 +23,7 @@ class AccountController extends FrontController
     }
 
     public function index(){
-        $user = Auth::user();
-
-        $sections = Section::all();
-
-        return view('account.edit', array('user' => $user, 'sections' => $sections));
+        return view('account.edit');
     }
 
     public function update($id, UpdateUserRequest $request)
@@ -48,11 +44,7 @@ class AccountController extends FrontController
     }
 
     public function changePassword(){
-        $user = Auth::user();
-
-        $sections = Section::all();
-
-        return view('account.change_password', array('user' => $user, 'sections' => $sections));
+        return view('account.change_password');
     }
 
     public function updatePassword(UpdateUserRequest $request){
@@ -83,11 +75,7 @@ class AccountController extends FrontController
             }
         }
 
-        $user = Auth::user();
-
-        $sections = Section::all();
-
-        return view('account.change_password', array('user' => $user, 'sections' => $sections));
+        return view('account.change_password');
     }
 
     public function admin_credential_rules(array $data)
