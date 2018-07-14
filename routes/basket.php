@@ -1,6 +1,6 @@
 <?php
 
-Route::post('basket/solicitar', 'BasketController@solicitarMercadoPago');
+Route::post('/basket/solicitar', 'BasketController@solicitarMercadoPago');
 
 Route::post('/basket/paymentResult', array('as' => 'basket.paymentResult', 'uses' => 'BasketController@paymentResult'));
 

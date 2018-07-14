@@ -16,7 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         // Using class based composers...
         View::composer(
-            'home.layouts.home', 'App\Http\ViewComposers\SectionsComposer'
+            array('layouts.base', 'home.home', 'layouts.details', '*'), 'App\Http\ViewComposers\SectionsComposer'
         );
 
         // Using Closure based composers...
