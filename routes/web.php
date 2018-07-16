@@ -93,6 +93,6 @@ Route::get('address/zone/{zone}/cities', 'AddressController@getCitiesFromZone');
 
 Route::get('address/city/{city}/locations', 'AddressController@getLocationsFromCity');
 
-//Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
+Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
 
 Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
