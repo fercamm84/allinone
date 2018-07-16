@@ -13,6 +13,7 @@ use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
@@ -89,6 +90,7 @@ class BasketController extends FrontController
 
             $arrayEnvio = array();
             $arrayEnvio = array_merge($arrayEnvio, array('preference' => $myJobPreference['response']['init_point']));
+            echo '<meta name="csrf-token" content="{{ csrf_token() }}">';
             echo json_encode($arrayEnvio);
             exit();
         }
