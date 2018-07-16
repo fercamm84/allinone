@@ -1,8 +1,13 @@
 <tr>
     <td>
-        @foreach($orderDetail->product->imageProducts as $imageProduct)
-            <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" width="100px" height="100px">
-        @endforeach
+        @if(sizeof($orderDetail->product->imageProducts)>0)
+            @foreach($orderDetail->product->imageProducts as $imageProduct)
+                <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" width="100px" height="100px">
+                <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" alt="" class="img-responsive">
+            @endforeach
+        @else
+            <img src="{{ asset('/img/default-no-image.png') }}" alt="" class="img-responsive">
+        @endif
     </td>
     <td>
         <p>{{ $orderDetail->product->name }}</p>
