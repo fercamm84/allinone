@@ -2,7 +2,7 @@
 
 //Route::post('/basket/solicitar', 'BasketController@solicitarMercadoPago');
 
-//Route::post('/basket/solicitar', array('as' => 'basket.solicitar', 'uses' => 'BasketController@solicitarMercadoPago'));
+Route::post('/basket/solicitar', array('as' => 'basket.solicitar', 'uses' => 'BasketController@solicitarMercadoPago'));
 
 Route::post('/basket/paymentResult', array('as' => 'basket.paymentResult', 'uses' => 'BasketController@paymentResult'));
 
@@ -22,7 +22,7 @@ Route::resource('basket', 'BasketController');
 
 Route::post('prueba', 'BasketController@prueba');
 
-Route::post('/basket/solicitar', function () {
-    return response('<meta name="csrf-token" content="{{ csrf_token() }}">', 200)
-        ->header('Content-Type', 'text/plain');
-});
+//Route::post('/basket/solicitar', function () {
+//    return response('<meta name="csrf-token" content="{{ csrf_token() }}">', 200)
+//        ->header('Content-Type', 'text/plain');
+//});
