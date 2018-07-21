@@ -17,7 +17,7 @@
     <div class="box">
         <div class="container">
             <div class="col-md-12">
-                <h2>Categories</h2>
+                <h2>Categorias</h2>
             </div>
         </div>
     </div>

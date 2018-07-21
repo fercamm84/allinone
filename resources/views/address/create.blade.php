@@ -1,6 +1,7 @@
 @extends('home.layouts.home')
 
 @section('content')
+<div class="container">
     <section class="content-header">
         <h1>
             New Address
@@ -148,4 +149,5 @@
             });
         });
     </script>
+	</div>
 @endsection

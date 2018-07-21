@@ -3994,6 +3994,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
+	
   }
   .navbar-form .form-control {
     display: inline-block;
@@ -4159,7 +4160,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555;
-    background-color: #e7e7e7;
+    background-color: #998675;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -5352,14 +5353,14 @@ a.list-group-item-danger.active:focus {
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
-  color: #000;
+  color: #fff;
   text-shadow: 0 1px 0 #fff;
-  filter: alpha(opacity=20);
-  opacity: .2;
+  /*filter: alpha(opacity=20);
+  opacity: .2;*/
 }
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #FFF;
   text-decoration: none;
   cursor: pointer;
   filter: alpha(opacity=50);

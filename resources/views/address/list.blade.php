@@ -1,6 +1,7 @@
 @extends('home.layouts.home')
 
 @section('content')
+<div class="container" style="margin-bottom:20%;">
     <table class="table table-responsive" id="addresses-table">
         <thead>
         <tr>
@@ -37,4 +38,5 @@
         </tbody>
     </table>
     <a href="{{ route('address.create') }}" class='btn btn-primary'>Add new</a>
+</div>
 @endsection
