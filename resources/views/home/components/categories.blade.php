@@ -1,20 +1,3 @@
-{{-- @foreach($sections as $section)
-    @if($section->type == 'home_principal')
-        @foreach($section->sectionCategories as $sectionCategory)
-            @foreach($sectionCategory->category->categoryProducts as $productCategory)
-                <a href="/cat/{!! $productCategory->category->id !!}">{!! $productCategory->category->description !!}</a>
-                @foreach($productCategory->category->imageCategories as $categoryImage)
-                    <img src="{{ asset('images/'.$categoryImage->image->name) }}" width="500px" height="500px">
-                @endforeach
-                {{--@foreach($productCategory->product->imageProducts as $productImage)--}}
-                    {{--<img src="{{ asset('imagenes/'.$productImage->image->name) }}">--}}
-                {{--@endforeach--}}
-{{--           @endforeach
-       @endforeach
-   @endif
-@endforeach
---}}
-
 <div class="container">
     <div class="col-md-12">
         <div id="main-slider">
