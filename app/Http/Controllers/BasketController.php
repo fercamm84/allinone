@@ -13,6 +13,7 @@ use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
@@ -89,6 +90,7 @@ class BasketController extends FrontController
 
             $arrayEnvio = array();
             $arrayEnvio = array_merge($arrayEnvio, array('preference' => $myJobPreference['response']['init_point']));
+            echo '<meta name="csrf-token" content="{{ csrf_token() }}">';
             echo json_encode($arrayEnvio);
             exit();
         }
@@ -160,14 +162,12 @@ class BasketController extends FrontController
 //        $user->email = 'fercamm@gmail.com';// This is the email you want to send to.
 //        $user->notify(new App\Notifications\TemplateEmail());
 //        die;
-        $sections = Section::all();
-
         $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        return view('basket.index', array('order' => $order, 'sections' => $sections));
+        return view('basket.index', array('order' => $order));
     }
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
@@ -179,8 +179,6 @@ class BasketController extends FrontController
     }
 
     public function pending(){
-        $sections = Section::all();
-
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
@@ -193,7 +191,7 @@ class BasketController extends FrontController
         }
 
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
-            return view('basket.success', array('order' => $order, 'sections' => $sections));
+            return view('basket.success', array('order' => $order));
         }else if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='rejected'){
             Flash::error('No se pudo realizar el pago. Por favor, intente nuevamente.');
             return redirect(route('basket.index'));
@@ -204,8 +202,6 @@ class BasketController extends FrontController
     }
 
     public function failure(){
-        $sections = Section::all();
-
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
@@ -218,7 +214,7 @@ class BasketController extends FrontController
         }
 
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
-            return view('basket.success', array('order' => $order, 'sections' => $sections));
+            return view('basket.success', array('order' => $order));
         }else{
             Flash::error('No se pudo realizar el pago. Por favor, intente nuevamente.');
             return redirect(route('basket.index'));
@@ -226,8 +222,6 @@ class BasketController extends FrontController
     }
 
     public function success(){
-        $sections = Section::all();
-
         $user = Auth::user();
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
@@ -240,7 +234,7 @@ class BasketController extends FrontController
         }
 
         if(isset($pago['response']['results']['0']['collection']['status']) && $pago['response']['results']['0']['collection']['status']=='approved'){
-            return view('basket.success', array('order' => $order, 'sections' => $sections));
+            return view('basket.success', array('order' => $order));
         }else{
             Flash::error('No se pudo obtener la respuesta del pago.');
             return redirect(route('basket.index'));
@@ -261,14 +255,12 @@ class BasketController extends FrontController
     }
 
     public function history(){
-        $sections = Section::all();
-
         $user = Auth::user();
 
         //obtengo la orden creada
         $orders = Order::where([['user_id', '=', $user->id], ['state', '<>', 1]])->get();
 
-        return view('basket.history', array('orders' => $orders, 'sections' => $sections));
+        return view('basket.history', array('orders' => $orders));
     }
 
 }

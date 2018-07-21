@@ -7,9 +7,12 @@
         <div class="row" id="productMain">
             <div class="col-sm-6">
                 <div id="mainImage">
-                    <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}"alt="" class="img-responsive">
+                    @if(sizeof($product->imageProducts)>0)
+                        <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}"alt="" class="img-responsive">
+                    @else
+                        <img src="{{ asset('/img/default-no-image.png') }}"alt="" class="img-responsive">
+                    @endif
                 </div>
-
             </div>
             <div class="col-sm-6">
                 <div class="box">

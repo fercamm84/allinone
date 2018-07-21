@@ -70,3 +70,27 @@
     <a href="{!! route('roleUsers.index') !!}"><i class="fa fa-edit"></i><span>Role Users</span></a>
 </li>
 
+<li class="{{ Request::is('countries*') ? 'active' : '' }}">
+    <a href="{!! route('countries.index') !!}"><i class="fa fa-edit"></i><span>Countries</span></a>
+</li>
+
+<li class="{{ Request::is('zones*') ? 'active' : '' }}">
+    <a href="{!! route('zones.index') !!}"><i class="fa fa-edit"></i><span>Zones</span></a>
+</li>
+
+<li class="{{ Request::is('cities*') ? 'active' : '' }}">
+    <a href="{!! route('cities.index') !!}"><i class="fa fa-edit"></i><span>Cities</span></a>
+</li>
+
+<li class="{{ Request::is('locations*') ? 'active' : '' }}">
+    <a href="{!! route('locations.index') !!}"><i class="fa fa-edit"></i><span>Locations</span></a>
+</li>
+
+<li class="{{ Request::is('addresses*') ? 'active' : '' }}">
+    <a href="{!! route('addresses.index') !!}"><i class="fa fa-edit"></i><span>Addresses</span></a>
+</li>
+
+<li class="{{ Request::is('userAddresses*') ? 'active' : '' }}">
+    <a href="{!! route('userAddresses.index') !!}"><i class="fa fa-edit"></i><span>User Addresses</span></a>
+</li>
+

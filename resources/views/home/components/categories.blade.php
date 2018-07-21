@@ -17,7 +17,7 @@
     <div class="box">
         <div class="container">
             <div class="col-md-12">
-                <h2>Categorias</h2>
+                <h2>Categories</h2>
             </div>
         </div>
     </div>
@@ -27,28 +27,49 @@
             @foreach($sections as $section)
                 @if($section->type == 'home_principal')
                     @foreach($section->sectionCategories as $sectionCategory)
-
-            <div class="item">
-                <div class="product">
-                    <div class="flip-container">
-                        <div class="flipper">
-                                <div class="front">
-                                    <a href="/cat/{!! $sectionCategory->category->id !!}">
-                                        <img src="{{ asset('imagenes/'.$sectionCategory->category->imageCategories{0}->image->name) }}" class="img-responsive">
-                                    </a>
+                        <div class="item">
+                            <div class="product">
+                                @if(sizeof($sectionCategory->category->imageCategories)>0)
+                                    <div class="flip-container">
+                                        <div class="flipper">
+                                            <div class="front">
+                                                <a href="/cat/{!! $sectionCategory->category->id !!}">
+                                                    <img src="{{ asset('imagenes/'.$sectionCategory->category->imageCategories{0}->image->name) }}" class="img-responsive">
+                                                </a>
+                                            </div>
+                                            @if(sizeof($sectionCategory->category->imageCategories)>1)
+                                                <div class="back">
+                                                    <a href="/cat/{!! $sectionCategory->category->id !!}">
+                                                        <img src="{{ asset('imagenes/'.$sectionCategory->category->imageCategories{1}->image->name) }}" class="img-responsive">
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="flip-container">
+                                        <div class="front">
+                                            <a href="/cat/{!! $sectionCategory->category->id !!}">
+                                                <img src="/img/default-no-image.png" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="/cat/{!! $sectionCategory->category->id !!}">
+                                                <img src="/img/default-no-image.png" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                                <a href="/cat/{!! $sectionCategory->category->id !!}" class="invisible" >
+                                    <img src="/img/default-no-image.png" alt="" class="img-responsive">
+                                </a>
+                                <div class="text">
+                                    <h3><a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!} </a></h3>
                                 </div>
+                                <!-- /.text -->
+                            </div>
+                            <!-- /.product -->
                         </div>
-                    </div>
-                    <a href="/cat/{!! $sectionCategory->category->id !!}" class="invisible">
-                        <img src="img/product1.jpg" alt="" class="img-responsive">
-                    </a>
-                    <div class="text">
-                        <h3><a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!} </a></h3>
-                    </div>
-                    <!-- /.text -->
-                </div>
-                <!-- /.product -->
-            </div>
                     @endforeach
                 @endif
             @endforeach

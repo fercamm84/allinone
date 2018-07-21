@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Repositories\PaymentRepository;
-use App\Http\Controllers\AppBaseController;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -157,10 +157,9 @@ class PaymentController extends AppBaseController
     public function getPayments(){
         try {
             //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
-            $pago = MP::get_payment(3662769330);
+//            $pago = MP::get_payment(3662769330);
+            $pago = MP::get_payment($_GET['id']);
         }catch (\Exception $exc){
-            header("HTTP/1.1 200 OK");
-            http_response_code(200);
             die;
         }
 
@@ -174,8 +173,25 @@ class PaymentController extends AppBaseController
         $payment_id = $pago['response']['collection']['id'];
         $external_reference = $pago['response']['collection']['external_reference'];
         $order_id = $external_reference;
+        $order_id = intval(str_replace('order_', '', $order_id));
 
+        $payment = Payment::where([['order_id', '=', $order_id]])->first();
 
+        if(count($payment) > 0){
+            $payment->state = $status;
+            $payment->merchant_order_id = $merchant_order_id;
+            $payment->total_paid_amount = $total_paid_amount;
+            $payment->status_detail = $status_detail;
+            $payment->payment_type = $payment_type;
+            $payment->operation_type = $operation_type;
+            $payment->payment_id = $payment_id;
+            $payment->order_id = $order_id;
+            $payment->save();
+        }
+
+        print_r($payment);
+
+        die;
     }
 
 }

@@ -57,10 +57,6 @@ Route::resource('sectionProducts', 'SectionProductController');
 
 Route::resource('payments', 'PaymentController');
 
-Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
-
-Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
-
 Route::resource('roles', 'RoleController');
 
 Route::resource('roleUsers', 'RoleUserController');
@@ -72,3 +68,31 @@ Route::post('/loginAdmin', array('as' => 'loginAdmin', 'uses' => 'Auth\LoginCont
 //Route::post('/register', array('as' => 'register', 'uses' => 'Auth\RegisterController@register'));
 
 Route::get('/cat-orderby/{id}/orderBy/{orderby}', 'CategoryShowController@order');
+
+Route::get('/myAccount/changePassword', array('as' => 'myAccount.changePassword', 'uses' => 'AccountController@changePassword'));
+
+Route::post('/myAccount/updatePassword', array('as' => 'myAccount.updatePassword', 'uses' => 'AccountController@updatePassword'));
+
+Route::resource('myAccount', 'AccountController');
+
+Route::resource('countries', 'CountryController');
+
+Route::resource('zones', 'ZoneController');
+
+Route::resource('cities', 'CityController');
+
+Route::resource('locations', 'LocationController');
+
+Route::resource('addresses', 'AddressesController');
+
+Route::resource('userAddresses', 'UserAddressController');
+
+Route::resource('address', 'AddressController');
+
+Route::get('address/zone/{zone}/cities', 'AddressController@getCitiesFromZone');
+
+Route::get('address/city/{city}/locations', 'AddressController@getLocationsFromCity');
+
+Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
+
+Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
