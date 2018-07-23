@@ -94,3 +94,7 @@
     <a href="{!! route('userAddresses.index') !!}"><i class="fa fa-edit"></i><span>User Addresses</span></a>
 </li>
 
+<li class="{{ Request::is('mailings*') ? 'active' : '' }}">
+    <a href="{!! route('mailings.index') !!}"><i class="fa fa-edit"></i><span>Mailings</span></a>
+</li>
+

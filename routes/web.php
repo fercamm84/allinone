@@ -96,3 +96,7 @@ Route::get('address/city/{city}/locations', 'AddressController@getLocationsFromC
 Route::get('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
 
 Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' => 'PaymentController@getPayments'));
+
+Route::resource('mailings', 'MailingController');
+
+Route::resource('contact', 'ContactController');

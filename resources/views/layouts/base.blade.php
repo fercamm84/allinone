@@ -22,7 +22,6 @@
     <link href="{{asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
-	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
@@ -94,6 +93,8 @@ _________________________________________________________ -->
                             <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                             </li>
                             <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                            </li>
+                            <li><a href="{{ url('/contact') }}">Contactanos</a>
                             </li>
                         </ul>
                     @endauth
@@ -397,7 +398,7 @@ _________________________________________________________ -->
                     <ul>
                         <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal">Iniciar Sesión</a>
                         </li>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                        <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
                         </li>
                     </ul>
 
