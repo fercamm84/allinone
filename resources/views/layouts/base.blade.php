@@ -90,7 +90,9 @@ _________________________________________________________ -->
                         <ul class="menu">
                             <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                             </li>
-                            <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                            <li><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a>
+                            </li>
+                            <li><a href="{{ url('/contact') }}">Contact us</a>
                             </li>
                         </ul>
                     @endauth
@@ -147,7 +149,7 @@ _________________________________________________________ -->
                     </form>
 
                     <a href="{{ url('/password/reset') }}">Olvide mi password</a><br>
-                    <a href="{{ url('/register') }}" class="text-center">Registrarse</a>
+                    <a href="{{ url('/register') }}" class="text-center">Sign up</a>
 
                 </div>
             </div>
@@ -160,7 +162,7 @@ _________________________________________________________ -->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="Register">Registrarse</h4>
+                    <h4 class="modal-title" id="Register">Sign up</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ url('/register') }}">
@@ -231,7 +233,7 @@ _________________________________________________________ -->
                             </div>
                             <!-- /.col -->
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Registrarse</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign up</button>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -437,7 +439,7 @@ _________________________________________________________ -->
                     <ul>
                         <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
-                        <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                        <li><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a>
                         </li>
                     </ul>
 
