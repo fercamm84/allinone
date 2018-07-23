@@ -319,9 +319,9 @@ _________________________________________________________ -->
                         </li>
                     </ul>
                 </li>
-                <li ><a href="/">Donde Encontrarnos</a>
+                <li ><a href="/location">Donde Encontrarnos</a>
                 </li>
-                <li ><a href="/">Contacto</a>
+                <li ><a href="/contact">Contacto</a>
                 </li>
 
             </ul>
