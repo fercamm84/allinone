@@ -372,10 +372,46 @@ _________________________________________________________ -->
     </div>
 
     <!-- *** FOOTER ***
+	
+	
 _________________________________________________________ -->
+
+
+	<div id="tarjetas">
+			<div class="container">
+			
+				<div class="col-md-6" style="text-align:right; color:#FFF !important;"><h3>Trabajamos con tarjetas de crédito y débito</h3></div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa-electron.jpg') }}" alt="Artesanías en Maderas"> </div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-american-express.jpg') }}" alt="Artesanías en Maderas"></div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa.jpg') }}" alt="Artesanías en Maderas"></div>
+				
+				
+			</div>
+	</div>
+		
+		
+		
+		
     <div id="footer" data-animate="fadeInUp">
+	
+		
+	
+	
         <div class="container">
+			
+			
+			
             <div class="row">
+				
+				
+			
+			
+			
+			
+			
                 <div class="col-md-4 col-sm-6">
                     <!-- h4>Pages</h4>
 
@@ -395,9 +431,9 @@ _________________________________________________________ -->
                     <h4>Sección Usuarios</h4>
 
                     <ul>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal">Iniciar Sesión</a>
+                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
                         </li>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
                         </li>
                     </ul>
 

@@ -965,6 +965,19 @@ h1 {
 #footer .social a.email:hover {
   background-color: #4a7f45;
 }
+
+#tarjetas {
+  background: #988675 !important;
+  color: #ccc;
+  padding: 10px 0;
+  font-size: 12px;
+}
+#tarjetas p {
+  margin: 0;
+}
+
+
+
 #copyright {
   background: #362f2d;
   color: #ccc;
@@ -976,6 +989,11 @@ h1 {
 }
 @media (max-width: 991px) {
   #copyright p {
+    float: none !important;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #tarjetas p {
     float: none !important;
     text-align: center;
     margin-bottom: 10px;
