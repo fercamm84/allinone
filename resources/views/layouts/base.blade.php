@@ -22,7 +22,6 @@
     <link href="{{asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
-	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
@@ -94,6 +93,8 @@ _________________________________________________________ -->
                             <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                             </li>
                             <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                            </li>
+                            <li><a href="{{ url('/contact') }}">Contactanos</a>
                             </li>
                         </ul>
                     @endauth
@@ -318,9 +319,9 @@ _________________________________________________________ -->
                         </li>
                     </ul>
                 </li>
-                <li ><a href="/">Donde Encontrarnos</a>
+                <li ><a href="/location">Donde Encontrarnos</a>
                 </li>
-                <li ><a href="/">Contacto</a>
+                <li ><a href="/contact">Contacto</a>
                 </li>
 
             </ul>
@@ -434,6 +435,7 @@ _________________________________________________________ -->
                         <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
                         </li>
                         <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
+                        <!-- li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a -->
                         </li>
                     </ul>
 

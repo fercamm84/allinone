@@ -187,6 +187,17 @@ class PaymentController extends AppBaseController
             $payment->payment_id = $payment_id;
             $payment->order_id = $order_id;
             $payment->save();
+        }else{
+            $payment = array();
+            $payment['state'] = $status;
+            $payment['merchant_order_id'] = $merchant_order_id;
+            $payment['total_paid_amount'] = $total_paid_amount;
+            $payment['status_detail'] = $status_detail;
+            $payment['payment_type'] = $payment_type;
+            $payment['operation_type'] = $operation_type;
+            $payment['payment_id'] = $payment_id;
+            $payment['order_id'] = $order_id;
+            $this->paymentRepository->create($payment);
         }
 
         print_r($payment);
