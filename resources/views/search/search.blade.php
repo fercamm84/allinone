@@ -67,24 +67,24 @@
                             <div class="flip-container">
                                 <div class="front">
                                     <a href="/prod/{!! $product->id !!}">
-                                        <img src="/img/default-no-image.png" class="img-responsive">
+                                        <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                     </a>
                                 </div>
                                 <div class="back">
                                     <a href="/prod/{!! $product->id !!}">
-                                        <img src="/img/default-no-image.png" class="img-responsive">
+                                        <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                     </a>
                                 </div>
                             </div>
                         @endif
                         <a href="/prod/{!! $product->id !!}" class="invisible" >
-                            <img src="/img/default-no-image.png" alt="" class="img-responsive">
+                            <img src="{{ asset('/img/default-no-image.png')}}" alt="" class="img-responsive">
                         </a>
                         <div class="text">
                             <h3><a href="/prod/{!! $product->id !!}">{!! $product->name !!}</a></h3>
                             <p class="price">${!! $product->price !!}</p>
                             <p class="buttons">
-                                <a href="/prod/{!! $product->id !!}" class="btn btn-default">View detail</a>
+                                <a href="/prod/{!! $product->id !!}" class="btn btn-default">Ver detalle</a>
                             </p>
                         </div>
                     </div>

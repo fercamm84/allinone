@@ -1,3 +1,4 @@
+
 <table class="table table-responsive" id="addresses-table">
     <thead>
         <tr>

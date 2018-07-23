@@ -19,7 +19,7 @@ h1 {
   font-size: 40px;
 }
 #top {
-  background: #555555;
+  background: #362f2d;
   padding: 10px 0;
 }
 #top .offer {
@@ -69,18 +69,46 @@ h1 {
   color: #999999;
 }
 #top #login-modal .modal-header {
-  background: #4fbfa8;
+  /*background: #4fbfa8;*/
+  background: #362f2d;
 }
 #top #login-modal .modal-header h4 {
   color: #fff;
 }
 #top #login-modal a {
-  color: #4fbfa8;
+  /*color: #4fbfa8;*/
+  color: #362f2d;
 }
 #top #login-modal p {
   font-weight: 300;
   margin-bottom: 20px;
 }
+
+
+
+
+/*seba*/
+
+#top #register-modal .modal-header {
+  /*background: #4fbfa8;*/
+  background: #362f2d;
+}
+#top #register-modal .modal-header h4 {
+  color: #fff;
+}
+#top #register-modal a {
+  /*color: #4fbfa8;*/
+  color: #362f2d;
+}
+#top #register-modal p {
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+/* fin seba*/
+
+
+
 .navbar .yamm-content h5 {
   font-size: 18px;
   font-weight: 400;
@@ -491,7 +519,9 @@ h1 {
 #content .product .flip-container,
 #content .product .front,
 #content .product .back {
-  width: 100%;
+ width: 100%;
+  /*height:121px !important;
+  width:176px !important;*/
 }
 #content .product .flipper {
   -webkit-backface-visibility: hidden;
@@ -504,6 +534,7 @@ h1 {
   -ms-transform-style: preserve-3d;
   transform-style: preserve-3d;
   position: relative;
+  
 }
 #content .product .front,
 #content .product .back {
@@ -935,7 +966,7 @@ h1 {
   background-color: #4a7f45;
 }
 #copyright {
-  background: #333;
+  background: #362f2d;
   color: #ccc;
   padding: 20px 0;
   font-size: 12px;
@@ -1268,8 +1299,9 @@ h1 {
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #555555;
-  background-color: #4fbfa8;
+  color: #FFF;
+  /*background-color: #4fbfa8;*/
+  background-color: #998675;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -1293,7 +1325,8 @@ h1 {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #4fbfa8;
+  /*background-color: #4fbfa8;*/
+  background-color: #c9bbaf;
   color: #555555;
 }
 @media (max-width: 767px) {
@@ -1309,7 +1342,9 @@ h1 {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555555;
-    background-color: #4fbfa8;
+    /*background-color: #4fbfa8;
+	background-color: #998675;*/
+	background-color:#c9bbaf;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -1330,7 +1365,8 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: #f0f0f0;
+  /*background-color: #f0f0f0;*/
+  background-color: #ebebeb;
 }
 a {
   color: #4fbfa8;

@@ -17,7 +17,7 @@
     <div class="box">
         <div class="container">
             <div class="col-md-12">
-                <h2>Categories</h2>
+                <h2>Categorias</h2>
             </div>
         </div>
     </div>
@@ -50,18 +50,18 @@
                                     <div class="flip-container">
                                         <div class="front">
                                             <a href="/cat/{!! $sectionCategory->category->id !!}">
-                                                <img src="/img/default-no-image.png" class="img-responsive">
+                                                <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
                                             <a href="/cat/{!! $sectionCategory->category->id !!}">
-                                                <img src="/img/default-no-image.png" class="img-responsive">
+                                                <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 @endif
                                 <a href="/cat/{!! $sectionCategory->category->id !!}" class="invisible" >
-                                    <img src="/img/default-no-image.png" alt="" class="img-responsive">
+                                    <img src="{{ asset('/img/default-no-image.png')}}" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
                                     <h3><a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!} </a></h3>
