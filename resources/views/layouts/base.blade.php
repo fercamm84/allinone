@@ -61,6 +61,13 @@
     @yield('scripts')
 </head>
 
+<?php 
+$directoryURI = $_SERVER['REQUEST_URI'];
+$path = parse_url($directoryURI, PHP_URL_PATH);
+$components = explode('/', $path);
+$first_part = $components[1];
+?>
+
 <body>
 
 <!-- *** TOPBAR ***
@@ -291,9 +298,9 @@ _________________________________________________________ -->
         <div class="navbar-collapse collapse" id="navigation">
 
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="/">Home</a>
+                <li class="<?php if ($first_part=="") {echo "active"; } else  {echo "noactive";}?>"><a href="/">Home</a>
                 </li>
-                <li class="dropdown yamm-fw">
+                <li class="dropdown yamm-fw <?php if ($first_part!=="" && $first_part!=="location" && $first_part!=="contact") {echo "active"; } else  {echo "noactive";}?>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Productos <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
@@ -319,9 +326,9 @@ _________________________________________________________ -->
                         </li>
                     </ul>
                 </li>
-                <li ><a href="/location">Donde Encontrarnos</a>
+                <li class="<?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>"><a href="/location">Donde Encontrarnos</a>
                 </li>
-                <li ><a href="/contact">Contacto</a>
+                <li class="<?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>"><a href="/contact">Contacto</a>
                 </li>
 
             </ul>
@@ -373,10 +380,46 @@ _________________________________________________________ -->
     </div>
 
     <!-- *** FOOTER ***
+	
+	
 _________________________________________________________ -->
+
+
+	<div id="tarjetas">
+			<div class="container">
+			
+				<div class="col-md-6" style="text-align:right; color:#FFF !important;"><h3>Trabajamos con tarjetas de crédito y débito</h3></div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa-electron.jpg') }}" alt="Artesanías en Maderas"> </div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-american-express.jpg') }}" alt="Artesanías en Maderas"></div>
+				
+				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa.jpg') }}" alt="Artesanías en Maderas"></div>
+				
+				
+			</div>
+	</div>
+		
+		
+		
+		
     <div id="footer" data-animate="fadeInUp">
+	
+		
+	
+	
         <div class="container">
+			
+			
+			
             <div class="row">
+				
+				
+			
+			
+			
+			
+			
                 <div class="col-md-4 col-sm-6">
                     <!-- h4>Pages</h4>
 
@@ -396,9 +439,10 @@ _________________________________________________________ -->
                     <h4>Sección Usuarios</h4>
 
                     <ul>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal">Iniciar Sesión</a>
+                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
                         </li>
-                        <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
+                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
+                        <!-- li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a -->
                         </li>
                     </ul>
 
