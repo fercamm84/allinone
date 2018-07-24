@@ -3,23 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMailingRequest;
-use App\Http\Requests\CreatePaymentRequest;
-use App\Http\Requests\UpdatePaymentRequest;
+use App\Http\Helpers\SendMailHelper;
 use App\Repositories\MailingRepository;
 use Illuminate\Http\Request;
 use Flash;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use SantiGraviano\LaravelMercadoPago\Facades\MP;
 
 class ContactController extends AppBaseController
 {
     /** @var  MailingRepository */
     private $mailingRepository;
 
+    private $SendMailHelper;
+
     public function __construct(MailingRepository $mailingRepo)
     {
         $this->mailingRepository = $mailingRepo;
+        $this->SendMailHelper = new SendMailHelper();
     }
 
     /**
@@ -45,6 +45,8 @@ class ContactController extends AppBaseController
         $input = $request->all();
 
         $mailing = $this->mailingRepository->create($input);
+
+        $this->SendMailHelper->sendEmailContactUs($mailing);
 
         Flash::success('Contact saved successfully.');
 

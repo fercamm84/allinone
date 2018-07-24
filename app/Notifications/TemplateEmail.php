@@ -12,6 +12,62 @@ class TemplateEmail extends Notification
     use Queueable;
 
     /**
+     * The "level" of the notification (info, success, error).
+     *
+     * @var string
+     */
+    public $level = 'info';
+
+    /**
+     * The subject of the notification.
+     *
+     * @var string
+     */
+    public $subject;
+
+    /**
+     * The notification's greeting.
+     *
+     * @var string
+     */
+    public $greeting;
+
+    /**
+     * The notification's salutation.
+     *
+     * @var string
+     */
+    public $salutation;
+
+    /**
+     * The "intro" lines of the notification.
+     *
+     * @var array
+     */
+    public $introLines = [];
+
+    /**
+     * The "outro" lines of the notification.
+     *
+     * @var array
+     */
+    public $outroLines = [];
+
+    /**
+     * The text / label for the action.
+     *
+     * @var string
+     */
+    public $actionText;
+
+    /**
+     * The action URL.
+     *
+     * @var string
+     */
+    public $actionUrl;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
@@ -40,14 +96,25 @@ class TemplateEmail extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-//          ->subject('Your Subject') // it will use this class name if you don't specify
-//          ->greeting('') // example: Dear Sir, Hello Madam, etc ...
-            ->level('info')// It is kind of email. Available options: info, success, error. Default: info
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
-//          ->salutation('')  // example: best regards, thanks, etc ...
+        $MailMessage = new MailMessage;
+        $MailMessage->level($this->level);
+        $MailMessage->subject($this->subject);
+        $MailMessage->greeting($this->greeting);
+        $MailMessage->salutation($this->salutation);
+        $MailMessage->introLines = $this->introLines;
+        $MailMessage->outroLines = $this->outroLines;
+        $MailMessage->actionText = $this->actionText;
+        $MailMessage->actionUrl = $this->actionUrl;
+
+        return $MailMessage;
+//        return (new MailMessage)
+////          ->subject('Your Subject') // it will use this class name if you don't specify
+////          ->greeting('') // example: Dear Sir, Hello Madam, etc ...
+//            ->level('info')// It is kind of email. Available options: info, success, error. Default: info
+//            ->line('The introduction to the notification.')
+//            ->action('Notification Action', url('/'))
+//            ->line('Thank you for using our application!');
+////          ->salutation('')  // example: best regards, thanks, etc ...
     }
 
     /**
@@ -56,10 +123,17 @@ class TemplateEmail extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
-            //
+            'level' => $this->level,
+            'subject' => $this->subject,
+            'greeting' => $this->greeting,
+            'salutation' => $this->salutation,
+            'introLines' => $this->introLines,
+            'outroLines' => $this->outroLines,
+            'actionText' => $this->actionText,
+            'actionUrl' => $this->actionUrl,
         ];
     }
 }
