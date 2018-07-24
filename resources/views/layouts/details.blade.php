@@ -7,15 +7,19 @@
     <div id="content">
         <div class="container">
 
-            @if(isset($category))
+
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li><a href="/">Home</a>
-                        </li>
-                        <li>{!! $category->description!!}</li>
+                        <li><a href="/">Home</a></li>
+                        @if(isset($category))
+                            <li><a href="/cat/{!! $category->id!!}">{!! $category->description!!}</a></li>
+                            @if(isset($product))
+                                <li><a href="/prod/{!! $product->id!!}">{!! $product->description!!}</a></li>
+                            @endif
+                        @endif
                     </ul>
                 </div>
-            @endif
+
 
             <div class="col-md-3">
                 <!-- *** MENUS AND FILTERS ***

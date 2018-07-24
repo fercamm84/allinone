@@ -10,6 +10,30 @@
     {!! Form::text('short_description', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Link Facebook Field -->
+<div class="form-group col-lg-12">
+    {!! Form::label('link_facebook', 'Link Facebook:') !!}
+    {!! Form::text('link_facebook', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Link Twitter Field -->
+<div class="form-group col-lg-12">
+    {!! Form::label('link_twitter', 'Link Twitter:') !!}
+    {!! Form::text('link_twitter', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Link Instagram Field -->
+<div class="form-group col-lg-12">
+    {!! Form::label('link_instagram', 'Link Instagram:') !!}
+    {!! Form::text('link_instagram', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Link external Field -->
+<div class="form-group col-lg-12">
+    {!! Form::label('link_external', 'Link external:') !!}
+    {!! Form::text('link_external', null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Title Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('title', 'Title:') !!}
