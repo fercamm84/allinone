@@ -14,7 +14,7 @@ class SendMailHelper {
     public function sendEmailContactUs($mailing = null)
     {
         $user = new User();
-        $user->email = 'fercamm@gmail.com';// This is the email you want to send to.
+        $user->email = env('APP_MAIL');// This is the email you want to send to.
         $TemplateEmail = new TemplateEmail();
 
         $TemplateEmail->subject = 'Contact from "Contact us section"';
