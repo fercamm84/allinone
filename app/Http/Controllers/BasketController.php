@@ -157,11 +157,6 @@ class BasketController extends FrontController
     }
 
     public function index(){
-//TODO: Con esto se envia un email:
-//        $user = new App\User();
-//        $user->email = 'fercamm@gmail.com';// This is the email you want to send to.
-//        $user->notify(new App\Notifications\TemplateEmail());
-//        die;
         $user = Auth::user();
 
         //obtengo la orden creada

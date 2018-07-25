@@ -19,6 +19,10 @@
         <tr>
             <td>{!! $product->description !!}</td>
             <td>{!! $product->short_description !!}</td>
+            <td>{!! $product->link_facebook !!}</td>
+            <td>{!! $product->link_twitter !!}</td>
+            <td>{!! $product->link_instagram !!}</td>
+            <td>{!! $product->link_external !!}</td>
             <td>{!! $product->title !!}</td>
             <td>{!! $product->price !!}</td>
             <td>{!! $product->name !!}</td>

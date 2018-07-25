@@ -74,11 +74,10 @@
             <div class="social">
                 <h4>Sugerir a un amigo</h4>
                 <p>
-					
-                    <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
-					<a href="#" class="external instagram" data-animate-hover="pulse"><i class="fa fa-instagram"></i></a>
-                    <!-- <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a> -->
-                    <!-- <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a> -->
+
+                    @if($product->link_facebook != null)
+                        <a class="post_share_facebook external facebook" data-animate-hover="pulse" href="{{ $product->link_facebook }}"><i class="fa fa-facebook"></i></a>
+                    @endif
                     <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                 </p>
             </div>

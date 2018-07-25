@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection OrderDetail
  * @property string description
  * @property string short_description
+ * @property string link_facebook
+ * @property string link_twitter
+ * @property string link_instagram
+ * @property string link_external
  * @property string title
  * @property float price
  * @property string name
@@ -40,6 +44,10 @@ class Product extends Model
     public $fillable = [
         'description',
         'short_description',
+        'link_facebook',
+        'link_twitter',
+        'link_instagram',
+        'link_external',
         'title',
         'price',
         'name',
@@ -58,6 +66,10 @@ class Product extends Model
         'id' => 'integer',
         'description' => 'string',
         'short_description' => 'string',
+        'link_facebook' => 'string',
+        'link_twitter' => 'string',
+        'link_instagram' => 'string',
+        'link_external' => 'string',
         'title' => 'string',
         'price' => 'float',
         'name' => 'string',
