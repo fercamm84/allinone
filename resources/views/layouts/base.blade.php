@@ -276,8 +276,8 @@ _________________________________________________________ -->
         <div class="navbar-header">
 
             <a class="navbar-brand home" href="/" data-animate-hover="bounce">
-                <img src="{{ asset('img/logo.png') }}" alt="Obaju logo" class="hidden-xs">
-                <img src="{{ asset('img/logo-small.png') }}" alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
+                <img src="{{ asset('imagenes/logo.png') }}" alt="Logo" class="hidden-xs" width="95" height="30">
+                <img src="{{ asset('imagenes/logo-small.png') }}" alt="Small logo" class="visible-xs" width="95" height="30"><span class="sr-only">Go to homepage</span>
             </a>
             <div class="navbar-buttons">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
