@@ -57,6 +57,16 @@ class ImageController extends AppBaseController
     {
         $input = $request->all();
 
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagen = $request->file('image');
+
+            if(empty($input['name'])){
+                $input['name'] = $imagen->getClientOriginalName();
+            }
+
+            $imagen->move(env("FOLDER_IMAGES"), $input['name']);
+        }
+
         $image = $this->imageRepository->create($input);
 
         Flash::success('Image saved successfully.');
@@ -120,6 +130,16 @@ class ImageController extends AppBaseController
             Flash::error('Image not found');
 
             return redirect(route('images.index'));
+        }
+
+        if(!empty($image['name']) && file_exists($image['name'])){
+            unlink(env("FOLDER_IMAGES").$image['name']);
+        }
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagen = $request->file('image');
+
+            $imagen->move(env("FOLDER_IMAGES"), $image['name']);
         }
 
         $image = $this->imageRepository->update($request->all(), $id);

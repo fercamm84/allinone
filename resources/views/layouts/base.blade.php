@@ -62,6 +62,13 @@
     @yield('scripts')
 </head>
 
+<?php
+$directoryURI = $_SERVER['REQUEST_URI'];
+$path = parse_url($directoryURI, PHP_URL_PATH);
+$components = explode('/', $path);
+$first_part = $components[1];
+?>
+
 <body>
 
 <!-- *** TOPBAR ***
@@ -268,8 +275,8 @@ _________________________________________________________ -->
         <div class="navbar-header">
 
             <a class="navbar-brand home" href="/" data-animate-hover="bounce">
-                <img src="{{ asset('img/logo.png') }}" alt="Obaju logo" class="hidden-xs">
-                <img src="{{ asset('img/logo-small.png') }}" alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
+                <img src="{{ asset('imagenes/logo.png') }}" alt="Logo" class="hidden-xs" width="95" height="30">
+                <img src="{{ asset('imagenes/logo-small.png') }}" alt="Small logo" class="visible-xs" width="95" height="30"><span class="sr-only">Go to homepage</span>
             </a>
             <div class="navbar-buttons">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
@@ -290,9 +297,9 @@ _________________________________________________________ -->
         <div class="navbar-collapse collapse" id="navigation">
 
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="/">Home</a>
+                <li class="<?php if ($first_part=="") {echo "active"; } else  {echo "noactive";}?>"><a href="/">Home</a>
                 </li>
-                <li class="dropdown yamm-fw">
+                <li class="dropdown yamm-fw <?php if ($first_part!=="" && $first_part!=="location" && $first_part!=="contact") {echo "active"; } else  {echo "noactive";}?>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Productos <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
@@ -318,11 +325,9 @@ _________________________________________________________ -->
                         </li>
                     </ul>
                 </li>
-                <li ><a href="/">Donde Encontrarnos</a>
+                <li class="<?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>"><a href="/location">Donde Encontrarnos</a>
                 </li>
-                <li ><a href="/">Contacto</a>
-                </li>
-
+                <li class="<?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>"><a href="/contact">Contacto</a>
             </ul>
 
         </div>
