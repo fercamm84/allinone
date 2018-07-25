@@ -22,6 +22,7 @@
     <link href="{{asset('css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
@@ -61,13 +62,6 @@
     @yield('scripts')
 </head>
 
-<?php 
-$directoryURI = $_SERVER['REQUEST_URI'];
-$path = parse_url($directoryURI, PHP_URL_PATH);
-$components = explode('/', $path);
-$first_part = $components[1];
-?>
-
 <body>
 
 <!-- *** TOPBAR ***
@@ -100,8 +94,6 @@ _________________________________________________________ -->
                             <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                             </li>
                             <li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a>
-                            </li>
-                            <li><a href="{{ url('/contact') }}">Contactanos</a>
                             </li>
                         </ul>
                     @endauth
@@ -298,9 +290,9 @@ _________________________________________________________ -->
         <div class="navbar-collapse collapse" id="navigation">
 
             <ul class="nav navbar-nav navbar-left">
-                <li class="<?php if ($first_part=="") {echo "active"; } else  {echo "noactive";}?>"><a href="/">Home</a>
+                <li class="active"><a href="/">Home</a>
                 </li>
-                <li class="dropdown yamm-fw <?php if ($first_part!=="" && $first_part!=="location" && $first_part!=="contact") {echo "active"; } else  {echo "noactive";}?>">
+                <li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Productos <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
@@ -326,9 +318,9 @@ _________________________________________________________ -->
                         </li>
                     </ul>
                 </li>
-                <li class="<?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>"><a href="/location">Donde Encontrarnos</a>
+                <li ><a href="/">Donde Encontrarnos</a>
                 </li>
-                <li class="<?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>"><a href="/contact">Contacto</a>
+                <li ><a href="/">Contacto</a>
                 </li>
 
             </ul>
@@ -375,8 +367,59 @@ _________________________________________________________ -->
 <div id="all">
 
     <div id="content">
+		
         @include('flash::message')
         @yield('content')
+		
+		
+		<!-- *** ADVANTAGES HOMEPAGE ***
+ _________________________________________________________ -->
+            <div id="advantages" style="margin-bottom:4%;">
+
+                <div class="container">
+                    <div class="same-height-row">
+                        <div class="col-sm-4">
+                            <div class="same-height clickable">
+								<div class="dot">
+									<div class="icon" style="font-size:4.3em;"><i class="fa fa-group"></i></div>
+								</div>
+                                <h4><strong style="color:#333;">NOSOTROS</strong></h4>
+                                <p style="margin-top:-9px;">- Somos fabricantes de muebles de campo - </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="same-height clickable">
+								<div class="dot">
+									<div class="icon" style="font-size:4.3em;"><i class="fa fa-info-circle"></i></div>
+								</div>
+                                <h4><strong style="color:#333;">NUESTROS PRODUCTOS</strong></h4>
+                                <p style="margin-top:-9px;">- Diseños exclusivos y por pedido - </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="same-height clickable">
+                                <div class="dot">
+									<div class="icon" style="font-size:4.3em;"><i class="fa fa-thumbs-up"></i></div>
+								</div>
+                                <h4><strong style="color:#333;">CALIDAD</strong></h4>
+                                <p style="margin-top:-9px;">- Variedad en maderas de alta calidad -</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+					<br><br>
+                </div>
+                <!-- /.container -->
+
+
+            </div>
+            <!-- /#advantages -->
+
+            <!-- *** ADVANTAGES END *** -->
+		
+		
     </div>
 
     <!-- *** FOOTER ***
@@ -442,7 +485,6 @@ _________________________________________________________ -->
                         <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
                         </li>
                         <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
-                        <!-- li><a href="#" data-toggle="modal" data-target="#register-modal">Registrarse</a -->
                         </li>
                     </ul>
 
