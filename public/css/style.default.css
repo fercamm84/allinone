@@ -1723,3 +1723,18 @@ address {
   color: #fff;
   text-decoration: none;
 }
+
+
+
+.dot {
+  height: 123px;
+  width: 123px;
+  padding-top:15px;
+  background-color: #FFF;
+  /*color:#4fbfa8;*/
+  color:#988675;
+  border:4px solid #988675;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align:center;
+}
