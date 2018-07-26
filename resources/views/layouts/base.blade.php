@@ -375,56 +375,7 @@ _________________________________________________________ -->
 		
         @include('flash::message')
         @yield('content')
-		
-		
-		<!-- *** ADVANTAGES HOMEPAGE ***
- _________________________________________________________ -->
-            <div id="advantages" style="margin-bottom:4%;">
 
-                <div class="container">
-                    <div class="same-height-row">
-                        <div class="col-sm-4">
-                            <div class="same-height clickable">
-								<div class="dot">
-									<div class="icon" style="font-size:4.3em;"><i class="fa fa-group"></i></div>
-								</div>
-                                <h4><strong style="color:#333;">NOSOTROS</strong></h4>
-                                <p style="margin-top:-9px;">- Somos fabricantes de muebles de campo - </p>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="same-height clickable">
-								<div class="dot">
-									<div class="icon" style="font-size:4.3em;"><i class="fa fa-info-circle"></i></div>
-								</div>
-                                <h4><strong style="color:#333;">NUESTROS PRODUCTOS</strong></h4>
-                                <p style="margin-top:-9px;">- Diseños exclusivos y por pedido - </p>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="same-height clickable">
-                                <div class="dot">
-									<div class="icon" style="font-size:4.3em;"><i class="fa fa-thumbs-up"></i></div>
-								</div>
-                                <h4><strong style="color:#333;">CALIDAD</strong></h4>
-                                <p style="margin-top:-9px;">- Variedad en maderas de alta calidad -</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-					<br><br>
-                </div>
-                <!-- /.container -->
-
-
-            </div>
-            <!-- /#advantages -->
-
-            <!-- *** ADVANTAGES END *** -->
-		
-		
     </div>
 
     <!-- *** FOOTER ***
