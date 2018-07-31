@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use App\Repositories\ImageCategoryRepository;
+use App\Repositories\ImageProductRepository;
 use App\Repositories\ImageRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -16,9 +18,17 @@ class ImageController extends AppBaseController
     /** @var  ImageRepository */
     private $imageRepository;
 
-    public function __construct(ImageRepository $imageRepo)
+    /** @var  ImageProductRepository */
+    private $imageProductRepository;
+
+    /** @var  ImageCategoryRepository */
+    private $imageCategoryRepository;
+
+    public function __construct(ImageRepository $imageRepo, ImageProductRepository $imageProductRepo, ImageCategoryRepository $imageCategoryRepo)
     {
         $this->imageRepository = $imageRepo;
+        $this->imageProductRepository = $imageProductRepo;
+        $this->imageCategoryRepository = $imageCategoryRepo;
     }
 
     /**
