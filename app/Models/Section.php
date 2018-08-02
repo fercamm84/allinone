@@ -15,8 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection imageCategories
  * @property \Illuminate\Database\Eloquent\Collection imageProducts
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
- * @property \Illuminate\Database\Eloquent\Collection SectionCategory
- * @property \Illuminate\Database\Eloquent\Collection SectionProduct
+ * @property \Illuminate\Database\Eloquent\Collection SectionEntity
  * @property string type
  * @property string name
  */
@@ -61,16 +60,9 @@ class Section extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function sectionCategories()
+    public function sectionEntities()
     {
-        return $this->hasMany(\App\Models\SectionCategory::class);
+        return $this->hasMany(\App\Models\SectionEntity::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function sectionProducts()
-    {
-        return $this->hasMany(\App\Models\SectionProduct::class);
-    }
 }

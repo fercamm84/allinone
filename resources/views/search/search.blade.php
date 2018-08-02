@@ -48,16 +48,18 @@
 
                 <div class="col-md-4 col-sm-6">
                     <div class="product">
-                        @if(sizeof($product->imageProducts)>0)
+                        @if(sizeof($product->entity->imageEntities)>0)
                             <div class="flip-container">
                                 <div class="flipper">
                                     <div class="front">
-                                        <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}" class="img-responsive">
+                                        <a href="/prod/{!! $product->id !!}">
+                                            <img src="{{ asset('imagenes/'.$product->entity->imageEntities{0}->image->name) }}" class="img-responsive">
+                                        </a>
                                     </div>
-                                    @if(sizeof($product->imageProducts)>1)
+                                    @if(sizeof($product->entity->imageEntities)>1)
                                         <div class="back">
                                             <a href="/prod/{!! $product->id !!}">
-                                                <img src="{{ asset('imagenes/'.$product->imageProducts{1}->image->name) }}" class="img-responsive">
+                                                <img src="{{ asset('imagenes/'.$product->entity->imageEntities{1}->image->name) }}" class="img-responsive">
                                             </a>
                                         </div>
                                     @endif

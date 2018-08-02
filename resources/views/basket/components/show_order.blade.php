@@ -1,7 +1,7 @@
 <tr>
     <td>
-        @foreach($orderDetail->product->imageProducts as $imageProduct)
-            <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" width="100px" height="100px">
+        @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
+            <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" width="100px" height="100px">
         @endforeach
     </td>
     <td>

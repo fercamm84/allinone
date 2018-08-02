@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Repositories\ProductRepository;
-use App\Repositories\ImageProductRepository;
+use App\Repositories\ImageEntityRepository;
 use App\Repositories\ImageRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -18,16 +18,16 @@ class ProductController extends AppBaseController
     /** @var  ProductRepository */
     private $productRepository;
 
-    /** @var  ImageProductRepository */
-    private $imageProductRepository;
+    /** @var  ImageEntityRepository */
+    private $imageEntityRepository;
 
     /** @var  ImageRepository */
     private $imageRepository;
 
-    public function __construct(ProductRepository $productRepo, ImageProductRepository $imageProductRepo, ImageRepository $imageRepo)
+    public function __construct(ProductRepository $productRepo, ImageEntityRepository $imageEntityRepo, ImageRepository $imageRepo)
     {
         $this->productRepository = $productRepo;
-        $this->imageProductRepository = $imageProductRepo;
+        $this->imageEntityRepository = $imageEntityRepo;
         $this->imageRepository = $imageRepo;
     }
 
@@ -144,11 +144,11 @@ class ProductController extends AppBaseController
             $image['name'] = $imagen->getClientOriginalName();
             $image = $this->imageRepository->create($image);
 
-            $imageProduct = array();
-            $imageProduct['product_id'] = $product->id;
-            $imageProduct['image_id'] = $image->id;
-            $imageProduct['active'] = 1;
-            $this->imageProductRepository->create($imageProduct);
+            $imageEntity = array();
+            $imageEntity['entity_id'] = $product->entity->id;
+            $imageEntity['image_id'] = $image->id;
+            $imageEntity['active'] = 1;
+            $this->imageEntityRepository->create($imageEntity);
         }
 
         Flash::success('Product updated successfully.');

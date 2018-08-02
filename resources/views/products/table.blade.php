@@ -1,22 +1,28 @@
 <table class="table table-responsive" id="products-table">
     <thead>
         <tr>
+            <th># Product</th>
             <th>Description</th>
-        <th>Short Description</th>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Name</th>
-        <th>Order</th>
-        <th>Visible</th>
-        <th>Stock</th>
-        <th>Remember Token</th>
-        <th>User Id</th>
+            <th>Short Description</th>
+            <th>Link Facebook</th>
+            <th>Link Twitter</th>
+            <th>Link Instagram</th>
+            <th>Link External</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Name</th>
+            <th>Order</th>
+            <th>Visible</th>
+            <th>Stock</th>
+            <th>User Id</th>
+            <th>Entity Id</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($products as $product)
         <tr>
+            <td>{!! $product->id !!}</td>
             <td>{!! $product->description !!}</td>
             <td>{!! $product->short_description !!}</td>
             <td>{!! $product->link_facebook !!}</td>
@@ -30,6 +36,7 @@
             <td>{!! $product->visible !!}</td>
             <td>{!! $product->stock !!}</td>
             <td>{!! $product->user_id !!}</td>
+            <td>{!! $product->entity_id !!}</td>
             <td>
                 {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
