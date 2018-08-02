@@ -310,13 +310,14 @@ _________________________________________________________ -->
                                         <ul>
 											@foreach($sections as $section)
 												@if($section->type == 'home_principal')
-													@foreach($section->sectionCategories as $sectionCategory)
+                                                    @foreach($section->sectionEntities as $sectionEntity)
+                                                        <?php $category = $sectionEntity->entity->entidad(); ?>
 															<li class="dropdown yamm-fw">
-																<a href="/cat/{!! $sectionCategory->category->id !!}">{!! $sectionCategory->category->description !!}</a>
+																<a href="/cat/{{ $category->id }}">{{ $category->description }}</a>
 															</li>
 													@endforeach
 												@endif
-											@endforeach								
+											@endforeach
 										<ul>
 									</div>
                                 </div>

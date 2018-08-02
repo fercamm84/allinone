@@ -1,14 +1,16 @@
 <table class="table table-responsive" id="images-table">
     <thead>
         <tr>
+            <th># Image</th>
             <th>Type</th>
-        <th>Name</th>
+            <th>Name</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($images as $image)
         <tr>
+            <td>{!! $image->id !!}</td>
             <td>{!! $image->type !!}</td>
             <td>{!! $image->name !!}</td>
             <td>

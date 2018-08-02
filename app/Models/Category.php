@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string description
  * @property integer order
  * @property integer parent_id
+ * @property integer entity_id
  */
 class Category extends Model
 {
@@ -34,7 +35,8 @@ class Category extends Model
         'description',
         'order',
         'type',
-        'parent_id'
+        'parent_id',
+        'entity_id'
     ];
 
     /**
@@ -47,7 +49,8 @@ class Category extends Model
         'description' => 'string',
         'order' => 'integer',
         'type' => 'string',
-        'parent_id' => 'integer'
+        'parent_id' => 'integer',
+        'entity_id' => 'integer'
     ];
 
     /**
@@ -58,6 +61,14 @@ class Category extends Model
     public static $rules = [
         
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function entity()
+    {
+        return $this->belongsTo(\App\Models\Entity::class);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -75,12 +86,21 @@ class Category extends Model
         return $this->hasMany(\App\Models\CategoryProduct::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function imageCategories()
-    {
-        return $this->hasMany(\App\Models\ImageCategory::class);
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($category) {
+            if($category->entity_id == null) {
+                $entity = new Entity();
+                $entity->type = 'category';
+                $entity->save();
+                $category->entity_id = $entity->id;
+            }
+        });
+
+        static::deleted(function($category) {
+            $category->entity()->delete();
+        });
     }
 
 }

@@ -45,15 +45,7 @@ Route::get('/prod/{id}', 'ProductShowController@index');
 
 Route::resource('images', 'ImageController');
 
-Route::resource('imageCategories', 'ImageCategoryController');
-
-Route::resource('imageProducts', 'ImageProductController');
-
 Route::resource('sections', 'SectionController');
-
-Route::resource('sectionCategories', 'SectionCategoryController');
-
-Route::resource('sectionProducts', 'SectionProductController');
 
 Route::resource('payments', 'PaymentController');
 
@@ -100,3 +92,10 @@ Route::post('/payment/getPayments', array('as' => 'payment.getPayments', 'uses' 
 Route::resource('mailings', 'MailingController');
 
 Route::resource('contact', 'ContactController');
+
+
+Route::resource('entities', 'EntityController');
+
+Route::resource('sectionEntities', 'SectionEntityController');
+
+Route::resource('imageEntities', 'ImageEntityController');

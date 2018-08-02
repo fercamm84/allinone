@@ -38,24 +38,8 @@
     <a href="{!! route('images.index') !!}"><i class="fa fa-edit"></i><span>Images</span></a>
 </li>
 
-<li class="{{ Request::is('imageCategories*') ? 'active' : '' }}">
-    <a href="{!! route('imageCategories.index') !!}"><i class="fa fa-edit"></i><span>Image Categories</span></a>
-</li>
-
-<li class="{{ Request::is('imageProducts*') ? 'active' : '' }}">
-    <a href="{!! route('imageProducts.index') !!}"><i class="fa fa-edit"></i><span>Image Products</span></a>
-</li>
-
 <li class="{{ Request::is('sections*') ? 'active' : '' }}">
     <a href="{!! route('sections.index') !!}"><i class="fa fa-edit"></i><span>Sections</span></a>
-</li>
-
-<li class="{{ Request::is('sectionCategories*') ? 'active' : '' }}">
-    <a href="{!! route('sectionCategories.index') !!}"><i class="fa fa-edit"></i><span>Section Categories</span></a>
-</li>
-
-<li class="{{ Request::is('sectionProducts*') ? 'active' : '' }}">
-    <a href="{!! route('sectionProducts.index') !!}"><i class="fa fa-edit"></i><span>Section Products</span></a>
 </li>
 
 <li class="{{ Request::is('payments*') ? 'active' : '' }}">
@@ -96,5 +80,17 @@
 
 <li class="{{ Request::is('mailings*') ? 'active' : '' }}">
     <a href="{!! route('mailings.index') !!}"><i class="fa fa-edit"></i><span>Mailings</span></a>
+</li>
+
+{{--<li class="{{ Request::is('entities*') ? 'active' : '' }}">--}}
+    {{--<a href="{!! route('entities.index') !!}"><i class="fa fa-edit"></i><span>Entities</span></a>--}}
+{{--</li>--}}
+
+<li class="{{ Request::is('sectionEntities*') ? 'active' : '' }}">
+    <a href="{!! route('sectionEntities.index') !!}"><i class="fa fa-edit"></i><span>Section Entities</span></a>
+</li>
+
+<li class="{{ Request::is('imageEntities*') ? 'active' : '' }}">
+    <a href="{!! route('imageEntities.index') !!}"><i class="fa fa-edit"></i><span>Image Entities</span></a>
 </li>
 

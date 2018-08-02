@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property boolean visible
  * @property integer stock
  * @property integer user_id
+ * @property integer entity_id
  */
 class Product extends Model
 {
@@ -54,7 +55,8 @@ class Product extends Model
         'order',
         'visible',
         'stock',
-        'user_id'
+        'user_id',
+        'entity_id'
     ];
 
     /**
@@ -76,7 +78,8 @@ class Product extends Model
         'order' => 'integer',
         'visible' => 'boolean',
         'stock' => 'integer',
-        'user_id' => 'integer'
+        'user_id' => 'integer',
+        'entity_id' => 'integer'
     ];
 
     /**
@@ -97,6 +100,14 @@ class Product extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function entity()
+    {
+        return $this->belongsTo(\App\Models\Entity::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
     public function categoryProducts()
@@ -107,16 +118,26 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function imageProducts()
-    {
-        return $this->hasMany(\App\Models\ImageProduct::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
     public function orderDetails()
     {
         return $this->hasMany(\App\Models\OrderDetail::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($product) {
+            if($product->entity_id == null){
+                $entity = new Entity();
+                $entity->type = 'product';
+                $entity->save();
+                $product->entity_id = $entity->id;
+            }
+        });
+
+        static::deleted(function($product) {
+            $product->entity()->delete();
+        });
+    }
+
 }

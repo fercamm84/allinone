@@ -10,13 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version March 12, 2018, 7:54 pm UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
- * @property \Illuminate\Database\Eloquent\Collection ImageProduct
- * @property \Illuminate\Database\Eloquent\Collection ImageCategory
- * @property \Illuminate\Database\Eloquent\Collection orderDetails
- * @property \Illuminate\Database\Eloquent\Collection sectionCategories
- * @property \Illuminate\Database\Eloquent\Collection sectionProducts
  * @property string type
  * @property string name
  */
@@ -61,25 +54,16 @@ class Image extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function imageProducts()
+    public function imageEntities()
     {
-        return $this->hasMany(\App\Models\ImageProduct::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function imageCategories()
-    {
-        return $this->hasMany(\App\Models\ImageCategory::class);
+        return $this->hasMany(\App\Models\ImageEntity::class);
     }
 
     protected static function boot() {
         parent::boot();
 
         static::deleting(function($image) {
-            $image->imageProducts()->delete();
-            $image->imageCategories()->delete();
+            $image->imageEntities()->delete();
         });
     }
 

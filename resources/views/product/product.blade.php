@@ -7,8 +7,8 @@
         <div class="row" id="productMain">
             <div class="col-sm-6">
                 <div id="mainImage">
-                    @if(sizeof($product->imageProducts)>0)
-                        <img src="{{ asset('imagenes/'.$product->imageProducts{0}->image->name) }}"alt="" class="img-responsive">
+                    @if(sizeof($product->entity->imageEntities)>0)
+                        <img src="{{ asset('imagenes/'.$product->entity->imageEntities{0}->image->name) }}"alt="" class="img-responsive">
                     @else
                         <img src="{{ asset('/img/default-no-image.png') }}"alt="" class="img-responsive">
                     @endif
@@ -40,10 +40,10 @@
                 </div>
 
                 <div class="row" id="thumbs">
-                    @foreach($product->imageProducts as $imageProduct)
+                    @foreach($product->entity->imageEntities as $imageEntity)
                         <div class="col-xs-4">
-                            <a href="{{ asset('imagenes/'.$imageProduct->image->name) }}" class="thumb">
-                                <img src="{{ asset('imagenes/'.$imageProduct->image->name) }}" alt="" class="img-responsive">
+                            <a href="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="thumb">
+                                <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" alt="" class="img-responsive">
                             </a>
                         </div>
                     @endforeach

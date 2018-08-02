@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Repositories\CategoryRepository;
-use App\Repositories\ImageCategoryRepository;
+use App\Repositories\ImageEntityRepository;
 use App\Repositories\ImageRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -18,16 +18,16 @@ class CategoryController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
-    /** @var  ImageCategoryRepository */
-    private $imageCategoryRepository;
+    /** @var  ImageEntityRepository */
+    private $imageEntityRepository;
 
     /** @var  ImageRepository */
     private $imageRepository;
 
-    public function __construct(CategoryRepository $categoryRepo, ImageCategoryRepository $imageCategoryRepo, ImageRepository $imageRepo)
+    public function __construct(CategoryRepository $categoryRepo, ImageEntityRepository $imageEntityRepo, ImageRepository $imageRepo)
     {
         $this->categoryRepository = $categoryRepo;
-        $this->imageCategoryRepository = $imageCategoryRepo;
+        $this->imageEntityRepository = $imageEntityRepo;
         $this->imageRepository = $imageRepo;
     }
 
@@ -144,11 +144,11 @@ class CategoryController extends AppBaseController
             $image['name'] = $imagen->getClientOriginalName();
             $image = $this->imageRepository->create($image);
 
-            $imageCategory = array();
-            $imageCategory['category_id'] = $category->id;
-            $imageCategory['image_id'] = $image->id;
-            $imageCategory['active'] = 1;
-            $this->imageCategoryRepository->create($imageCategory);
+            $imageEntity = array();
+            $imageEntity['entity_id'] = $category->entity->id;
+            $imageEntity['image_id'] = $image->id;
+            $imageEntity['active'] = 1;
+            $this->imageEntityRepository->create($imageEntity);
         }
 
         Flash::success('Category updated successfully.');
