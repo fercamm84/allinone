@@ -90,3 +90,27 @@
     <a href="{!! route('attributeEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Entities</span></a>
 </li>
 
+<li class="{{ Request::is('sellers*') ? 'active' : '' }}">
+    <a href="{!! route('sellers.index') !!}"><i class="fa fa-edit"></i><span>Sellers</span></a>
+</li>
+
+<li class="{{ Request::is('sellerCategories*') ? 'active' : '' }}">
+    <a href="{!! route('sellerCategories.index') !!}"><i class="fa fa-edit"></i><span>Seller Categories</span></a>
+</li>
+
+<li class="{{ Request::is('news*') ? 'active' : '' }}">
+    <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
+</li>
+
+<li class="{{ Request::is('events*') ? 'active' : '' }}">
+    <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
+</li>
+
+<li class="{{ Request::is('news*') ? 'active' : '' }}">
+    <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
+</li>
+
+<li class="{{ Request::is('news*') ? 'active' : '' }}">
+    <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
+</li>
+
