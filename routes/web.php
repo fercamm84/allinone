@@ -98,3 +98,15 @@ Route::resource('sectionEntities', 'SectionEntityController');
 Route::resource('imageEntities', 'ImageEntityController');
 
 Route::resource('attributeEntities', 'AttributeEntityController');
+
+Route::resource('sellers', 'SellerController');
+
+Route::resource('sellerCategories', 'SellerCategoryController');
+
+Route::resource('news', 'NewController');
+
+Route::resource('events', 'EventController');
+
+Route::resource('news', 'NewController');
+
+Route::resource('news', 'NewsController');
