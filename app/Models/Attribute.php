@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version March 9, 2018, 5:29 am UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection CategoryAttribute
+ * @property \Illuminate\Database\Eloquent\Collection AttributeEntity
  * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property string descripcion
@@ -60,8 +60,8 @@ class Attribute extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function categoryAttributes()
+    public function attributesEntity()
     {
-        return $this->hasMany(\App\Models\CategoryAttribute::class);
+        return $this->hasMany(\App\Models\AttributeEntity::class);
     }
 }

@@ -33,8 +33,6 @@ Route::resource('orders', 'OrderController');
 
 Route::resource('orderDetails', 'OrderDetailController');
 
-Route::resource('categoryAttributes', 'CategoryAttributeController');
-
 Route::resource('categoryProducts', 'CategoryProductController');
 
 Route::get('/', 'HomePageController@index')->name('index');;
@@ -93,9 +91,10 @@ Route::resource('mailings', 'MailingController');
 
 Route::resource('contact', 'ContactController');
 
-
 Route::resource('entities', 'EntityController');
 
 Route::resource('sectionEntities', 'SectionEntityController');
 
 Route::resource('imageEntities', 'ImageEntityController');
+
+Route::resource('attributeEntities', 'AttributeEntityController');

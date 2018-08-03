@@ -1,23 +1,25 @@
 <table class="table table-responsive" id="users-table">
     <thead>
         <tr>
+            <th># User</th>
             <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Password</th>
-        <th>User Type</th>
-        <th>Twitter Id</th>
-        <th>Facebook Id</th>
-        <th>Created</th>
-        <th>Remember Token</th>
-        <th>Nickname</th>
-        <th>Name</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>User Type</th>
+            <th>Twitter Id</th>
+            <th>Facebook Id</th>
+            <th>Created</th>
+            <th>Remember Token</th>
+            <th>Nickname</th>
+            <th>Name</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($users as $user)
         <tr>
+            <td>{!! $user->id !!}</td>
             <td>{!! $user->firstname !!}</td>
             <td>{!! $user->lastname !!}</td>
             <td>{!! $user->email !!}</td>

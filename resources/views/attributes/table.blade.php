@@ -1,15 +1,17 @@
 <table class="table table-responsive" id="attributes-table">
     <thead>
         <tr>
+            <th># Attribute</th>
             <th>Descripcion</th>
-        <th>Order</th>
-        <th>Visible</th>
+            <th>Order</th>
+            <th>Visible</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($attributes as $attribute)
         <tr>
+            <td>{!! $attribute->id !!}</td>
             <td>{!! $attribute->descripcion !!}</td>
             <td>{!! $attribute->order !!}</td>
             <td>{!! $attribute->visible !!}</td>

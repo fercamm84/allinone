@@ -22,10 +22,6 @@
     <a href="{!! route('orderDetails.index') !!}"><i class="fa fa-edit"></i><span>Order Details</span></a>
 </li>
 
-<li class="{{ Request::is('categoryAttributes*') ? 'active' : '' }}">
-    <a href="{!! route('categoryAttributes.index') !!}"><i class="fa fa-edit"></i><span>Category Attributes</span></a>
-</li>
-
 <li class="{{ Request::is('categoryProducts*') ? 'active' : '' }}">
     <a href="{!! route('categoryProducts.index') !!}"><i class="fa fa-edit"></i><span>Category Products</span></a>
 </li>
@@ -82,15 +78,15 @@
     <a href="{!! route('mailings.index') !!}"><i class="fa fa-edit"></i><span>Mailings</span></a>
 </li>
 
-{{--<li class="{{ Request::is('entities*') ? 'active' : '' }}">--}}
-    {{--<a href="{!! route('entities.index') !!}"><i class="fa fa-edit"></i><span>Entities</span></a>--}}
-{{--</li>--}}
-
 <li class="{{ Request::is('sectionEntities*') ? 'active' : '' }}">
     <a href="{!! route('sectionEntities.index') !!}"><i class="fa fa-edit"></i><span>Section Entities</span></a>
 </li>
 
 <li class="{{ Request::is('imageEntities*') ? 'active' : '' }}">
     <a href="{!! route('imageEntities.index') !!}"><i class="fa fa-edit"></i><span>Image Entities</span></a>
+</li>
+
+<li class="{{ Request::is('attributeEntities*') ? 'active' : '' }}">
+    <a href="{!! route('attributeEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Entities</span></a>
 </li>
 

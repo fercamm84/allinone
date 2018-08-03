@@ -73,14 +73,6 @@ class Category extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function categoryAttributes()
-    {
-        return $this->hasMany(\App\Models\CategoryAttribute::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
     public function categoryProducts()
     {
         return $this->hasMany(\App\Models\CategoryProduct::class);
