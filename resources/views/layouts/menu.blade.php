@@ -105,12 +105,3 @@
 <li class="{{ Request::is('events*') ? 'active' : '' }}">
     <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
 </li>
-
-<li class="{{ Request::is('news*') ? 'active' : '' }}">
-    <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
-</li>
-
-<li class="{{ Request::is('news*') ? 'active' : '' }}">
-    <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
-</li>
-
