@@ -11,18 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version August 1, 2018, 8:19 pm UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection Category
- * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
- * @property \Illuminate\Database\Eloquent\Collection imageCategories
+ * @property \Illuminate\Database\Eloquent\Collection attributeEntities
  * @property \Illuminate\Database\Eloquent\Collection ImageEntity
- * @property \Illuminate\Database\Eloquent\Collection imageProducts
  * @property \Illuminate\Database\Eloquent\Collection mailings
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property \Illuminate\Database\Eloquent\Collection Product
  * @property \Illuminate\Database\Eloquent\Collection roleUsers
- * @property \Illuminate\Database\Eloquent\Collection sectionCategoriesOLD
  * @property \Illuminate\Database\Eloquent\Collection SectionEntity
- * @property \Illuminate\Database\Eloquent\Collection sectionProductsOLD
  * @property \Illuminate\Database\Eloquent\Collection userAddresses
  * @property string type
  */
@@ -76,6 +71,14 @@ class Entity extends Model
     public function imageEntities()
     {
         return $this->hasMany(\App\Models\ImageEntity::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function attributeEntities()
+    {
+        return $this->hasMany(\App\Models\AttributeEntity::class);
     }
 
     /**
