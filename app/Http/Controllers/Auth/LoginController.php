@@ -51,7 +51,7 @@ class LoginController extends Controller
 
     public function loginAdmin(Request $request){
       //  $this->redirectTo = '/products';
-        return $this->login($request, 1, '/home');
+        return $this->login($request, 1, '/admin');
     }
 
     public function login(Request $request, $role, $path){

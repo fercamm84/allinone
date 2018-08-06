@@ -100,6 +100,22 @@ class Entity extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+    public function news()
+    {
+        return $this->hasMany(\App\Models\News::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function events()
+    {
+        return $this->hasMany(\App\Models\Event::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
     public function sectionEntities()
     {
         return $this->hasMany(\App\Models\SectionEntity::class);
@@ -114,6 +130,12 @@ class Entity extends Model
         }
         if($this->type == 'seller'){
             return $this->sellers[0];
+        }
+        if($this->type == 'news'){
+            return $this->news[0];
+        }
+        if($this->type == 'event'){
+            return $this->events[0];
         }
     }
 

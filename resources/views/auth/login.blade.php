@@ -35,7 +35,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{ trans('messages.common.login.title.log_in') }} </b></a>
+        <a href="{{ url('/admin') }}"><b>{{ trans('messages.common.login.title.log_in') }} </b></a>
     </div>
 
     <!-- /.login-logo -->

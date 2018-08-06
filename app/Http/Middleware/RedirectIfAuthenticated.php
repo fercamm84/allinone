@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
 
             foreach($user->roleUsers as $roleUser){
                 if($roleUser->role_id == 1){
-                    return redirect('/home');
+                    return redirect('/admin');
                 }
             }
 

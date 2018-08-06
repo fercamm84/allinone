@@ -76,4 +76,30 @@ class Event extends Model
     {
         return $this->belongsTo(\App\Models\Entity::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($event) {
+            if($event->entity_id == null){
+                $entity = new Entity();
+                $entity->type = 'event';
+                $entity->save();
+                $event->entity_id = $entity->id;
+            }
+        });
+
+        static::deleted(function($event) {
+            $event->entity()->delete();
+        });
+    }
+
+    public function url(){
+        return 'event';
+    }
+
+    public function getClassType(){
+        return 'event';
+    }
+
 }

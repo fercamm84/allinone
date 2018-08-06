@@ -34,7 +34,7 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ url('/home') }}"><b>{{env('APP_NAME')}}</b></a>
+        <a href="{{ url('/admin') }}"><b>{{env('APP_NAME')}}</b></a>
     </div>
 
     <div class="register-box-body">
