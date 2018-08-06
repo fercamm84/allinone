@@ -84,4 +84,30 @@ class Seller extends Model
     {
         return $this->hasMany(\App\Models\SellerCategory::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($seller) {
+            if($seller->entity_id == null){
+                $entity = new Entity();
+                $entity->type = 'seller';
+                $entity->save();
+                $seller->entity_id = $entity->id;
+            }
+        });
+
+        static::deleted(function($seller) {
+            $seller->entity()->delete();
+        });
+    }
+
+    public function url(){
+        return 'seller';
+    }
+
+    public function getClassType(){
+        return 'seller';
+    }
+
 }

@@ -140,4 +140,12 @@ class Product extends Model
         });
     }
 
+    public function url(){
+        return 'prod';
+    }
+
+    public function getClassType(){
+        return 'product';
+    }
+
 }

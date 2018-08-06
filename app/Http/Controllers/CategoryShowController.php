@@ -17,16 +17,16 @@ class CategoryShowController extends Controller
         // y "category" y "section" y "product" respectivamente.
         $category = Category::find($id);
 
-        $categories = array();
-        array_push($categories, $category);
+        $entity_parents = array();
+        array_push($entity_parents, $category);
 
-        $products = array();
+        $entity_children = array();
 
         foreach ($category->categoryProducts as $categoryProduct) {
-            array_push($products, $categoryProduct->product);
+            array_push($entity_children, $categoryProduct->product);
         }
 
-        return view('search.search', array('products' => $products, 'categories' => $categories));
+        return view('search.search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => $category, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
     }
 
     public function order($id = null, $orderby = null){

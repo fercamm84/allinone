@@ -78,6 +78,14 @@ class Category extends Model
         return $this->hasMany(\App\Models\CategoryProduct::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function sellerCategories()
+    {
+        return $this->hasMany(\App\Models\SellerCategory::class);
+    }
+
     protected static function boot() {
         parent::boot();
 
@@ -93,6 +101,14 @@ class Category extends Model
         static::deleted(function($category) {
             $category->entity()->delete();
         });
+    }
+
+    public function url(){
+        return 'cat';
+    }
+
+    public function getClassType(){
+        return 'category';
     }
 
 }

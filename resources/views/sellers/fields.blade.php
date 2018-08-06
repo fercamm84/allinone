@@ -16,12 +16,6 @@
     {!! Form::text('type', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Entity Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('entity_id', 'Entity Id:') !!}
-    {!! Form::number('entity_id', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

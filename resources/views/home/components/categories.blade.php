@@ -27,21 +27,21 @@
             @foreach($sections as $section)
                 @if($section->type == 'home_principal')
                     @foreach($section->sectionEntities as $sectionEntity)
-                        <?php $category = $sectionEntity->entity->entidad(); ?>
+                        <?php $entidad = $sectionEntity->entity->entidad(); ?>
                         <div class="item">
                             <div class="product">
-                                @if(sizeof($category->entity->imageEntities)>0)
+                                @if(sizeof($entidad->entity->imageEntities)>0)
                                     <div class="flip-container">
                                         <div class="flipper">
                                             <div class="front">
-                                                <a href="/cat/{{ $category->id }}">
-                                                    <img src="{{ asset('imagenes/'.$category->entity->imageEntities{0}->image->name) }}" class="img-responsive">
+                                                <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
+                                                    <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" class="img-responsive">
                                                 </a>
                                             </div>
-                                            @if(sizeof($category->entity->imageEntities)>1)
+                                            @if(sizeof($entidad->entity->imageEntities)>1)
                                                 <div class="back">
-                                                    <a href="/cat/{{ $category->id }}">
-                                                        <img src="{{ asset('imagenes/'.$category->entity->imageEntities{1}->image->name) }}" class="img-responsive">
+                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
+                                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{1}->image->name) }}" class="img-responsive">
                                                     </a>
                                                 </div>
                                             @endif
@@ -50,22 +50,22 @@
                                 @else
                                     <div class="flip-container">
                                         <div class="front">
-                                            <a href="/cat/{{ $category->id }}">
+                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
                                                 <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="/cat/{{ $category->id }}">
+                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
                                                 <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 @endif
-                                <a href="/cat/{{ $category->id }}" class="invisible" >
+                                <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" class="invisible" >
                                     <img src="{{ asset('/img/default-no-image.png')}}" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="/cat/{{ $category->id }}">{{ $category->description }} </a></h3>
+                                    <h3><a href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->description }} </a></h3>
                                 </div>
                                 <!-- /.text -->
                             </div>

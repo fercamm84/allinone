@@ -27,8 +27,7 @@ class ProductShowController extends Controller
             $stock_solicitado = $orderDetail->volume;
         }
 */
-        $categories = $product->categoryProducts();
-        return view('product.product', array('product' => $product, 'stock_solicitado' => $stock_solicitado, 'category' => $product->categoryProducts{0}->category ));
+        return view('product.product', array('product' => $product, 'stock_solicitado' => $stock_solicitado, 'category' => $product->categoryProducts{0}->category, 'seller' => (isset($product->categoryProducts{0}->category->sellerCategories{0}->seller) ? $product->categoryProducts{0}->category->sellerCategories{0}->seller : null)));
     }
 
 }

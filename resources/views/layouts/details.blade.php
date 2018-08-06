@@ -11,10 +11,20 @@
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li><a href="/">Home</a></li>
-                        @if(isset($category))
-                            <li><a href="/cat/{{ $category->id }}">{{ $category->description}}</a></li>
-                            @if(isset($product))
-                                <li><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li>
+                        @if(isset($seller))
+                            <li><a href="/seller/{{ $seller->id }}">{{ $seller->description}}</a></li>
+                            @if(isset($category))
+                                <li><a href="/cat/{{ $category->id }}">{{ $category->description}}</a></li>
+                                @if(isset($product))
+                                    <li><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li>
+                                @endif
+                            @endif
+                        @else
+                            @if(isset($category))
+                                <li><a href="/cat/{{ $category->id }}">{{ $category->description}}</a></li>
+                                @if(isset($product))
+                                    <li><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li>
+                                @endif
                             @endif
                         @endif
                     </ul>
