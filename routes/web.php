@@ -17,7 +17,7 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/admin', 'HomeController@index');
 
 Route::resource('parameters', 'ParameterController');
 
@@ -36,6 +36,8 @@ Route::resource('orderDetails', 'OrderDetailController');
 Route::resource('categoryProducts', 'CategoryProductController');
 
 Route::get('/', 'HomePageController@index')->name('index');;
+
+Route::get('/seller/{id}', 'SellerShowController@index');
 
 Route::get('/cat/{id}', 'CategoryShowController@index');
 

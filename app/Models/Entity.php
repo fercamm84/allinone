@@ -92,6 +92,14 @@ class Entity extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+    public function sellers()
+    {
+        return $this->hasMany(\App\Models\Seller::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
     public function sectionEntities()
     {
         return $this->hasMany(\App\Models\SectionEntity::class);
@@ -103,6 +111,9 @@ class Entity extends Model
         }
         if($this->type == 'product'){
             return $this->products[0];
+        }
+        if($this->type == 'seller'){
+            return $this->sellers[0];
         }
     }
 
