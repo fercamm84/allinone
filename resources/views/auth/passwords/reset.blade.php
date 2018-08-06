@@ -35,7 +35,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/home') }}"><b>{{env('APP_NAME')}}</b></a>
+        <a href="{{ url('/') }}"><b>{{env('APP_NAME')}}</b></a>
     </div>
 
     <!-- /.login-logo -->

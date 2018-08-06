@@ -76,4 +76,30 @@ class News extends Model
     {
         return $this->belongsTo(\App\Models\Entity::class);
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($news) {
+            if($news->entity_id == null){
+                $entity = new Entity();
+                $entity->type = 'news';
+                $entity->save();
+                $news->entity_id = $entity->id;
+            }
+        });
+
+        static::deleted(function($news) {
+            $news->entity()->delete();
+        });
+    }
+
+    public function url(){
+        return 'news';
+    }
+
+    public function getClassType(){
+        return 'news';
+    }
+
 }
