@@ -107,11 +107,11 @@
                         alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
                     }
                 } else {
-                    alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
+                    alert('Se ha producido un error. Vuelva a intentarlo, por favor..');
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('Se ha producido un error. Vuelva a intentarlo, por favor.');
+                alert('Se ha producido un error. Vuelva a intentarlo, por favor...');
             }
         });
     }
