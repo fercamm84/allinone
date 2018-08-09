@@ -90,7 +90,6 @@ class BasketController extends FrontController
 
             $arrayEnvio = array();
             $arrayEnvio = array_merge($arrayEnvio, array('preference' => $myJobPreference['response']['init_point']));
-            echo '<meta name="csrf-token" content="{{ csrf_token() }}">';
             echo json_encode($arrayEnvio);
             exit();
         }
