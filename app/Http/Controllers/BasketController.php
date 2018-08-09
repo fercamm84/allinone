@@ -63,8 +63,8 @@ class BasketController extends FrontController
                         "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
                         "quantity" => 1,
                         "currency_id" => 'ARS',
-//                        "unit_price" => $total
-                        "unit_price" => 1
+                        "unit_price" => $total
+//                        "unit_price" => 1
                     )
                 ),
                 "back_urls" => array(
