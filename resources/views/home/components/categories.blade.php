@@ -18,13 +18,24 @@
 
 <div id="hot">
 
-    <div class="box">
-        <div class="container">
-            <div class="col-md-12">
-                <h2>Categorias</h2>
+    <?php $mostrarCategorias = true; ?>
+    @foreach($sections as $section)
+        @if($section->type == 'home_principal')
+            @foreach($section->sectionEntities as $sectionEntity)
+                <?php $entidad = $sectionEntity->entity->type != 'category'; ?>
+                <?php $mostrarCategorias = false; ?>
+            @endforeach
+        @endif
+    @endforeach
+    @if($mostrarCategorias)
+        <div class="box">
+            <div class="container">
+                <div class="col-md-12">
+                    <h2>Categorias</h2>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="container">
         <div class="product-slider">
