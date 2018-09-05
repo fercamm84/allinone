@@ -55,10 +55,7 @@ class BasketController extends FrontController
 
         if(count($order) > 0 && count($order->orderDetails) > 0){
             //Busco el precio total a pagar para generar la preferencia de pago:
-            $total = 0;
-            foreach($order->orderDetails as $orderDetail){
-                $total = floatval($orderDetail->volume * $orderDetail->product->price);
-            }
+            $total = $order->total();
 
             //Creo preferencia de Mercadopago:
             $myJobPreference_data = array(

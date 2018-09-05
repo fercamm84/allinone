@@ -18,7 +18,7 @@
         <p>{{ $orderDetail->product->price + $attribute_value_total }}</p>
     </td>
     <td>
-        <p>{{ $orderDetail->volume * ($orderDetail->product->price + $attribute_value_total) }}</p>
+        <p>{{ $orderDetail->total() }}</p>
     </td>
     <td>
         {{ Form::open(array('route' => array('basket.delete.item', $orderDetail->id))) }}

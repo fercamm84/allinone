@@ -92,4 +92,13 @@ class OrderDetail extends Model
         });
     }
 
+    public function total(){
+        $attribute_value_total = 0;
+        foreach($this->orderDetailAttributeValues as $orderDetailAttributeValue){
+            $attribute_value_total += $orderDetailAttributeValue->attributeValue->amount;
+        }
+
+        return ($this->volume * ($this->product->price + $attribute_value_total));
+    }
+
 }
