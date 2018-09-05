@@ -15,7 +15,7 @@
         @foreach($orderDetail->orderDetailAttributeValues as $orderDetailAttributeValue)
             <?php $attribute_value_total += $orderDetailAttributeValue->attributeValue->amount; ?>
         @endforeach
-        <p>{{ $orderDetail->product->price + $attribute_value_total }}</p>
+        <p>{{ $orderDetail->unitPrice() }}</p>
     </td>
     <td>
         <p>{{ $orderDetail->total() }}</p>

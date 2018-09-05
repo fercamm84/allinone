@@ -39,6 +39,18 @@
                                     @include('basket.components.show_order')
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                    </td>
+                                    <td>
+                                        <p>Total: </p>
+                                    </td>
+                                    <td>
+                                        <p>{{ $order->total() }}</p>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                         <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn btn-primary boton-mobile" style="width:250px;">PAGAR</a>
                         {{--<input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">--}}
