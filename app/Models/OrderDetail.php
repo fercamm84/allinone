@@ -73,4 +73,23 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(\App\Models\Product::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function orderDetailAttributeValues()
+    {
+        return $this->hasMany(\App\Models\OrderDetailAttributeValue::class);
+    }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::deleted(function($orderDetail) {
+            foreach($orderDetail->orderDetailAttributeValues as $orderDetailAttributeValue){
+                $orderDetailAttributeValue->delete();
+            }
+        });
+    }
+
 }

@@ -6,8 +6,8 @@
 
 <!-- Descripcion Field -->
 <div class="form-group">
-    {!! Form::label('descripcion', 'Descripcion:') !!}
-    <p>{!! $attribute->descripcion !!}</p>
+    {!! Form::label('description', 'Description:') !!}
+    <p>{!! $attribute->description !!}</p>
 </div>
 
 <!-- Order Field -->

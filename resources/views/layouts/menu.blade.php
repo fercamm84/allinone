@@ -105,3 +105,15 @@
 <li class="{{ Request::is('events*') ? 'active' : '' }}">
     <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
 </li>
+<li class="{{ Request::is('attributeEntities*') ? 'active' : '' }}">
+    <a href="{!! route('attributeEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Entities</span></a>
+</li>
+
+<li class="{{ Request::is('attributeValues*') ? 'active' : '' }}">
+    <a href="{!! route('attributeValues.index') !!}"><i class="fa fa-edit"></i><span>Attribute Values</span></a>
+</li>
+
+<li class="{{ Request::is('orderDetailAttributeValues*') ? 'active' : '' }}">
+    <a href="{!! route('orderDetailAttributeValues.index') !!}"><i class="fa fa-edit"></i><span>Order Detail Attribute Values</span></a>
+</li>
+

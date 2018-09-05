@@ -13,6 +13,7 @@ use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\OrderDetailAttributeValueRepository;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
@@ -33,11 +34,15 @@ class BasketController extends FrontController
     /** @var  PaymentRepository */
     private $paymentRepository;
 
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo){
+    /** @var  OrderDetailAttributeValueRepository */
+    private $orderDetailAttributeValueRepository;
+
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueRepository $orderDetailAttributeValueRepo){
         parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
+        $this->orderDetailAttributeValueRepository = $orderDetailAttributeValueRepo;
     }
 
     public function solicitarMercadoPago(Request $request){
@@ -144,10 +149,19 @@ class BasketController extends FrontController
             $orderDetail['volume'] = $request->input('stock');
             $orderDetail['order_id'] = $order->id;
             $orderDetail['product_id'] = $product->id;
-            $this->orderDetailRepository->create($orderDetail);
+            $orderDetail = $this->orderDetailRepository->create($orderDetail);
         }else{
             $orderDetail->volume = $orderDetail->volume + $request->input('stock');
             $orderDetail->save();
+        }
+
+        foreach($product->entity->attributeEntities as $attributeEntity){
+            $attribute_value_id = $request->input('attr_'.$attributeEntity->attribute->id);
+
+            $orderDetailAttributeValue = array();
+            $orderDetailAttributeValue['order_detail_id'] = $orderDetail->id;
+            $orderDetailAttributeValue['attribute_value_id'] = $attribute_value_id;
+            $this->orderDetailAttributeValueRepository->create($orderDetailAttributeValue);
         }
 
         Flash::success('Item agregado al carrito.');

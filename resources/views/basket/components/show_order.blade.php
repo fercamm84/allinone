@@ -11,10 +11,14 @@
         <p>{{ $orderDetail->volume }}</p>
     </td>
     <td>
-        <p>{{ $orderDetail->product->price }}</p>
+        <?php $attribute_value_total = 0; ?>
+        @foreach($orderDetail->orderDetailAttributeValues as $orderDetailAttributeValue)
+            <?php $attribute_value_total += $orderDetailAttributeValue->attributeValue->amount; ?>
+        @endforeach
+        <p>{{ $orderDetail->product->price + $attribute_value_total }}</p>
     </td>
     <td>
-        <p>{{ $orderDetail->volume * $orderDetail->product->price }}</p>
+        <p>{{ $orderDetail->volume * ($orderDetail->product->price + $attribute_value_total) }}</p>
     </td>
     <td>
         {{ Form::open(array('route' => array('basket.delete.item', $orderDetail->id))) }}

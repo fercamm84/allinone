@@ -20,7 +20,7 @@ class AttributeRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'descripcion',
+        'description',
         'order',
         'visible'
     ];
