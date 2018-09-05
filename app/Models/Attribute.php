@@ -74,37 +74,4 @@ class Attribute extends Model
         return $this->hasMany(\App\Models\AttributeValue::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function entity()
-    {
-        return $this->belongsTo(\App\Models\Entity::class);
-    }
-
-    protected static function boot() {
-        parent::boot();
-
-        static::saving(function($attribute) {
-            if($attribute->entity_id == null){
-                $entity = new Entity();
-                $entity->type = 'attribute';
-                $entity->save();
-                $attribute->entity_id = $entity->id;
-            }
-        });
-
-        static::deleted(function($attribute) {
-            $attribute->entity()->delete();
-        });
-    }
-
-    public function url(){
-        return 'attr';
-    }
-
-    public function getClassType(){
-        return 'attribute';
-    }
-
 }
