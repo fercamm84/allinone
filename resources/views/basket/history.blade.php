@@ -50,24 +50,30 @@
                                                 <p>{{ $orderDetail->volume }}</p>
                                             </td>
                                             <td>
-                                                <p>{{ $orderDetail->product->price }}</p>
+                                                <p>{{ $orderDetail->unitPrice() }}</p>
                                             </td>
                                             <td>
-                                                <p>{{ $orderDetail->volume * $orderDetail->product->price }}</p>
+                                                <p>{{ $orderDetail->total() }}</p>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>
-                                                <p>Estado: </p>
-                                            </td>
-                                            <td>
-                                                <p>{{ $order->state }}</p>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <p>Estado: </p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $order->state }}</p>
+                                        </td>
+                                        <td>
+                                            <p>Total: </p>
+                                        </td>
+                                        <td>
+                                            <p>{{ $order->total() }}</p>
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         @endforeach
                     @endif
