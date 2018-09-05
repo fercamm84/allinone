@@ -79,4 +79,14 @@ class Order extends Model
     {
         return $this->hasMany(\App\Models\OrderDetail::class);
     }
+
+    public function total(){
+        $total = 0;
+        foreach($this->orderDetails as $orderDetail){
+            $total += $orderDetail->total();
+        }
+
+        return $total;
+    }
+
 }
