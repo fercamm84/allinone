@@ -8,23 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class AttributeEntity
  * @package App\Models
- * @version August 3, 2018, 2:52 am UTC
+ * @version September 5, 2018, 1:55 am UTC
  *
  * @property \App\Models\Attribute attribute
  * @property \App\Models\Entity entity
  * @property \Illuminate\Database\Eloquent\Collection categories
- * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
  * @property \Illuminate\Database\Eloquent\Collection categoryProducts
- * @property \Illuminate\Database\Eloquent\Collection imageCategories
  * @property \Illuminate\Database\Eloquent\Collection imageEntities
- * @property \Illuminate\Database\Eloquent\Collection imageProducts
  * @property \Illuminate\Database\Eloquent\Collection mailings
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property \Illuminate\Database\Eloquent\Collection products
  * @property \Illuminate\Database\Eloquent\Collection roleUsers
- * @property \Illuminate\Database\Eloquent\Collection sectionCategories
  * @property \Illuminate\Database\Eloquent\Collection sectionEntities
- * @property \Illuminate\Database\Eloquent\Collection sectionProducts
+ * @property \Illuminate\Database\Eloquent\Collection sellerCategories
  * @property \Illuminate\Database\Eloquent\Collection userAddresses
  * @property integer entity_id
  * @property integer attribute_id

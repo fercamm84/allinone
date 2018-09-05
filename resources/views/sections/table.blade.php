@@ -1,14 +1,16 @@
 <table class="table table-responsive" id="sections-table">
     <thead>
         <tr>
+            <th># Section</th>
             <th>Type</th>
-        <th>Name</th>
+            <th>Name</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($sections as $section)
         <tr>
+            <td>{!! $section->id !!}</td>
             <td>{!! $section->type !!}</td>
             <td>{!! $section->name !!}</td>
             <td>

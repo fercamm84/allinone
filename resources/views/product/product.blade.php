@@ -24,18 +24,20 @@
                     <p class="goToDescription">
                         <a href="#details" class="scroll-to">Ver detalle</a>
                     </p>
-                    <h2 class="price">${!! $product->price !!}</h2>
 
-                    <p class="text-center buttons">
-                        {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
-                        {{ Form::hidden('product_id', $product->id) }}
-                        {{ Form::number('stock', 1, ['class' => 'form-control', 'min' => '1', 'max' => $product->stock - $stock_solicitado, 'required' => true]) }}
-                        <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">
-                            <i class='fa fa-shopping-cart'></i> Agregar al carrito
-                        </button>
-                        {{ Form::close() }}
-                    </p>
+                    {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
+                        @include('product.components.attributes')
 
+                        <h2 class="price">$<span id="price">{!! $product->price !!}</span></h2>
+
+                        <p class="text-center buttons">
+                            {{ Form::hidden('product_id', $product->id) }}
+                            {{ Form::number('stock', 1, ['class' => 'form-control', 'min' => '1', 'max' => $product->stock - $stock_solicitado, 'required' => true]) }}
+                            <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">
+                                <i class='fa fa-shopping-cart'></i> Agregar al carrito
+                            </button>
+                        </p>
+                    {{ Form::close() }}
 
                 </div>
 
@@ -57,9 +59,6 @@
             <p>
             <h3 style="margin-bottom: 1px !important;">{!! $product->name !!}</h3>
             <span >{!! $product->short_description !!}</span>
-            <hr>
-			<h3 style="margin-bottom: 1px !important;">Precio</h3>
-				<span>$ {!! $product->price !!}</span>
             <hr>
             <h3 style="margin-bottom: 1px !important;">Stock Disponible</h3>
 				<span>{!! $product->stock !!}</span>

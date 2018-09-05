@@ -8,7 +8,7 @@ use InfyOm\Generator\Common\BaseRepository;
 /**
  * Class AttributeEntityRepository
  * @package App\Repositories
- * @version August 3, 2018, 2:52 am UTC
+ * @version September 5, 2018, 1:55 am UTC
  *
  * @method AttributeEntity findWithoutFail($id, $columns = ['*'])
  * @method AttributeEntity find($id, $columns = ['*'])

@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th># Attribute</th>
-            <th>Descripcion</th>
+            <th>Description</th>
             <th>Order</th>
             <th>Visible</th>
             <th colspan="3">Action</th>
@@ -12,7 +12,7 @@
     @foreach($attributes as $attribute)
         <tr>
             <td>{!! $attribute->id !!}</td>
-            <td>{!! $attribute->descripcion !!}</td>
+            <td>{!! $attribute->description !!}</td>
             <td>{!! $attribute->order !!}</td>
             <td>{!! $attribute->visible !!}</td>
             <td>

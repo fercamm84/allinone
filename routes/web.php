@@ -112,3 +112,9 @@ Route::resource('events', 'EventController');
 Route::resource('news', 'NewController');
 
 Route::resource('news', 'NewsController');
+
+Route::resource('attributeEntities', 'AttributeEntityController');
+
+Route::resource('attributeValues', 'AttributeValueController');
+
+Route::resource('orderDetailAttributeValues', 'OrderDetailAttributeValueController');
