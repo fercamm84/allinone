@@ -122,3 +122,7 @@ Route::resource('sellerReservations', 'SellerReservationController');
 Route::resource('attributeValueEntities', 'AttributeValueEntityController');
 
 Route::resource('orderDetailAttributeValueEntities', 'OrderDetailAttributeValueEntityController');
+
+Route::post('/seller/reservation', 'SellerShowController@reservation');
+
+Route::post('/seller/reserve', 'SellerShowController@reserve');

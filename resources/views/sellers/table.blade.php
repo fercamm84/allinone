@@ -2,9 +2,10 @@
     <thead>
         <tr>
             <th>Description</th>
-        <th>Order</th>
-        <th>Type</th>
-        <th>Entity Id</th>
+            <th>Order</th>
+            <th>Reservations</th>
+            <th>Type</th>
+            <th>Entity Id</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
@@ -12,6 +13,7 @@
     @foreach($sellers as $seller)
         <tr>
             <td>{!! $seller->description !!}</td>
+            <td>{!! $seller->reservations !!}</td>
             <td>{!! $seller->order !!}</td>
             <td>{!! $seller->type !!}</td>
             <td>{!! $seller->entity_id !!}</td>

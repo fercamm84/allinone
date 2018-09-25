@@ -10,6 +10,15 @@
     {!! Form::number('order', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Reservations Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('reservations', 'Reservations:') !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('reservations', false) !!}
+        {!! Form::checkbox('reservations', '1', null) !!} 1
+    </label>
+</div>
+
 <!-- Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('type', 'Type:') !!}

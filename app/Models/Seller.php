@@ -44,7 +44,8 @@ class Seller extends Model
         'description',
         'order',
         'type',
-        'entity_id'
+        'entity_id',
+        'reservations',
     ];
 
     /**
@@ -56,6 +57,7 @@ class Seller extends Model
         'id' => 'integer',
         'description' => 'string',
         'order' => 'integer',
+        'reservations' => 'boolean',
         'type' => 'string',
         'entity_id' => 'integer'
     ];

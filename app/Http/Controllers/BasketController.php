@@ -109,7 +109,7 @@ class BasketController extends FrontController
         $payment = Payment::where([['order_id', '=', $order->id]])->first();
         if($request->input('payment_state') != null){
             if($request->input('payment_state') == 'approved'){
-                Flash::success('Compra efectuada satisfactoriamente..');
+                Flash::success('Compra efectuada satisfactoriamente.');
             }else if($request->input('payment_state') == 'rejected'){
                 Flash::error('El pago fue rechazado. Por favor, intente nuevamente.');
             }else if($request->input('payment_state') == 'pending'){
