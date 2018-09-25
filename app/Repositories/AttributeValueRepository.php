@@ -21,8 +21,7 @@ class AttributeValueRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'attribute_id',
-        'description',
-        'amount'
+        'description'
     ];
 
     /**

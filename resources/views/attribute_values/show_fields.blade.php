@@ -16,12 +16,6 @@
     <p>{!! $attributeValue->description !!}</p>
 </div>
 
-<!-- Amount Field -->
-<div class="form-group">
-    {!! Form::label('amount', 'Amount:') !!}
-    <p>{!! $attributeValue->amount !!}</p>
-</div>
-
 <!-- Updated At Field -->
 <div class="form-group">
     {!! Form::label('updated_at', 'Updated At:') !!}

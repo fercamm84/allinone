@@ -39,6 +39,8 @@ Route::get('/', 'HomePageController@index')->name('index');;
 
 Route::get('/seller/{id}', 'SellerShowController@index');
 
+Route::get('/brand/{id}', 'BrandShowController@index');
+
 Route::get('/cat/{id}', 'CategoryShowController@index');
 
 Route::get('/prod/{id}', 'ProductShowController@index');
@@ -99,8 +101,6 @@ Route::resource('sectionEntities', 'SectionEntityController');
 
 Route::resource('imageEntities', 'ImageEntityController');
 
-Route::resource('attributeEntities', 'AttributeEntityController');
-
 Route::resource('sellers', 'SellerController');
 
 Route::resource('sellerCategories', 'SellerCategoryController');
@@ -109,8 +109,16 @@ Route::resource('news', 'NewController');
 
 Route::resource('events', 'EventController');
 
-Route::resource('attributeEntities', 'AttributeEntityController');
-
 Route::resource('attributeValues', 'AttributeValueController');
 
-Route::resource('orderDetailAttributeValues', 'OrderDetailAttributeValueController');
+Route::resource('brands', 'BrandController');
+
+Route::resource('brandCategories', 'BrandCategoryController');
+
+Route::resource('sellerDays', 'SellerDayController');
+
+Route::resource('sellerReservations', 'SellerReservationController');
+
+Route::resource('attributeValueEntities', 'AttributeValueEntityController');
+
+Route::resource('orderDetailAttributeValueEntities', 'OrderDetailAttributeValueEntityController');

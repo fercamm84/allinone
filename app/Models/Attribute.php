@@ -61,14 +61,6 @@ class Attribute extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function attributeEntities()
-    {
-        return $this->hasMany(\App\Models\AttributeEntity::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
     public function attributeValues()
     {
         return $this->hasMany(\App\Models\AttributeValue::class);

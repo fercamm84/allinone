@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seller;
-use App\Models\Section;
+use App\Repositories\SellerDayRepository;
 
 class SellerShowController extends Controller
 {
 
-    public function __construct(){
+    /** @var  SellerDayRepository */
+    private $sellerDayRepository;
+
+    public function __construct(SellerDayRepository $sellerDayRepo){
+        $this->sellerDayRepository = $sellerDayRepo;
     }
 
     public function index($id = null){
@@ -24,7 +28,10 @@ class SellerShowController extends Controller
             array_push($entity_children, $sellerCategory->category);
         }
 
-        return view('search.search', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children, 'categories' => $entity_children, 'seller' => $seller));
+        $sellerDays = $this->sellerDayRepository->all();
+
+        return view('search.search', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children,
+            'categories' => $entity_children, 'seller' => $seller, 'sellerDays' => $sellerDays));
     }
 
 }

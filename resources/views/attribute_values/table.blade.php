@@ -1,18 +1,18 @@
 <table class="table table-responsive" id="attributeValues-table">
     <thead>
         <tr>
+            <th>Attribute Values Id</th>
             <th>Attribute Id</th>
-        <th>Description</th>
-        <th>Amount</th>
+            <th>Description</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($attributeValues as $attributeValue)
         <tr>
+            <td>{!! $attributeValue->id !!}</td>
             <td>{!! $attributeValue->attribute_id !!}</td>
             <td>{!! $attributeValue->description !!}</td>
-            <td>{!! $attributeValue->amount !!}</td>
             <td>
                 {!! Form::open(['route' => ['attributeValues.destroy', $attributeValue->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

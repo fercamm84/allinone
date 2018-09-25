@@ -86,10 +86,6 @@
     <a href="{!! route('imageEntities.index') !!}"><i class="fa fa-edit"></i><span>Image Entities</span></a>
 </li>
 
-<li class="{{ Request::is('attributeEntities*') ? 'active' : '' }}">
-    <a href="{!! route('attributeEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Entities</span></a>
-</li>
-
 <li class="{{ Request::is('sellers*') ? 'active' : '' }}">
     <a href="{!! route('sellers.index') !!}"><i class="fa fa-edit"></i><span>Sellers</span></a>
 </li>
@@ -105,15 +101,32 @@
 <li class="{{ Request::is('events*') ? 'active' : '' }}">
     <a href="{!! route('events.index') !!}"><i class="fa fa-edit"></i><span>Events</span></a>
 </li>
-<li class="{{ Request::is('attributeEntities*') ? 'active' : '' }}">
-    <a href="{!! route('attributeEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Entities</span></a>
-</li>
 
 <li class="{{ Request::is('attributeValues*') ? 'active' : '' }}">
     <a href="{!! route('attributeValues.index') !!}"><i class="fa fa-edit"></i><span>Attribute Values</span></a>
 </li>
 
-<li class="{{ Request::is('orderDetailAttributeValues*') ? 'active' : '' }}">
-    <a href="{!! route('orderDetailAttributeValues.index') !!}"><i class="fa fa-edit"></i><span>Order Detail Attribute Values</span></a>
+<li class="{{ Request::is('brands*') ? 'active' : '' }}">
+    <a href="{!! route('brands.index') !!}"><i class="fa fa-edit"></i><span>Brands</span></a>
+</li>
+
+<li class="{{ Request::is('brandCategories*') ? 'active' : '' }}">
+    <a href="{!! route('brandCategories.index') !!}"><i class="fa fa-edit"></i><span>Brand Categories</span></a>
+</li>
+
+<li class="{{ Request::is('sellerDays*') ? 'active' : '' }}">
+    <a href="{!! route('sellerDays.index') !!}"><i class="fa fa-edit"></i><span>Seller Days</span></a>
+</li>
+
+<li class="{{ Request::is('sellerReservations*') ? 'active' : '' }}">
+    <a href="{!! route('sellerReservations.index') !!}"><i class="fa fa-edit"></i><span>Seller Reservations</span></a>
+</li>
+
+<li class="{{ Request::is('attributeValueEntities*') ? 'active' : '' }}">
+    <a href="{!! route('attributeValueEntities.index') !!}"><i class="fa fa-edit"></i><span>Attribute Value Entities</span></a>
+</li>
+
+<li class="{{ Request::is('orderDetailAttributeValueEntities*') ? 'active' : '' }}">
+    <a href="{!! route('orderDetailAttributeValueEntities.index') !!}"><i class="fa fa-edit"></i><span>Order Detail Attribute Value Entities</span></a>
 </li>
 

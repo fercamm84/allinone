@@ -77,25 +77,25 @@ class OrderDetail extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function orderDetailAttributeValues()
+    public function orderDetailAttributeValueEntities()
     {
-        return $this->hasMany(\App\Models\OrderDetailAttributeValue::class);
+        return $this->hasMany(\App\Models\OrderDetailAttributeValueEntity::class);
     }
 
     protected static function boot() {
         parent::boot();
 
         static::deleted(function($orderDetail) {
-            foreach($orderDetail->orderDetailAttributeValues as $orderDetailAttributeValue){
-                $orderDetailAttributeValue->delete();
+            foreach($orderDetail->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
+                $orderDetailAttributeValueEntity->delete();
             }
         });
     }
 
     public function total(){
         $attribute_value_total = 0;
-        foreach($this->orderDetailAttributeValues as $orderDetailAttributeValue){
-            $attribute_value_total += $orderDetailAttributeValue->attributeValue->amount;
+        foreach($this->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
+            $attribute_value_total += $orderDetailAttributeValueEntity->attributeValueEntity->amount;
         }
 
         return ($this->volume * ($this->product->price + $attribute_value_total));
@@ -103,8 +103,8 @@ class OrderDetail extends Model
 
     public function unitPrice(){
         $attribute_value_total = 0;
-        foreach($this->orderDetailAttributeValues as $orderDetailAttributeValue){
-            $attribute_value_total += $orderDetailAttributeValue->attributeValue->amount;
+        foreach($this->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
+            $attribute_value_total += $orderDetailAttributeValueEntity->attributeValueEntity->amount;
         }
 
         return $this->product->price + $attribute_value_total;
