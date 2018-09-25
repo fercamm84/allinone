@@ -13,7 +13,7 @@ use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
-use App\Repositories\OrderDetailAttributeValueRepository;
+use App\Repositories\OrderDetailAttributeValueEntityRepository;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
@@ -34,15 +34,15 @@ class BasketController extends FrontController
     /** @var  PaymentRepository */
     private $paymentRepository;
 
-    /** @var  OrderDetailAttributeValueRepository */
-    private $orderDetailAttributeValueRepository;
+    /** @var  OrderDetailAttributeValueEntityRepository */
+    private $orderDetailAttributeValueEntityRepository;
 
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueRepository $orderDetailAttributeValueRepo){
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo){
         parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
-        $this->orderDetailAttributeValueRepository = $orderDetailAttributeValueRepo;
+        $this->orderDetailAttributeValueEntityRepository = $orderDetailAttributeValueEntityRepo;
     }
 
     public function solicitarMercadoPago(Request $request){
@@ -109,7 +109,7 @@ class BasketController extends FrontController
         $payment = Payment::where([['order_id', '=', $order->id]])->first();
         if($request->input('payment_state') != null){
             if($request->input('payment_state') == 'approved'){
-                Flash::success('Compra efectuada satisfactoriamente..');
+                Flash::success('Compra efectuada satisfactoriamente.');
             }else if($request->input('payment_state') == 'rejected'){
                 Flash::error('El pago fue rechazado. Por favor, intente nuevamente.');
             }else if($request->input('payment_state') == 'pending'){
@@ -152,13 +152,19 @@ class BasketController extends FrontController
             $orderDetail->save();
         }
 
-        foreach($product->entity->attributeEntities as $attributeEntity){
-            $attribute_value_id = $request->input('attr_'.$attributeEntity->attribute->id);
+        $attributes = array();
+        foreach($product->entity->attributeValueEntities as $attributeValueEntity){
+            array_push($attributes, $attributeValueEntity->attributeValue->attribute);
+        }
+        $attributes = array_unique(array_merge($attributes, $attributes), SORT_REGULAR);
 
-            $orderDetailAttributeValue = array();
-            $orderDetailAttributeValue['order_detail_id'] = $orderDetail->id;
-            $orderDetailAttributeValue['attribute_value_id'] = $attribute_value_id;
-            $this->orderDetailAttributeValueRepository->create($orderDetailAttributeValue);
+        foreach($attributes as $attribute){
+            $attribute_value_entity_id = $request->input('attr_'.$attribute->id);
+
+            $orderDetailAttributeValueEntity = array();
+            $orderDetailAttributeValueEntity['order_detail_id'] = $orderDetail->id;
+            $orderDetailAttributeValueEntity['attribute_value_entity_id'] = $attribute_value_entity_id;
+            $this->orderDetailAttributeValueEntityRepository->create($orderDetailAttributeValueEntity);
         }
 
         Flash::success('Item agregado al carrito.');
@@ -171,6 +177,13 @@ class BasketController extends FrontController
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+//        foreach($order->orderDetails as $orderDetail){
+//            foreach($orderDetail->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
+//                $orderDetailAttributeValueEntity->attributeValueEntity->amount;
+//            }
+//        }
+//        die;
 
         return view('basket.index', array('order' => $order));
     }

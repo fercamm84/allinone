@@ -1,10 +1,13 @@
 <div class="container">
     <div class="col-md-12">
-        @foreach($product->entity->attributeEntities as $attributeEntity)
-            <p>{{ $attributeEntity->attribute->description }}:</p>
-            @foreach($attributeEntity->attribute->attributeValues as $attributeValue)
-                {{ Form::radio('attr_'.$attributeValue->attribute->id, $attributeValue->id, false, ['amount' => $attributeValue->amount, 'onmouseup' => 'changePrice(this)', 'required']) }} {{ $attributeValue->description }}<BR>
+        @foreach($attributes as $attribute)
+            <p>{{ $attribute->description }}:</p>
+            @foreach($product->entity->attributeValueEntities as $attributeValueEntity)
+                @if($attribute->id == $attributeValueEntity->attributeValue->attribute->id)
+                    <p>{{ Form::radio('attr_'.$attributeValueEntity->attributeValue->attribute->id, $attributeValueEntity->id, false, ['amount' => $attributeValueEntity->amount, 'onmouseup' => 'changePrice(this)', 'required']) }} {{ $attributeValueEntity->attributeValue->description }}</p>
+                @endif
             @endforeach
+            <BR>
         @endforeach
     </div>
 </div>

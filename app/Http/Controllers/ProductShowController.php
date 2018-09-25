@@ -28,7 +28,29 @@ class ProductShowController extends Controller
         }
 */
 
-        return view('product.product', array('product' => $product, 'stock_solicitado' => $stock_solicitado, 'category' => $product->categoryProducts{0}->category, 'seller' => (isset($product->categoryProducts{0}->category->sellerCategories{0}->seller) ? $product->categoryProducts{0}->category->sellerCategories{0}->seller : null)));
+        $attributes = array();
+        foreach($product->entity->attributeValueEntities as $attributeValueEntity){
+            array_push($attributes, $attributeValueEntity->attributeValue->attribute);
+        }
+        $attributes = array_unique(array_merge($attributes, $attributes), SORT_REGULAR);
+
+//        foreach($attributes as $attribute){
+//            print_r($attribute->description);
+//            print_r('<BR>');
+//            foreach($product->entity->attributeValueEntities as $attributeValueEntity){
+//                if($attribute->id == $attributeValueEntity->attributeValue->attribute->id){
+//                    print_r($attributeValueEntity->attributeValue->description);
+//                    print_r($attributeValueEntity->attributeValue);
+//                    print_r('<BR>');
+//                }
+//            }
+//            print_r('<BR>');
+//        }
+//        die;
+
+        return view('product.product', array('product' => $product, 'attributes' => $attributes,
+            'stock_solicitado' => $stock_solicitado, 'category' => $product->categoryProducts{0}->category,
+            'seller' => (isset($product->categoryProducts{0}->category->sellerCategories{0}->seller) ? $product->categoryProducts{0}->category->sellerCategories{0}->seller : null)));
     }
 
 }

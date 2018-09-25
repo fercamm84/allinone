@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection userAddresses
  * @property integer attribute_id
  * @property string description
- * @property decimal amount
  */
 class AttributeValue extends Model
 {
@@ -41,8 +40,7 @@ class AttributeValue extends Model
 
     public $fillable = [
         'attribute_id',
-        'description',
-        'amount'
+        'description'
     ];
 
     /**
@@ -76,9 +74,9 @@ class AttributeValue extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function orderDetailAttributeValues()
+    public function attributeValueEntities()
     {
-        return $this->hasMany(\App\Models\OrderDetailAttributeValue::class);
+        return $this->hasMany(\App\Models\AttributeValueEntity::class);
     }
 
 }

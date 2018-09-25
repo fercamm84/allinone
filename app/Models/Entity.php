@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection Category
  * @property \Illuminate\Database\Eloquent\Collection attributeEntities
  * @property \Illuminate\Database\Eloquent\Collection ImageEntity
+ * @property \Illuminate\Database\Eloquent\Collection AttributeValueEntity
  * @property \Illuminate\Database\Eloquent\Collection mailings
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property \Illuminate\Database\Eloquent\Collection Product
@@ -76,9 +77,9 @@ class Entity extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function attributeEntities()
+    public function attributeValueEntities()
     {
-        return $this->hasMany(\App\Models\AttributeEntity::class);
+        return $this->hasMany(\App\Models\AttributeValueEntity::class);
     }
 
     /**
@@ -95,6 +96,14 @@ class Entity extends Model
     public function sellers()
     {
         return $this->hasMany(\App\Models\Seller::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function brands()
+    {
+        return $this->hasMany(\App\Models\Brand::class);
     }
 
     /**
@@ -130,6 +139,9 @@ class Entity extends Model
         }
         if($this->type == 'seller'){
             return $this->sellers[0];
+        }
+        if($this->type == 'brand'){
+            return $this->brands[0];
         }
         if($this->type == 'news'){
             return $this->news[0];
