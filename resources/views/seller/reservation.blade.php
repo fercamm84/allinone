@@ -2,6 +2,7 @@
 
 @section('details')
 
+    @if($sellerDay)
     @foreach($hours as $hour => $availability)
         <div class="hour">
             {{ $hour }} -
@@ -34,6 +35,9 @@
             @endif
         </div>
     @endforeach
+    @else
+        NO SE HACEN RESERVAS PARA ESTE DIA
+    @endif
 
     <script>
         $('.hour').keypress(function (e) {
