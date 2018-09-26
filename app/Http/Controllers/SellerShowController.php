@@ -97,18 +97,21 @@ class SellerShowController extends Controller
 
         $hours = array();
 
-        //cargo $hours que tiene listado de horas
-        for ($actualHour = $sellerDay->from_hour; $actualHour <= $sellerDay->to_hour; $actualHour++) {
-            $hours[$actualHour] = $sellerDay->total;//total de disponibilidad simultanea
-        }
+        if($sellerDay){
+            //cargo $hours que tiene listado de horas
+            for ($actualHour = $sellerDay->from_hour; $actualHour <= $sellerDay->to_hour; $actualHour++) {
+                $hours[$actualHour] = $sellerDay->total;//total de disponibilidad simultanea
+            }
 
-        $sellerReservations = SellerReservation::where([['seller_day_id', '=', $sellerDay->id]])->get();
+            $sellerReservations = SellerReservation::where([['seller_day_id', '=', $sellerDay->id]])->get();
 
-        foreach ($sellerReservations as $sellerReservation) {
-            for ($actualHour = $sellerReservation->from_hour; $actualHour < $sellerReservation->to_hour; $actualHour++) {
-                $hours[$actualHour] = $hours[$actualHour] - $sellerReservation->total;//de la disponibilidad en la hora se resta segun la reserva ya solicitada
+            foreach ($sellerReservations as $sellerReservation) {
+                for ($actualHour = $sellerReservation->from_hour; $actualHour < $sellerReservation->to_hour; $actualHour++) {
+                    $hours[$actualHour] = $hours[$actualHour] - $sellerReservation->total;//de la disponibilidad en la hora se resta segun la reserva ya solicitada
+                }
             }
         }
+
         return array($sellerDay, $hours);
     }
 
