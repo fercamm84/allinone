@@ -24,7 +24,7 @@ class BrandShowController extends Controller
             array_push($entity_children, $brandCategory->category);
         }
 
-        return view('search.search', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children, 'categories' => $entity_children, 'brand' => $brand));
+        return view('brand.brand', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children, 'categories' => $entity_children, 'brand' => $brand));
     }
 
 }

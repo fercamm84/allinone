@@ -43,7 +43,7 @@ class SearchController extends Controller
         }
 
 //        return view('search.search', array('products' => $products, 'categories' => $categories));
-        return view('search.search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => null, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
+        return view('search.global_search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => null, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
     }
 
 }

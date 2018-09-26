@@ -26,7 +26,7 @@ class CategoryShowController extends Controller
             array_push($entity_children, $categoryProduct->product);
         }
 
-        return view('search.search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => $category, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
+        return view('category.category', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => $category, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
     }
 
     public function order($id = null, $orderby = null){
