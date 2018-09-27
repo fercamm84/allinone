@@ -10,6 +10,7 @@ use App\Repositories\SellerReservationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laracasts\Flash\Flash;
 
 class SellerShowController extends Controller
 {

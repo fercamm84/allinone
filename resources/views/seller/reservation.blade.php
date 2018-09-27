@@ -8,7 +8,7 @@
                 <div class="row text-center buttons">
                     @if($availability >= $number_of_reservations)
                         {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve')) }}
-                            {{ Form::hidden('seller_day_id', $seller->id) }}
+                            {{ Form::hidden('seller_day_id', $sellerDay->id) }}
                             {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
                             {{ Form::hidden('from_hour', $hour) }}
 

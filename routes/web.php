@@ -125,4 +125,4 @@ Route::resource('orderDetailAttributeValueEntities', 'OrderDetailAttributeValueE
 
 Route::post('/seller/reservation', 'SellerShowController@reservation');
 
-Route::post('/seller/reserve', 'SellerShowController@reserve');
+Route::post('/seller/reserve', 'SellerShowController@reserve')->middleware('auth');
