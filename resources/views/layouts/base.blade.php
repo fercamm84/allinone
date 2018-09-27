@@ -50,7 +50,7 @@
     <!-- Bootstrap 3.3.7 -->
 	<!-- alejo <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
     
-    <script src="{{asset('js/jquery-1.11.0.min.js') }}"></script>
+{{--    <script src="{{asset('js/jquery-1.11.0.min.js') }}"></script>--}}
     <script src="{{asset('js/bootstrap.min.js') }}"></script>
     <script src="{{asset('js/jquery.cookie.js') }}"></script>
     <script src="{{asset('js/waypoints.min.js') }}"></script>
@@ -58,6 +58,11 @@
     <script src="{{asset('js/bootstrap-hover-dropdown.js') }}"></script>
     <script src="{{asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{asset('js/front.js') }}"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     @yield('scripts')
 </head>

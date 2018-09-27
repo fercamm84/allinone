@@ -46,8 +46,9 @@ class SellerShowController extends Controller
     public function reservation(Request $request){
         $seller = Seller::find($request->input('seller_id'));
         $number_of_reservations = $request->input('number_of_reservations');
+        $day_selected = $request->input('day_selected');
 
-        list($sellerDay, $hours) = $this->calculateAvailability($seller);
+        list($sellerDay, $hours) = $this->calculateAvailability($seller, $day_selected);
 
         return view('seller.reservation', array('seller' => $seller, 'sellerDay' => $sellerDay, 'hours' => $hours, 'number_of_reservations' => $number_of_reservations));
     }
@@ -92,8 +93,9 @@ class SellerShowController extends Controller
      * @param $seller
      * @return array
      */
-    private function calculateAvailability($seller){
-        $sellerDay = SellerDay::where([['seller_id', '=', $seller->id], ['date', '=', DB::raw('CURDATE()')]])->first();
+    private function calculateAvailability($seller, $day_selected){
+//        $sellerDay = SellerDay::where([['seller_id', '=', $seller->id], ['date', '=', DB::raw('CURDATE()')]])->first();
+        $sellerDay = SellerDay::where([['seller_id', '=', $seller->id], ['date', '=', $day_selected]])->first();
 
         $hours = array();
 
