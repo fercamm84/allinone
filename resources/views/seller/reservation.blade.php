@@ -3,38 +3,41 @@
 @section('details')
 
     @if($sellerDay)
-        @foreach($hours as $hour => $availability)
-            <div class="hour">
-                {{ $hour }} -
-                @if($availability >= $number_of_reservations)
-                    {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve')) }}
-                    <p class="text-center buttons">
-                        {{ Form::hidden('seller_day_id', $seller->id) }}
-                        {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
-                        {{ Form::hidden('from_hour', $hour) }}
+        <div class="col-xs-9">
+            @foreach($hours as $hour => $availability)
+                    @if($availability >= $number_of_reservations)
+                        {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve')) }}
+                        <div class="row text-center buttons">
+                            {{ Form::hidden('seller_day_id', $seller->id) }}
+                            {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
+                            {{ Form::hidden('from_hour', $hour) }}
 
-                        <?php $maxHours = 1; ?>
-                        @foreach($hours as $nextHour => $availabilityNextHour)
-                            @if($nextHour > $hour)
-                                @if($availabilityNextHour >= $number_of_reservations)
-                                    <?php $maxHours++; ?>
-                                @else
-                                    @break
+                            <?php $maxHours = 1; ?>
+                            @foreach($hours as $nextHour => $availabilityNextHour)
+                                @if($nextHour > $hour)
+                                    @if($availabilityNextHour >= $number_of_reservations)
+                                        <?php $maxHours++; ?>
+                                    @else
+                                        @break
+                                    @endif
                                 @endif
-                            @endif
-                        @endforeach
+                            @endforeach
 
-                        Cant. horas: {{ Form::number('hours', null, ['class' => 'form-control hour', 'min' => '1', 'max' => $maxHours, 'placeholder' => 'Max: '.$maxHours.' hs.', 'type' => 'number', 'required' => true]) }}
-                        <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">
-                            <i class='fa fa-user'></i> Reservar
-                        </button>
-                    </p>
-                    {{ Form::close() }}
-                @else
-                    NO HAY LUGAR
-                @endif
-            </div>
-        @endforeach
+                            <label class="col-xs-1">{{ $hour }}:</label>
+                            <label class="col-xs-2">Horas a reservar:</label>
+                            <div class="col-xs-5">
+                                {{ Form::number('hours', null, ['class' => 'form-control hour ', 'min' => '1', 'max' => $maxHours, 'placeholder' => 'Max: '.$maxHours.' hs.', 'type' => 'number', 'required' => true]) }}
+                            </div>
+                            <button class='btn btn-primary col-xs-4' type='submit' value='submit'>
+                                <i class='fa fa-user'></i> Reservar
+                            </button>
+                        </div>
+                        {{ Form::close() }}
+                    @else
+                        NO HAY LUGAR
+                    @endif
+            @endforeach
+        </div>
     @else
         NO SE HACEN RESERVAS PARA ESTE DIA
     @endif
