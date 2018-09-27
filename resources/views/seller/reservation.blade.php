@@ -2,8 +2,8 @@
 
 @section('details')
 
-    @if($sellerDay)
-        <div class="col-xs-9">
+    <div class="col-xs-9">
+        @if($sellerDay)
             @foreach($hours as $hour => $availability)
                 <div class="row text-center buttons">
                     @if($availability >= $number_of_reservations)
@@ -39,10 +39,12 @@
                     @endif
                 </div>
             @endforeach
-        </div>
-    @else
-        NO SE HACEN RESERVAS PARA ESTE DIA
-    @endif
+        @else
+            <div class="row text-center buttons">
+                <label class="col-xs-12">NO SE HACEN RESERVAS PARA ESTE DIA</label>
+            </div>
+        @endif
+    </div>
 
     <script>
         $('.hour').keypress(function (e) {
