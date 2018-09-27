@@ -5,9 +5,9 @@
     @if($sellerDay)
         <div class="col-xs-9">
             @foreach($hours as $hour => $availability)
+                <div class="row text-center buttons">
                     @if($availability >= $number_of_reservations)
                         {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve')) }}
-                        <div class="row text-center buttons">
                             {{ Form::hidden('seller_day_id', $seller->id) }}
                             {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
                             {{ Form::hidden('from_hour', $hour) }}
@@ -31,11 +31,13 @@
                             <button class='btn btn-primary col-xs-4' type='submit' value='submit'>
                                 <i class='fa fa-user'></i> Reservar
                             </button>
-                        </div>
+
                         {{ Form::close() }}
                     @else
-                        NO HAY LUGAR
+                        <label class="col-xs-1">{{ $hour }}:</label>
+                        <label class="col-xs-2">NO DISPONIBLE</label>
                     @endif
+                </div>
             @endforeach
         </div>
     @else
