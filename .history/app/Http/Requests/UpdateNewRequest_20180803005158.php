@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\News;
+use App\Models\New;
 
-class CreateNewRequest extends FormRequest
+class UpdateNewRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,6 @@ class CreateNewRequest extends FormRequest
      */
     public function rules()
     {
-        return News::$rules;
+        return New::$rules;
     }
 }
