@@ -105,7 +105,7 @@ Route::resource('sellers', 'SellerController');
 
 Route::resource('sellerCategories', 'SellerCategoryController');
 
-Route::resource('news', 'NewController');
+Route::resource('news', 'NewsController');
 
 Route::resource('events', 'EventController');
 
@@ -126,3 +126,5 @@ Route::resource('orderDetailAttributeValueEntities', 'OrderDetailAttributeValueE
 Route::post('/seller/reservation', 'SellerShowController@reservation');
 
 Route::post('/seller/reserve', 'SellerShowController@reserve')->middleware('auth');
+
+$this->get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
