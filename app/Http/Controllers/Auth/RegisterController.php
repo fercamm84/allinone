@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Notifications\UserRegisteredSuccessfully;
 use App\Repositories\RoleUserRepository;
 use App\Repositories\UserRepository;
+use App\Http\Helpers\SendMailHelper;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +42,8 @@ class RegisterController extends Controller
     /** @var  UserRepository */
     private $userRepository;
 
+    private $SendMailHelper;
+
     /**
      * Create a new controller instance.
      *
@@ -49,6 +53,7 @@ class RegisterController extends Controller
         $this->roleUserRepository = $roleUserRepo;
         $this->userRepository = $userRepo;
         $this->middleware('guest');
+        $this->SendMailHelper = new SendMailHelper();
     }
 
     /**
@@ -102,17 +107,45 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        $user->activation_code = str_random(30).time();//agrego codigo de activacion
+        $user->save();
+
+        // $this->guard()->login($user);
 
         $roleUser = array();
         $roleUser['user_id'] = $user->id;
-        $roleUser['role_id'] = 2;
+        $roleUser['role_id'] = 2;//rol para acceder al front
         $this->roleUserRepository->create($roleUser);
+
+        $user->notify(new UserRegisteredSuccessfully($user));
 
         Flash::success(trans('auth.register.ok'));
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
+    }
+
+    /**
+     * Activate the user with given activation code.
+     * @param string $activationCode
+     * @return string
+     */
+    public function activateUser(string $activationCode)
+    {
+        try {
+            $user = app(User::class)->where('activation_code', $activationCode)->first();
+            if (!$user) {
+                return "The code does not exist for any user in our system.";
+            }
+            $user->status = 1;
+            $user->activation_code = null;
+            $user->save();
+            auth()->login($user);
+        } catch (\Exception $exception) {
+            logger()->error($exception);
+            return "Whoops! something went wrong.";
+        }
+        return redirect()->to('/');
     }
 
 }

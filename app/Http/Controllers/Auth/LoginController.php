@@ -72,6 +72,16 @@ class LoginController extends Controller
             $user = Auth::user();
             $user = User::find($user->id);
 
+            if($user && $user->status != 1){
+                Auth::logout();
+
+                Flash::error(trans('auth.verification'));
+    
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('auth.verification')],
+                ]);
+            }
+
             foreach($user->roleUsers as $roleUser){
                 if($roleUser->role_id == $role){
                     return $this->sendLoginResponse($request);
