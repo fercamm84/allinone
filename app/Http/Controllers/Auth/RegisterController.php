@@ -101,7 +101,16 @@ class RegisterController extends Controller
         try{
             $this->validator($request->all())->validate();
         }catch(\Exception $e){
-            Flash::error(trans('auth.register.error'));
+            //TODO: Ver si ya existe el usuario (por email)
+            $user = User::where([['email', '=', $request->email]])->first();
+
+            if($user){
+                $user->notify(new UserRegisteredSuccessfully($user));
+                Flash::error(trans('auth.register.resend.email'));
+            }else{
+                Flash::error(trans('auth.register.error'));
+            }
+            
             throw $e;
         }
 
@@ -117,6 +126,7 @@ class RegisterController extends Controller
         $roleUser['role_id'] = 2;//rol para acceder al front
         $this->roleUserRepository->create($roleUser);
 
+        
         $user->notify(new UserRegisteredSuccessfully($user));
 
         Flash::success(trans('auth.register.ok'));

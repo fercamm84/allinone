@@ -6,12 +6,12 @@
     <meta name="robots" content="all,follow">
     <meta name="googlebot" content="index,follow,snippet,archive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Obaju e-commerce template">
-    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
-    <meta name="keywords" content="">
+    <meta name="description" content="Reserbeer">
+    <meta name="author" content="Reserbeer">
+    <meta name="keywords" content="beer craft artesanal cerveza biere birra reserbeer reservas bar bares">
 
     <title>
-
+        Reserbeer
     </title>
 
     <meta name="keywords" content="">
@@ -19,10 +19,13 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
 
     <!-- styles -->
-    <link href="{{asset('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
-	<link href="{{asset('css/bootstrap.css') }}" rel="stylesheet">
+	
+    <link href="{{asset('css/core-style.css') }}" rel="stylesheet">
+    <link href="{{asset('css/responsive.css') }}" rel="stylesheet">
+
     <link href="{{asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
@@ -33,36 +36,23 @@
     <!-- your stylesheet with modifications -->
     <link href="{{asset('css/custom.css') }}" rel="stylesheet">
 
-    <script src="{{asset('js/respond.min.js') }}"></script>
-
-    <link rel="shortcut icon" href="{{asset('favicon.png') }}">
+    <!-- <link rel="shortcut icon" href="{{asset('favicon.png') }}"> -->
 
     @yield('css')
 
-    <!-- jQuery 3.1.1 -->
-
-    <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-    <!-- Bootstrap 3.3.7 -->
-	<!-- alejo <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-    
-    <script src="{{asset('js/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{asset('js/jquery-2.2.4.min.js') }}"></script>
     <script src="{{asset('js/bootstrap.min.js') }}"></script>
+
+    <script src="{{asset('js/popper.min.js') }}"></script>
+    <script src="{{asset('js/plugins.js') }}"></script>
+    
+
     <script src="{{asset('js/jquery.cookie.js') }}"></script>
     <script src="{{asset('js/waypoints.min.js') }}"></script>
     <script src="{{asset('js/modernizr.js') }}"></script>
     <script src="{{asset('js/bootstrap-hover-dropdown.js') }}"></script>
     <script src="{{asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{asset('js/front.js') }}"></script>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    {{--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--}}
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     @yield('scripts')
 </head>
@@ -75,6 +65,35 @@ $first_part = $components[1];
 ?>
 
 <body>
+
+<div class="catagories-side-menu">
+    <!-- Close Icon -->
+    <div id="sideMenuClose">
+        <i class="ti-close"></i>
+    </div>
+    <!--  Side Nav  -->
+    <div class="nav-side-menu">
+        <div class="menu-list">
+            <h6>Cervecerías</h6>
+            <ul id="menu-content" class="menu-content collapse out">
+                <!-- Single Item -->
+                <li data-toggle="collapse" data-target="#women" class="collapsed active">
+                    <a href="#">Barrio<span class="arrow"></span></a>
+                    <ul class="sub-menu collapse" id="women">
+                        <li><a href="#">Belgrano</a></li>
+                        <li><a href="#">Palermo</a></li>
+                        <li><a href="#">Caballito</a></li>
+                        <li><a href="#">Nuñez</a></li>
+                        <li><a href="#">Flores</a></li>
+                        <li><a href="#">Centro</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
 
 <!-- *** TOPBAR ***
 _________________________________________________________ -->
@@ -270,308 +289,214 @@ _________________________________________________________ -->
 
 </div>
 
-<!-- *** TOP BAR END *** -->
 
-<!-- *** NAVBAR ***
-_________________________________________________________ -->
 
-<div class="navbar navbar-default yamm" role="navigation" id="navbar">
-    <div class="container">
-        <div class="navbar-header">
 
-            <a class="navbar-brand home" href="/" data-animate-hover="bounce">
-                <img src="{{ asset('imagenes/logo.png') }}" alt="Logo" class="hidden-xs" width="95" height="30">
-                <img src="{{ asset('imagenes/logo-small.png') }}" alt="Small logo" class="visible-xs" width="95" height="30"><span class="sr-only">Go to homepage</span>
-            </a>
-            <div class="navbar-buttons">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <i class="fa fa-align-justify"></i>
-                </button>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
-                    <span class="sr-only">Toggle search</span>
-                    <i class="fa fa-search"></i>
-                </button>
-                <a class="btn btn-default navbar-toggle" href="basket.html">
-                    <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
-                </a>
-            </div>
-        </div>
-        <!--/.navbar-header -->
+    <!-- ****** Header Area Start ****** -->
+    <header class="header_area">
+        <!-- Top Header Area Start -->
+        <div class="top_header_area">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-end">
 
-        <div class="navbar-collapse collapse" id="navigation">
-
-            <ul class="nav navbar-nav navbar-left">
-                <li class="<?php if ($first_part=="") {echo "active"; } else  {echo "noactive";}?>"><a href="/">Home</a>
-                </li>
-                <li class="dropdown yamm-fw <?php if ($first_part!=="" && $first_part!=="location" && $first_part!=="contact") {echo "active"; } else  {echo "noactive";}?>">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Productos <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="yamm-content">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h5>Categorias</h5>
-                                        <ul>
-											@foreach($sections as $section)
-												@if($section->type == 'home_principal')
-                                                    @foreach($section->sectionEntities as $sectionEntity)
-                                                        <?php $category = $sectionEntity->entity->entidad(); ?>
-															<li class="dropdown yamm-fw">
-																<a href="/cat/{{ $category->id }}">{{ $category->description }}</a>
-															</li>
-													@endforeach
-												@endif
-											@endforeach
-										<ul>
-									</div>
+                    <div class="col-12 col-lg-7">
+                        <div class="top_single_area d-flex align-items-center">
+                            <!-- Logo Area -->
+                            <div class="top_logo">
+                                <a href="/"><img src="{{ asset('imagenes/logo.png') }}" alt="" width="95" height="30"></a>
+                            </div>
+                            <!-- Cart & Menu Area -->
+                            <div class="header-cart-menu d-flex align-items-center ml-auto">
+                                <!-- Cart Area -->
+                                <div class="cart">
+                                    <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i class="ti-bag"></i> Your Bag $20</a>
+                                    <!-- Cart List Area Start -->
+                                    <ul class="cart-list">
+                                        <li>
+                                            <a href="#" class="image"><img src="img/product-img/product-10.jpg" class="cart-thumb" alt=""></a>
+                                            <div class="cart-item-desc">
+                                                <h6><a href="#">Women's Fashion</a></h6>
+                                                <p>1x - <span class="price">$10</span></p>
+                                            </div>
+                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="image"><img src="img/product-img/product-11.jpg" class="cart-thumb" alt=""></a>
+                                            <div class="cart-item-desc">
+                                                <h6><a href="#">Women's Fashion</a></h6>
+                                                <p>1x - <span class="price">$10</span></p>
+                                            </div>
+                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                        </li>
+                                        <li class="total">
+                                            <span class="pull-right">Total: $20.00</span>
+                                            <a href="/basket" class="btn btn-sm btn-cart">Carrito</a>
+                                            <a href="checkout-1.html" class="btn btn-sm btn-checkout">Checkout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="header-right-side-menu ml-15">
+                                    <a href="#" id="sideMenuBtn"><i class="ti-menu" aria-hidden="true"></i></a>
                                 </div>
                             </div>
-
-                        </li>
-                    </ul>
-                </li>
-                <li class="<?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>"><a href="/location">Donde Encontrarnos</a>
-                </li>
-                <li class="<?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>"><a href="/contact">Contacto</a>
-            </ul>
-
-        </div>
-        <!--/.nav-collapse -->
-
-        <div class="navbar-buttons">
-
-            <div class="navbar-collapse collapse right" id="basket-overview">
-                <a href="/basket" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm"></span></a>
-            </div>
-            <!--/.nav-collapse -->
-
-            <div class="navbar-collapse collapse right" id="search-not-mobile">
-                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
-                    <span class="sr-only">Toggle search</span>
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-
-        </div>
-
-        <div class="collapse clearfix" id="search">
-
-            {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
-            <div class="input-group">
-                {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
-                <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </span>
-            </div>
-            {{ Form::close() }}
-
-        </div>
-        <!--/.nav-collapse -->
-
-    </div>
-    <!-- /.container -->
-</div>
-<!-- /#navbar -->
-
-<!-- *** NAVBAR END *** -->
-<div id="all">
-
-    <div id="content">
-		
-        @include('flash::message')
-        @yield('content')
-
-    </div>
-
-    <!-- *** FOOTER ***
-	
-	
-_________________________________________________________ -->
-
-
-	<div id="tarjetas">
-			<div class="container">
-			
-				<div class="col-md-6" style="text-align:right; color:#FFF !important;"><h3>Trabajamos con tarjetas de crédito y débito</h3></div>
-				
-				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa-electron.jpg') }}" alt="Artesanías en Maderas"> </div>
-				
-				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-american-express.jpg') }}" alt="Artesanías en Maderas"></div>
-				
-				<div class="col-md-2"><img src="{{ asset('img/artesaniasenmaderas-visa.jpg') }}" alt="Artesanías en Maderas"></div>
-				
-				
-			</div>
-	</div>
-		
-		
-		
-		
-    <div id="footer" data-animate="fadeInUp">
-	
-		
-	
-	
-        <div class="container">
-			
-			
-			
-            <div class="row">
-				
-				
-			
-			
-			
-			
-			
-                <div class="col-md-4 col-sm-6">
-                    <!-- h4>Pages</h4>
-
-                    <ul>
-                        <li><a href="text.html">About us</a>
-                        </li>
-                        <li><a href="text.html">Terms and conditions</a>
-                        </li>
-                        <li><a href="faq.html">FAQ</a>
-                        </li>
-                        <li><a href="contact.html">Contact us</a>
-                        </li>
-                    </ul>
-
-                    <hr -->
-
-                    <h4>Sección Usuarios</h4>
-
-                    <ul>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
-                        </li>
-                        <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
-                        </li>
-                    </ul>
-
-                    <hr class="hidden-md hidden-lg hidden-sm">
+                        </div>
+                    </div>
 
                 </div>
-                <!-- /.col-md-3 -->
+            </div>
+        </div>
 
-                <!-- div class="col-md-3 col-sm-6">
+        <!-- Top Header Area End -->
+        <div class="main_header_area">
+            <div class="container h-100">
+                <div class="row h-100">
+                    <div class="col-12 d-md-flex justify-content-between">
+                        <!-- Header Social Area -->
+                        <div class="header-social-area">
+                            <a href="#"><span class="karl-level">Share</span> <i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </div>
+                        <!-- Menu Area -->
+                        <div class="main-menu-area">
+                            <nav class="navbar navbar-expand-lg align-items-start">
 
-                    <h4>Top categories</h4>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
 
-                    <h5>Men</h5>
+                                <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
+                                    <ul class="navbar-nav animated" id="nav">
+                                        <li class="nav-item active"><a class="nav-link" href="/">Reserbeer</a></li>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                                            <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                @foreach($sections as $section)
+                                                    @if($section->type == 'home_principal')
+                                                        @foreach($section->sectionEntities as $sectionEntity)
+                                                            <?php $category = $sectionEntity->entity->entidad(); ?>
+                                                            <a class="dropdown-item" href="/cat/{{ $category->id }}">{{ $category->description }}</a>
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </li>
+                                        <li class="nav-item <?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>">
+                                            <a class="nav-link" href="/location">Donde Encontrarnos</a>
+                                        </li>
+                                        <li class="nav-item <?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>">
+                                            <a class="nav-link" href="/contact"><span class="karl-level">Escribinos</span>Contacto</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <!-- Help Line -->
+                        <div class="help-line">
+                            <a href="tel:+346573556778"><i class="ti-headphone-alt"></i> +34 657 3556 778</a>
+                        </div>
+                    </div>
+                    <div class="col-6 d-md-flex justify-content-between">
+                        <div class="navbar-buttons">
 
-                    <ul>
-                        <li><a href="category.html">T-shirts</a>
-                        </li>
-                        <li><a href="category.html">Shirts</a>
-                        </li>
-                        <li><a href="category.html">Accessories</a>
-                        </li>
-                    </ul>
-
-                    <h5>Ladies</h5>
-                    <ul>
-                        <li><a href="category.html">T-shirts</a>
-                        </li>
-                        <li><a href="category.html">Skirts</a>
-                        </li>
-                        <li><a href="category.html">Pants</a>
-                        </li>
-                        <li><a href="category.html">Accessories</a>
-                        </li>
-                    </ul>
-
-                    <hr class="hidden-md hidden-lg">
-
-                </div -->
-                <!-- /.col-md-3 -->
-
-                <div class="col-md-4 col-sm-6">
-
-                    <h4>Dónde Encontrarnos</h4>
-
-                    <ul>
-					<li>&#8226; Italia 461 - (b1648eee)</li>
-                    <li>&#8226; Tigre, Buenos Aires, Argentina</li>
-					<li>&#8226; Tel: 011-47490453</li>
-                    </ul>
-
-                    <!-- a href="contact.html">Pagina de Contacto</a -->
-
-                    <hr class="hidden-md hidden-lg">
-
-                </div>
-                <!-- /.col-md-3 -->
-
-
-
-                <div class="col-md-4 col-sm-6">
-
-                    <!-- h4>Get the news</h4>
-
-                    <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-
-                    <form>
-                        <div class="input-group">
-
-                            <input type="text" class="form-control">
-
-                                <span class="input-group-btn">
-
-			    <button class="btn btn-default" type="button">Subscribe!</button>
-
-			</span>
+                            <div class="navbar-collapse collapse right" id="search-not-mobile">
+                                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                                    <span class="sr-only">Toggle search</span>
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
 
                         </div>
-                    </form>
 
-                    <hr -->
+                        <div class="collapse clearfix" id="search">
 
-                    <h4>Mantente en Contacto</h4>
+                            {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
+                            <div class="input-group">
+                                {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                        </span>
+                            </div>
+                            {{ Form::close() }}
 
-                    <p class="social">
-                        <a href="https://www.facebook.com/DIR-Mueblesartesanias-En-Madera-256976744447595/" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                        <a href="https://www.instagram.com/artesaniaenmaderas_/" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                        <a href="mailto:artesaniaenmaderas@hotmail.com" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
-                    </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ****** Header Area End ****** -->
 
+
+
+
+    <div id="all">
+
+        <div id="content">
+            
+            @include('flash::message')
+            @yield('content')
+
+        </div>
+
+        <!-- *** FOOTER *** -->
+        <div id="footer" data-animate="fadeInUp">
+
+            <div class="container">
+                
+                <div class="row">
+                    
+                    <div class="col-md-4 col-sm-6">
+                        
+                        <h4>Sección Usuarios</h4>
+
+                        <ul>
+                            <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
+                            </li>
+                            <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
+                            </li>
+                        </ul>
+
+                        <hr class="hidden-md hidden-lg hidden-sm">
+
+                    </div>
 
                 </div>
-                <!-- /.col-md-3 -->
+                <!-- /.row -->
 
             </div>
-            <!-- /.row -->
-
+            <!-- /.container -->
         </div>
-        <!-- /.container -->
-    </div>
-    <!-- /#footer -->
+        <!-- /#footer -->
 
-    <!-- *** FOOTER END *** -->
+        <!-- *** FOOTER END *** -->
 
 
 
 
-    <!-- *** COPYRIGHT ***
-_________________________________________________________ -->
-    <div id="copyright">
-        <div class="container">
-            <div class="col-md-6">
-                <!-- <p class="pull-left">© 2018 FAS fas@serugiran.tech</p> -->
-				© 2018 <a href="https://www.artesaniasenmaderas.com.ar" class="" style="color:#fff !important;" >Artesanías en Maderas</a>
-
-            </div>
-            <div class="col-md-6">
-                <p class="pull-right">
-                    <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
-                </p>
+        <!-- *** COPYRIGHT *** -->
+        <div id="copyright">
+            <div class="container">
+                <div class="col-md-6">
+                    © 2018 <a href="https://www.reserbeer.com" class="" style="color:#fff !important;" >Reserbeer</a>
+                </div>
+                <div class="col-md-6">
+                    <p class="pull-right">
+                        &nbsp;
+                    </p>
+                </div>
             </div>
         </div>
+        <!-- *** COPYRIGHT END *** -->
+
     </div>
-    <!-- *** COPYRIGHT END *** -->
+
+
+
 
 </div>
 
 </body>
+
+<script src="{{asset('js/active.js') }}"></script>
+
 </html>
