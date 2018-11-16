@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'activation_code', 'status'
+        'firstname', 'lastname', 'email', 'password', 'activation_code', 'status',
     ];
 
     /**
@@ -25,12 +25,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'activation_code', 'status',
     ];
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MyResetPassword($token));
+    }
+
+    public function getQueueableId(){
+        return $this->id;
     }
 
 }

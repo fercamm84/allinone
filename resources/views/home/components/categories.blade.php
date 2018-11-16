@@ -1,19 +1,53 @@
-<div class="container">
-    <div class="col-md-12">
-        <div id="main-slider">
+<div id="wrapper">
+    <!-- ****** Welcome Slides Area Start ****** -->
+    <section class="welcome_area">
+        <div class="welcome_slides owl-carousel">
             @foreach($sections as $section)
                 @if($section->type == 'home_slider')
                     @foreach($section->sectionEntities as $sectionEntity)
                         <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                        <div class="item">
-                            <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" class="img-responsive">
+                        <!-- Single Slide Start -->
+                        <div class="single_slide height-800 bg-img background-overlay" style="background-image: url({{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }});">
+                            <div class="container h-100">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-12">
+                                        <div class="welcome_slide_text">
+                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">La IMAGEN no es nada</h6>
+                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">la sed es todo</h2>
+                                            <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">Compre compre</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            @endforeach
+
+            @foreach($sections as $section)
+                @if($section->type == 'home_slider')
+                    @foreach($section->sectionEntities as $sectionEntity)
+                        <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                        <!-- Single Slide Start -->
+                        <div class="single_slide height-800 bg-img background-overlay" style="background-image: url({{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }});">
+                            <div class="container h-100">
+                                <div class="row h-100 align-items-center">
+                                    <div class="col-12">
+                                        <div class="welcome_slide_text">
+                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">La IMAGEN no es nada</h6>
+                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">la sed es todo</h2>
+                                            <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">Compre compre</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 @endif
             @endforeach
         </div>
-        <!-- /#main-slider -->
-    </div>
+    </section>
+    <!-- ****** Welcome Slides Area End ****** -->
 </div>
 
 <div id="hot">
@@ -37,58 +71,121 @@
         </div>
     @endif
 
-    <div class="container">
-        <div class="product-slider">
-            @foreach($sections as $section)
-                @if($section->type == 'home_principal')
-                    @foreach($section->sectionEntities as $sectionEntity)
-                        <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                        <div class="item">
-                            <div class="product">
-                                @if(sizeof($entidad->entity->imageEntities)>0)
-                                    <div class="flip-container">
-                                        <div class="flipper">
-                                            <div class="front">
-                                                <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
-                                                    <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" class="img-responsive">
-                                                </a>
-                                            </div>
-                                            @if(sizeof($entidad->entity->imageEntities)>1)
-                                                <div class="back">
-                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
-                                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{1}->image->name) }}" class="img-responsive">
-                                                    </a>
+
+    @foreach($sections as $section)
+        @if($section->type == 'home_principal')
+            @foreach($section->sectionEntities as $sectionEntity)
+                <?php $entidad = $sectionEntity->entity->entidad(); ?>
+
+                <!-- ****** Quick View Modal Area Start ****** -->
+                <div class="modal fade" id="quickview{{ $entidad->id }}" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                            <div class="modal-body">
+                                <div class="quickview_body">
+                                    <div class="container">
+                                        <div class="row">
+
+                                            <div class="col-12 col-lg-5">
+                                                <div class="quickview_pro_img">
+                                                    @if(sizeof($entidad->entity->imageEntities)>0)
+                                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" alt="">
+                                                    @else
+                                                        <img src="{{ asset('/img/default-no-image.png')}}" alt="">
+                                                    @endif
                                                 </div>
-                                            @endif
+                                            </div>
+                                            <div class="col-12 col-lg-7">
+                                                <div class="quickview_pro_des">
+                                                    <h4 class="title">{{ $entidad->description }}</h4>
+                                                    <div class="top_seller_product_rating mb-15">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                    <!-- <h5 class="price">$120.99 <span>$130</span></h5> -->
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita quibusdam aspernatur, sapiente consectetur accusantium perspiciatis praesentium eligendi, in fugiat?</p>
+                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">Entrar a {{ $entidad->description }}</a>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-                                @else
-                                    <div class="flip-container">
-                                        <div class="front">
-                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
-                                                <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
-                                            </a>
-                                        </div>
-                                        <div class="back">
-                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">
-                                                <img src="{{ asset('/img/default-no-image.png')}}" class="img-responsive">
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                                <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" class="invisible" >
-                                    <img src="{{ asset('/img/default-no-image.png')}}" alt="" class="img-responsive">
-                                </a>
-                                <div class="text">
-                                    <h3><a href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->description }} </a></h3>
                                 </div>
-                                <!-- /.text -->
                             </div>
-                            <!-- /.product -->
                         </div>
-                    @endforeach
-                @endif
+                    </div>
+                </div>
+                <!-- ****** Quick View Modal Area End ****** -->
+
             @endforeach
+        @endif
+    @endforeach
+
+
+    <!-- ****** Bares Start ****** -->
+    <section class="new_arrivals_area section_padding_100_0 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section_heading text-center">
+                        <h2>Cervecerías artesanales destacadas</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="karl-projects-menu mb-100">
+            <div class="text-center portfolio-menu">
+                <button class="btn active" data-filter="*">TODAS</button>
+                <button class="btn" data-filter=".palermo">Palermo</button>
+                <button class="btn" data-filter=".caballito">Caballito</button>
+                <button class="btn" data-filter=".belgrano">Belgrano</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row karl-new-arrivals">
+
+                @foreach($sections as $section)
+                    @if($section->type == 'home_principal')
+                        @foreach($section->sectionEntities as $sectionEntity)
+                            <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                            <div class="col-12 col-sm-6 col-md-4 single_gallery_item Palermo wow fadeInUpBig" data-wow-delay="0.2s">
+                                <!-- Product Image -->
+                                <div class="product-img">
+                                    @if(sizeof($entidad->entity->imageEntities)>0)
+                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" alt="">
+                                        <div class="product-quicview">
+                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
+                                        </div>
+                                    @else
+                                        <img src="{{ asset('/img/default-no-image.png')}}" alt="">
+                                        <div class="product-quicview">
+                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
+                                        </div>
+                                    @endif
+                                </div>
+                                
+                                <!-- Product Description -->
+                                <div class="product-description">
+                                    <!-- <h4 class="product-price">Belgrano</h4> -->
+                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}"><p>{{ $entidad->description }}</p></a>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                @endforeach
+
+            </div>
+        </div>
+    </section>
+    <!-- ****** New Arrivals Area End ****** -->
+
 </div>
