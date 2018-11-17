@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Section;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use Auth;
 use App;
@@ -43,7 +44,27 @@ class SearchController extends Controller
         }
 
 //        return view('search.search', array('products' => $products, 'categories' => $categories));
-        return view('search.global_search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => null, 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
+        return view('search.global_search', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => null, 
+                'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
+    }
+
+    public function searchCategoryByLocation($id = null){
+        $categories = Category::whereHas('entity', function($q) use ($id) {
+            $q->where('location_id', $id);
+        })->get();
+
+        $entity_parents = $categories;
+        
+        $entity_children = array();
+
+        foreach($categories as $category){
+            foreach ($category->categoryProducts as $categoryProduct) {
+                array_push($entity_children, $categoryProduct->product);
+            }
+        }
+
+        return view('category.category', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => $category, 
+            'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
     }
 
 }
