@@ -80,12 +80,21 @@ $first_part = $components[1];
                 <li data-toggle="collapse" data-target="#women" class="collapsed active">
                     <a href="#">Barrio<span class="arrow"></span></a>
                     <ul class="sub-menu collapse" id="women">
-                        <li><a href="#">Belgrano</a></li>
-                        <li><a href="#">Palermo</a></li>
-                        <li><a href="#">Caballito</a></li>
-                        <li><a href="#">Nuñez</a></li>
-                        <li><a href="#">Flores</a></li>
-                        <li><a href="#">Centro</a></li>
+                    
+                        <?php $locations = array(); ?>
+                        @foreach($sections as $section)
+                            @if($section->type == 'home_principal')
+                                @foreach($section->sectionEntities as $sectionEntity)
+                                    <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                                    <?php array_push($locations, $entidad->entity->location); ?>
+                                @endforeach
+                                <?php $locations = array_unique($locations); ?>
+                            @endif
+                        @endforeach
+                        @foreach($locations as $location)
+                            <li><a href="/search/categoryByLocation/{{ $location->id }}">{{ $location->description }}</a></li>
+                        @endforeach
+
                     </ul>
                 </li>
             </ul>

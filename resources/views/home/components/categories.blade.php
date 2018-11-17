@@ -144,9 +144,19 @@
         <div class="karl-projects-menu mb-100">
             <div class="text-center portfolio-menu">
                 <button class="btn active" data-filter="*">TODAS</button>
-                <button class="btn" data-filter=".palermo">Palermo</button>
-                <button class="btn" data-filter=".caballito">Caballito</button>
-                <button class="btn" data-filter=".belgrano">Belgrano</button>
+                <?php $locations = array(); ?>
+                @foreach($sections as $section)
+                    @if($section->type == 'home_principal')
+                        @foreach($section->sectionEntities as $sectionEntity)
+                            <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                            <?php array_push($locations, $entidad->entity->location); ?>
+                        @endforeach
+                        <?php $locations = array_unique($locations); ?>
+                    @endif
+                @endforeach
+                @foreach($locations as $location)
+                    <button class="btn" data-filter=".location_{{ $location->id }}">{{ $location->description }}</button>
+                @endforeach
             </div>
         </div>
 
@@ -157,7 +167,7 @@
                     @if($section->type == 'home_principal')
                         @foreach($section->sectionEntities as $sectionEntity)
                             <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                            <div class="col-12 col-sm-6 col-md-4 single_gallery_item Palermo wow fadeInUpBig" data-wow-delay="0.2s">
+                            <div class="col-12 col-sm-6 col-md-4 single_gallery_item location_{{ $entidad->entity->location->id }} wow fadeInUpBig" data-wow-delay="0.2s">
                                 <!-- Product Image -->
                                 <div class="product-img">
                                     @if(sizeof($entidad->entity->imageEntities)>0)

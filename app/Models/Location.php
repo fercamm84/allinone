@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection sectionCategories
  * @property \Illuminate\Database\Eloquent\Collection sectionProducts
  * @property \Illuminate\Database\Eloquent\Collection userAddresses
+ * @property \Illuminate\Database\Eloquent\Collection Entity
  * @property string description
  * @property integer city_id
  */
@@ -76,5 +77,13 @@ class Location extends Model
     public function addresses()
     {
         return $this->hasMany(\App\Models\Address::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function entities()
+    {
+        return $this->hasMany(\App\Models\Entity::class);
     }
 }

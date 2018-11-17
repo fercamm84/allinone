@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version August 1, 2018, 8:19 pm UTC
  *
+ * @property \App\Models\Location location
  * @property \Illuminate\Database\Eloquent\Collection Category
  * @property \Illuminate\Database\Eloquent\Collection attributeEntities
  * @property \Illuminate\Database\Eloquent\Collection ImageEntity
@@ -36,7 +37,8 @@ class Entity extends Model
 
 
     public $fillable = [
-        'type'
+        'type',
+        'location_id'
     ];
 
     /**
@@ -46,7 +48,8 @@ class Entity extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'type' => 'string'
+        'type' => 'string',
+        'location_id' => 'integer'
     ];
 
     /**
@@ -128,6 +131,14 @@ class Entity extends Model
     public function sectionEntities()
     {
         return $this->hasMany(\App\Models\SectionEntity::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function location()
+    {
+        return $this->belongsTo(\App\Models\Location::class);
     }
 
     public function entidad(){
