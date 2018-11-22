@@ -323,29 +323,32 @@ _________________________________________________________ -->
                                         @foreach($order->orderDetails as $orderDetail)
                                             <?php $cantidadTotalProductos += $orderDetail->volume; ?>
                                         @endforeach
-                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ $cantidadTotalProductos }}</span> <i class="ti-bag"></i> Mi carrito ${{ $orderDetail->total() }}</a>
-                                        <!-- Cart List Area Start -->
-                                        <ul class="cart-list">
-                                            @foreach($order->orderDetails as $orderDetail)
-                                                <li>
-                                                    <a href="#" class="image">
-                                                        @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
-                                                            <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="cart-thumb" width="150px" height="150px">
-                                                            <?php break; ?>
-                                                        @endforeach
-                                                    </a>
-                                                        <div class="cart-item-desc">
-                                                        <h6><a href="#">{{ $orderDetail->product->name }}</a></h6>
-                                                        <p>{{ $orderDetail->volume }} x - <span class="price">${{ $orderDetail->unitPrice() }}</span></p>
-                                                    </div>
-                                                    <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+
+                                        @if($cantidadTotalProductos > 0)
+                                            <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ $cantidadTotalProductos }}</span> <i class="ti-bag"></i> Mi carrito ${{ $orderDetail->total() }}</a>
+                                            <!-- Cart List Area Start -->
+                                            <ul class="cart-list">
+                                                @foreach($order->orderDetails as $orderDetail)
+                                                    <li>
+                                                        <a href="#" class="image">
+                                                            @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
+                                                                <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="cart-thumb" width="150px" height="150px">
+                                                                <?php break; ?>
+                                                            @endforeach
+                                                        </a>
+                                                            <div class="cart-item-desc">
+                                                            <h6><a href="#">{{ $orderDetail->product->name }}</a></h6>
+                                                            <p>{{ $orderDetail->volume }} x - <span class="price">${{ $orderDetail->unitPrice() }}</span></p>
+                                                        </div>
+                                                        <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                                    </li>
+                                                @endforeach
+                                                <li class="total">
+                                                    <span class="pull-right">Total: ${{ $orderDetail->total() }}</span>
+                                                    <a href="/basket" class="btn btn-sm btn-cart">Ir al carrito</a>
                                                 </li>
-                                            @endforeach
-                                            <li class="total">
-                                                <span class="pull-right">Total: ${{ $orderDetail->total() }}</span>
-                                                <a href="/basket" class="btn btn-sm btn-cart">Ir al carrito</a>
-                                            </li>
-                                        </ul>
+                                            </ul>
+                                        @endif
                                     </div>
                                 @endif
                                 <div class="header-right-side-menu ml-15">
