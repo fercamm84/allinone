@@ -323,14 +323,14 @@ _________________________________________________________ -->
                                         @foreach($order->orderDetails as $orderDetail)
                                             <?php $cantidadTotalProductos += $orderDetail->volume; ?>
                                         @endforeach
-                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ $cantidadTotalProductos }}</span> <i class="ti-bag"></i> Your Bag ${{ $orderDetail->total() }}</a>
+                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ $cantidadTotalProductos }}</span> <i class="ti-bag"></i> Mi carrito ${{ $orderDetail->total() }}</a>
                                         <!-- Cart List Area Start -->
                                         <ul class="cart-list">
                                             @foreach($order->orderDetails as $orderDetail)
                                                 <li>
                                                     <a href="#" class="image">
                                                         @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
-                                                            <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="cart-thumb" width="100px" height="100px">
+                                                            <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="cart-thumb" width="150px" height="150px">
                                                             <?php break; ?>
                                                         @endforeach
                                                     </a>
