@@ -389,8 +389,8 @@ _________________________________________________________ -->
                                                 @foreach($sections as $section)
                                                     @if($section->type == 'home_principal')
                                                         @foreach($section->sectionEntities as $sectionEntity)
-                                                            <?php $category = $sectionEntity->entity->entidad(); ?>
-                                                            <a class="dropdown-item" href="/cat/{{ $category->id }}">{{ $category->description }}</a>
+                                                            <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                                                            <a class="dropdown-item" href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->description }}</a>
                                                         @endforeach
                                                     @endif
                                                 @endforeach
