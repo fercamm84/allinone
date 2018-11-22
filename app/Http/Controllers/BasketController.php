@@ -130,7 +130,7 @@ class BasketController extends FrontController
 
         //obtengo la orden creada, sino, la creo
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
-        if(count($order) == 0){
+        if(empty($order)){
             $order = array();
             $order['user_id'] = $user->id;
             $order['state'] = 1;
@@ -141,7 +141,7 @@ class BasketController extends FrontController
         $orderDetail = OrderDetail::where([['order_id', '=', $order['id']], ['product_id', '=', $request->input('product_id')]])->first();
 
 //        if($orderDetail->isEmpty()){//esto es cuando se hace un ->get(); y se quiere ver si el listado obtenido es vacio o no
-        if(count($orderDetail) == 0){
+        if(empty($orderDetail)){
             $orderDetail = array();
             $orderDetail['volume'] = $request->input('stock');
             $orderDetail['order_id'] = $order->id;
