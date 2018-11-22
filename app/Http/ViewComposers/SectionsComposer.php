@@ -40,8 +40,11 @@ class SectionsComposer
 
         $sections = Section::all();
 
-        //obtengo la orden de compra actual
-        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+        $order = null;
+        if($user){
+            //obtengo la orden de compra actual
+            $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+        }
 
         $view->with('user', $user)->with('sections', $sections)->with('order', $order);
     }
