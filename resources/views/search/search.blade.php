@@ -53,7 +53,9 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
-                                        <h5 class="price">${!! $entity->price !!} <span><!--{!! $entity->price !!}--></span></h5>
+                                        @if($entity->getClassType() == 'product')
+                                            <h5 class="price">${!! $entity->price !!} <span><!--{!! $entity->price !!}--></span></h5>
+                                        @endif
                                         <p>{{ $entity->description }}</p>
                                         <a href="/{!! $entity->url() !!}/{!! $entity->id !!}">Ver detalle</a>
                                     </div>
