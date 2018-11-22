@@ -839,7 +839,7 @@ img {
 :: 9.0 Quickview Modal Area CSS
 ----------------------------- */
 
-#quickview button.close {
+.quickview button.close {
     box-shadow: none;
     position: absolute;
     right: 15px;

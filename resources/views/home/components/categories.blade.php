@@ -12,31 +12,9 @@
                                 <div class="row h-100 align-items-center">
                                     <div class="col-12">
                                         <div class="welcome_slide_text">
-                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">La IMAGEN no es nada</h6>
-                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">la sed es todo</h2>
-                                            <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">Compre compre</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-            @endforeach
-
-            @foreach($sections as $section)
-                @if($section->type == 'home_slider')
-                    @foreach($section->sectionEntities as $sectionEntity)
-                        <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                        <!-- Single Slide Start -->
-                        <div class="single_slide height-800 bg-img background-overlay" style="background-image: url({{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }});">
-                            <div class="container h-100">
-                                <div class="row h-100 align-items-center">
-                                    <div class="col-12">
-                                        <div class="welcome_slide_text">
-                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">La IMAGEN no es nada</h6>
-                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">la sed es todo</h2>
-                                            <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">Compre compre</a>
+                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">{{$entidad->type}}</h6>
+                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">{{$entidad->description}}</h2>
+                                            <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">conocer más</a>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +56,7 @@
                 <?php $entidad = $sectionEntity->entity->entidad(); ?>
 
                 <!-- ****** Quick View Modal Area Start ****** -->
-                <div class="modal fade" id="quickview{{ $entidad->id }}" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
+                <div class="modal fade quickview" id="quickview{{ $entidad->id }}" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">

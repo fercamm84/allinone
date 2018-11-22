@@ -31,7 +31,7 @@
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
 
     <!-- theme stylesheet -->
-    <link href="{{asset('css/style.default.css') }}" rel="stylesheet" id="theme-stylesheet">
+    <!-- <link href="{{asset('css/style.default.css') }}" rel="stylesheet" id="theme-stylesheet"> -->
 
     <!-- your stylesheet with modifications -->
     <link href="{{asset('css/custom.css') }}" rel="stylesheet">
@@ -47,12 +47,12 @@
     <script src="{{asset('js/plugins.js') }}"></script>
     
 
-    <script src="{{asset('js/jquery.cookie.js') }}"></script>
+    <!-- <script src="{{asset('js/jquery.cookie.js') }}"></script>
     <script src="{{asset('js/waypoints.min.js') }}"></script>
     <script src="{{asset('js/modernizr.js') }}"></script>
     <script src="{{asset('js/bootstrap-hover-dropdown.js') }}"></script>
     <script src="{{asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{asset('js/front.js') }}"></script>
+    <script src="{{asset('js/front.js') }}"></script> -->
 
     @yield('scripts')
 </head>
@@ -203,7 +203,7 @@ _________________________________________________________ -->
        
 
         
-        <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
        
 		<div class="modal-dialog modal-sm">
 
@@ -316,34 +316,38 @@ _________________________________________________________ -->
                             </div>
                             <!-- Cart & Menu Area -->
                             <div class="header-cart-menu d-flex align-items-center ml-auto">
-                                <!-- Cart Area -->
-                                <div class="cart">
-                                    <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i class="ti-bag"></i> Your Bag $20</a>
-                                    <!-- Cart List Area Start -->
-                                    <ul class="cart-list">
-                                        <li>
-                                            <a href="#" class="image"><img src="img/product-img/product-10.jpg" class="cart-thumb" alt=""></a>
-                                            <div class="cart-item-desc">
-                                                <h6><a href="#">Women's Fashion</a></h6>
-                                                <p>1x - <span class="price">$10</span></p>
-                                            </div>
-                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="image"><img src="img/product-img/product-11.jpg" class="cart-thumb" alt=""></a>
-                                            <div class="cart-item-desc">
-                                                <h6><a href="#">Women's Fashion</a></h6>
-                                                <p>1x - <span class="price">$10</span></p>
-                                            </div>
-                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
-                                        </li>
-                                        <li class="total">
-                                            <span class="pull-right">Total: $20.00</span>
-                                            <a href="/basket" class="btn btn-sm btn-cart">Carrito</a>
-                                            <a href="checkout-1.html" class="btn btn-sm btn-checkout">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                @if(!empty($order))
+                                    <!-- Cart Area -->
+                                    <div class="cart">
+                                        <?php $cantidadTotalProductos = 0; ?>
+                                        @foreach($order->orderDetails as $orderDetail)
+                                            <?php $cantidadTotalProductos += $orderDetail->volume; ?>
+                                        @endforeach
+                                        <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">{{ $cantidadTotalProductos }}</span> <i class="ti-bag"></i> Your Bag ${{ $orderDetail->total() }}</a>
+                                        <!-- Cart List Area Start -->
+                                        <ul class="cart-list">
+                                            @foreach($order->orderDetails as $orderDetail)
+                                                <li>
+                                                    <a href="#" class="image">
+                                                        @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
+                                                            <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" class="cart-thumb" width="100px" height="100px">
+                                                            <?php break; ?>
+                                                        @endforeach
+                                                    </a>
+                                                        <div class="cart-item-desc">
+                                                        <h6><a href="#">{{ $orderDetail->product->name }}</a></h6>
+                                                        <p>{{ $orderDetail->volume }} x - <span class="price">${{ $orderDetail->unitPrice() }}</span></p>
+                                                    </div>
+                                                    <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
+                                                </li>
+                                            @endforeach
+                                            <li class="total">
+                                                <span class="pull-right">Total: ${{ $orderDetail->total() }}</span>
+                                                <a href="/basket" class="btn btn-sm btn-cart">Ir al carrito</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="header-right-side-menu ml-15">
                                     <a href="#" id="sideMenuBtn"><i class="ti-menu" aria-hidden="true"></i></a>
                                 </div>
