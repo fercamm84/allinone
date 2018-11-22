@@ -6,7 +6,7 @@ use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Repositories\UserRepository;
-
+use App\Models\Order;
 class SectionsComposer
 {
     /**
@@ -40,7 +40,10 @@ class SectionsComposer
 
         $sections = Section::all();
 
-        $view->with('user', $user)->with('sections', $sections);
+        //obtengo la orden de compra actual
+        $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        $view->with('user', $user)->with('sections', $sections)->with('order', $order);
     }
 
 }

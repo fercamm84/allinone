@@ -178,13 +178,6 @@ class BasketController extends FrontController
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-//        foreach($order->orderDetails as $orderDetail){
-//            foreach($orderDetail->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
-//                $orderDetailAttributeValueEntity->attributeValueEntity->amount;
-//            }
-//        }
-//        die;
-
         return view('basket.index', array('order' => $order));
     }
 

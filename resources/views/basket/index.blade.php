@@ -3,65 +3,66 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <section class="content-header">
-        <h1>
-            Carrito
-        </h1>
-    </section>
     {{ Form::open(array('id'=>'formularioMP', 'route' => array('basket.paymentResult'))) }}
     {!! Form::hidden('payment_state', false, array('id' => 'payment_state')) !!}
     {!! Form::hidden('payment_task', false, array('id' => 'payment_task')) !!}
     {{ Form::close() }}
-    <div class="content">
-        <div class="box box-primary">
-            <div class="box-body">
-                <div class="row" style="padding-left: 20px">
-                    @if(!empty($order))
-                        <table>
-                            <thead>
-                                <th>
-                                </th>
-                                <th>
-                                    Nombre
-                                </th>
-                                <th>
-                                    Cantidad
-                                </th>
-                                <th>
-                                    Precio unitario
-                                </th>
-                                <th>
-                                    Precio total
-                                </th>
-                            </thead>
-                            <tbody>
-                                @foreach($order->orderDetails as $orderDetail)
-                                    @include('basket.components.show_order')
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="3">
-                                    </td>
-                                    <td>
-                                        <p>Total: </p>
-                                    </td>
-                                    <td>
-                                        <p>{{ $order->total() }}</p>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn btn-primary boton-mobile" style="width:250px;">PAGAR</a>
-                        {{--<input type="button" class="btn btn-primary" value="RESERVAR" onclick="redirigirMercadoPago('{{ $preference }}');">--}}
-                    @endif
+
+    <!-- ****** Cart Area Start ****** -->
+    <div class="cart_area section_padding_100 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        @if(!empty($order))
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($order->orderDetails as $orderDetail)
+                                        @include('basket.components.show_order')
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3">
+                                        </td>
+                                        <td class="pull-left">
+                                            <p>Total: </p>
+                                        </td>
+                                        <td class="pull-right">
+                                            <p>{{ $order->total() }}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="cart-footer d-flex mt-30">
+                                                <div class="back-to-shop w-50">
+                                                    &nbsp;
+                                                </div>
+                                                <div class="w-50 text-right coupon-code-area">
+                                                    <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn karl-checkout-btn" style="width:250px;">PAGAR</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        @endif
+                    </div>
                 </div>
             </div>
-            <div>
-                <a href="/basket/history">Histórico de pedidos</a>
-            </div>
+            <a href="/basket/history">Histórico de pedidos</a>
         </div>
     </div>
+    <!-- ****** Cart Area End ****** -->
 
 @endsection
 
