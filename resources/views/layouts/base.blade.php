@@ -92,7 +92,7 @@ $first_part = $components[1];
                             @endif
                         @endforeach
                         @foreach($locations as $location)
-                            <li><a href="/search/categoryByLocation/{{ $location->id }}">{{ $location->description }}</a></li>
+                            <li><a href="/search/sellerByLocation/{{ $location->id }}">{{ $location->description }}</a></li>
                         @endforeach
 
                     </ul>

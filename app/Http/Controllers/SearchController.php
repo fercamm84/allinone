@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Category;
+use App\Models\Seller;
 use App\Models\Section;
 use App\Models\Location;
 use Illuminate\Http\Request;
@@ -48,20 +48,22 @@ class SearchController extends Controller
                 'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
     }
 
-    public function searchCategoryByLocation($id = null){
-        $categories = Category::whereHas('entity', function($q) use ($id) {
+    public function searchSellerByLocation($id = null){
+        $selers = Seller::whereHas('entity', function($q) use ($id) {
             $q->where('location_id', $id);
         })->get();
 
-        $entity_parents = $categories;
+        $entity_parents = $selers;
         
         $entity_children = array();
 
-        foreach($categories as $category){
-            foreach ($category->categoryProducts as $categoryProduct) {
-                array_push($entity_children, $categoryProduct->product);
-            }
-        }
+        $categories = array();
+        $category = null;
+        // foreach($categories as $category){
+        //     foreach ($category->categoryProducts as $categoryProduct) {
+        //         array_push($entity_children, $categoryProduct->product);
+        //     }
+        // }
 
         return view('category.category', array('entity_children' => $entity_children, 'entity_parents' => $entity_parents, 'category' => $category, 
             'categories' => $entity_parents, 'seller' => (isset($category->sellerCategories{0}->seller)) ? $category->sellerCategories{0}->seller : null));
