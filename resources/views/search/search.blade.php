@@ -15,8 +15,8 @@
         </div>
         <!-- Product Description -->
         <div class="product-description">
-            <h4 class="product-price">{!! $entity->name !!}</h4>
-            <p>{{ $entity->description }}</p>
+            <h4 class="product-price">{!! $entity->title !!}</h4>
+            <p>{{ $entity->short_description }}</p>
             <!-- Add to Cart -->
             <a href="/{!! $entity->url() !!}/{!! $entity->id !!}" class="add-to-cart-btn">Ver detalle</a>
         </div>

@@ -6,20 +6,20 @@
                     <ol class="breadcrumb d-flex align-items-center">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
                         @if(isset($seller))
-                            <li class="breadcrumb-item"><a href="/seller/{{ $seller->id }}">{{ $seller->description}}</a></li>
+                            <li class="breadcrumb-item"><a href="/seller/{{ $seller->id }}">{{ $seller->title }}</a></li>
                             @if(isset($category))
-                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->description}}</a></li>
+                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->title }}</a></li>
                                 @if(isset($product))
                                     <!-- <li class="breadcrumb-item active"><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li> -->
-                                    <li class="breadcrumb-item active">{{ $product->description }}</li>
+                                    <li class="breadcrumb-item active">{{ $product->title }}</li>
                                 @endif
                             @endif
                         @else
                             @if(isset($category))
-                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->description}}</a></li>
+                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->title}}</a></li>
                                 @if(isset($product))
                                     <!-- <li class="breadcrumb-item active"><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li> -->
-                                    <li class="breadcrumb-item active">{{ $product->description }}</li>
+                                    <li class="breadcrumb-item active">{{ $product->title }}</li>
                                 @endif
                             @endif
                         @endif
