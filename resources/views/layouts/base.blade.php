@@ -384,20 +384,20 @@ _________________________________________________________ -->
                                     <ul class="navbar-nav animated" id="nav">
                                         <li class="nav-item active"><a class="nav-link" href="/">Reserbeer</a></li>
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                                            <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cervecerías</a>
                                             <div class="dropdown-menu" aria-labelledby="karlDropdown">
                                                 @foreach($sections as $section)
                                                     @if($section->type == 'home_principal')
                                                         @foreach($section->sectionEntities as $sectionEntity)
                                                             <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                                                            <a class="dropdown-item" href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->description }}</a>
+                                                            <a class="dropdown-item" href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->title }}</a>
                                                         @endforeach
                                                     @endif
                                                 @endforeach
                                             </div>
                                         </li>
                                         <li class="nav-item <?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>">
-                                            <a class="nav-link" href="/location">Donde Encontrarnos</a>
+                                            <a class="nav-link" href="/location">Dónde Encontrarnos</a>
                                         </li>
                                         <li class="nav-item <?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>">
                                             <a class="nav-link" href="/contact"><span class="karl-level">Escribinos</span>Contacto</a>

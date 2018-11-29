@@ -49,16 +49,18 @@ class SellerShowController extends Controller
         $number_of_reservations = $request->input('number_of_reservations');
         $day_selected = $request->input('day_selected');
 
-        list($sellerDay, $hours) = $this->calculateAvailability($seller, $day_selected);
+        $sellerDay = SellerDay::where([['seller_id', '=', $seller->id], ['date', '=', $day_selected]])->first();//Verifico si tiene disponibilidad en el dia
 
-        return view('seller.reservation', array('seller' => $seller, 'sellerDay' => $sellerDay, 'hours' => $hours, 'number_of_reservations' => $number_of_reservations));
+        $puedeReservar = $this->checkAvailability($sellerDay, $number_of_reservations);
+
+        return view('seller.reservation', array('seller' => $seller, 'sellerDay' => $sellerDay, 'number_of_reservations' => $number_of_reservations, 
+                                                'puedeReservar' => $puedeReservar));
     }
 
     public function reserve(Request $request){
         $sellerDay = SellerDay::find($request->input('seller_day_id'));
         $number_of_reservations = $request->input('number_of_reservations');
-        $from_hour = intval($request->input('from_hour'));
-        $to_hour = intval($request->input('hours')) + $from_hour;
+        $from_hour = intval($request->input('hour'));
 
         $user = Auth::user();
 
@@ -67,7 +69,6 @@ class SellerShowController extends Controller
         $sellerReservation['user_id'] = $user->id;
         $sellerReservation['total'] = $number_of_reservations;
         $sellerReservation['from_hour'] = $from_hour;
-        $sellerReservation['to_hour'] = $to_hour;
 
         $this->sellerReservationRepository->create($sellerReservation);
 
@@ -116,6 +117,23 @@ class SellerShowController extends Controller
         }
 
         return array($sellerDay, $hours);
+    }
+
+    private function checkAvailability($sellerDay, $reservasSolicitadas){
+        if($sellerDay){
+            $sellerReservations = SellerReservation::where([['seller_day_id', '=', $sellerDay->id]])->get();//Veo todas las reservas realizadas para dicho dia.
+
+            $reservasRealizadas = 0;
+            foreach ($sellerReservations as $sellerReservation) {
+                $reservasRealizadas += $sellerReservation->total;//cantidad de lugares reservados
+            }
+
+            if($reservasSolicitadas <= ($sellerDay->total - $reservasRealizadas)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -135,7 +135,7 @@
                                 </div>
                                 <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p>{{ $product->description }}</p>
+                                        <p>{{ $product->short_description }}</p>
                                     </div>
                                 </div>
                             </div>

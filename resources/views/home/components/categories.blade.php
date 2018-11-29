@@ -12,8 +12,8 @@
                                 <div class="row h-100 align-items-center">
                                     <div class="col-12">
                                         <div class="welcome_slide_text">
-                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">{{$entidad->type}}</h6>
-                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">{{$entidad->description}}</h2>
+                                            <h6 data-animation="bounceInDown" data-delay="0" data-duration="500ms">{{$entidad->subtitle}}</h6>
+                                            <h2 data-animation="fadeInUp" data-delay="500ms" data-duration="500ms">{{$entidad->title}}</h2>
                                             <a href="#" class="btn karl-btn" data-animation="fadeInUp" data-delay="1s" data-duration="500ms">conocer más</a>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="col-12 col-lg-7">
                                                 <div class="quickview_pro_des">
-                                                    <h4 class="title">{{ $entidad->description }}</h4>
+                                                    <h4 class="title">{{ $entidad->subtitle }}</h4>
                                                     <div class="top_seller_product_rating mb-15">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -88,8 +88,8 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </div>
                                                     <!-- <h5 class="price">$120.99 <span>$130</span></h5> -->
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita quibusdam aspernatur, sapiente consectetur accusantium perspiciatis praesentium eligendi, in fugiat?</p>
-                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">Entrar a {{ $entidad->description }}</a>
+                                                    <p>{{ $entidad->description }}</p>
+                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">Entrar a {{ $entidad->title }}</a>
                                                 </div>
                                             </div>
 
@@ -164,7 +164,7 @@
                                 <!-- Product Description -->
                                 <div class="product-description">
                                     <!-- <h4 class="product-price">Belgrano</h4> -->
-                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}"><p>{{ $entidad->description }}</p></a>
+                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}"><p>{{ $entidad->title }}ferfer</p></a>
                                 </div>
                             </div>
                         @endforeach

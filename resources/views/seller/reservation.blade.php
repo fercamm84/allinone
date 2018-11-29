@@ -2,46 +2,24 @@
 
 @section('details')
 
+    <script src="{{asset('js/jquery-clock-timepicker.min.js') }}"></script>
+
     <div class="col-xs-9">
-        @if($sellerDay)
-            @foreach($hours as $hour => $availability)
-                <div class="row text-center buttons">
-                    @if($availability >= $number_of_reservations)
-                        {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve')) }}
-                            {{ Form::hidden('seller_day_id', $sellerDay->id) }}
-                            {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
-                            {{ Form::hidden('from_hour', $hour) }}
-
-                            <?php $maxHours = 1; ?>
-                            @foreach($hours as $nextHour => $availabilityNextHour)
-                                @if($nextHour > $hour)
-                                    @if($availabilityNextHour >= $number_of_reservations)
-                                        <?php $maxHours++; ?>
-                                    @else
-                                        @break
-                                    @endif
-                                @endif
-                            @endforeach
-
-                            <label class="col-xs-1">{{ $hour }}:</label>
-                            <label class="col-xs-2">Horas a reservar:</label>
-                            <div class="col-xs-5">
-                                {{ Form::number('hours', null, ['class' => 'form-control hour ', 'min' => '1', 'max' => $maxHours, 'placeholder' => 'Max: '.$maxHours.' hs.', 'type' => 'number', 'required' => true]) }}
-                            </div>
-                            <button class='btn btn-primary col-xs-4' type='submit' value='submit'>
-                                <i class='fa fa-user'></i> Reservar
-                            </button>
-
-                        {{ Form::close() }}
-                    @else
-                        <label class="col-xs-1">{{ $hour }}:</label>
-                        <label class="col-xs-2">NO DISPONIBLE</label>
-                    @endif
-                </div>
-            @endforeach
+        @if($puedeReservar)
+            <div class="col-md-9">
+                {{ Form::open(array('id' => 'form_reserva', 'action' => 'SellerShowController@reserve')) }}
+                    {{ Form::hidden('seller_day_id', $sellerDay->id) }}
+                    {{ Form::hidden('number_of_reservations', $number_of_reservations) }}
+                    <h4>Seleccione la hora en la que asistirá:</h4>
+                    <input class="time standard" type="text" data-minimum="{{ $sellerDay->from_hour }}:00" data-maximum="{{ $sellerDay->to_hour }}:00" required name="hour" placeholder="Horario de reserva: 0 a 23 hs"/>
+                    <button class='btn btn-primary col-xs-4' type='submit' value='submit'>
+                        <i class='fa fa-user'></i> Reservar
+                    </button>
+                {{ Form::close() }}
+            </div>
         @else
             <div class="row text-center buttons">
-                <label class="col-xs-12">NO SE HACEN RESERVAS PARA ESTE DIA</label>
+                <label class="col-xs-12">NO HAY DISPONIBILIDAD DE RESERVAS PARA {{$number_of_reservations}} RESERVACIONES EN ESTE DIA</label>
             </div>
         @endif
     </div>
@@ -56,6 +34,12 @@
             }
             e.preventDefault();
             return false;
+        });
+
+        $('.standard').clockTimePicker({
+            precision: 60,
+            vibrate: true,
+            afternoonHoursInOuterCircle: true,
         });
     </script>
 
