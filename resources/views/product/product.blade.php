@@ -79,11 +79,11 @@
                             <i class="fa fa-star-o" aria-hidden="true"></i>
                         </div>
 
-                        {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
+                        @if($product->buyable)
+                            {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
                             
                             @include('product.components.attributes')
 
-                            
                             <h2 class="mb-50 price">$<span id="price">{!! $product->price !!}</span></h2>
 
                             <div class="cart clearfix mb-50 d-flex">
@@ -98,19 +98,81 @@
                                     <button type="submit" name="addtocart" value="5" class="btn cart-submit d-block">Add to cart</button>
                                 </p>
                             </div>
+                        @else
+                            {{ Form::open(array('id' => 'formularioContacto', 'action' => 'ProductShowController@contact')) }}
 
-                            <div class="share_wf mt-30">
-                                <p>Share With Friend</p>
-                                <div class="_icon">
-                                    @if($product->link_facebook != null)
-                                        <a class="post_share_facebook external facebook" data-animate-hover="pulse" href="{{ $product->link_facebook }}"><i class="fa fa-facebook"></i></a>
-                                    @endif
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                @include('product.components.attributes')
+
+                                <div class="checkout_area section_padding_100">
+                                    <div class="container">
+                                        <div class="row">            
+                                            <div class="col-12 col-md-6">
+                                            
+                                                <div class="checkout_details_area mt-50 clearfix">
+
+                                                    <div class="cart-page-heading">
+                                                        <h5>Contact</h5>
+                                                        <p>Enter your comments</p>
+                                                    </div>
+
+                                                    
+                                                    {{ Form::hidden('product_id', $product->id) }}
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="comments">Comments <span>*</span></label>
+                                                            {!! Form::textarea('comments', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="first_name">First Name <span>*</span></label>
+                                                            {!! Form::text('first_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="last_name">Last Name <span>*</span></label>
+                                                            {!! Form::text('last_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Email <span>*</span></label>
+                                                            {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Telephone <span>*</span></label>
+                                                            {!! Form::number('telephone', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <div class="custom-control custom-checkbox d-block">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">Subscribe to our newsletter</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-sm-12">
+                                                            {!! Form::submit('Send', ['class' => 'btn btn-primary']) !!}
+                                                            <a href="{{ url('/') }}" class="btn btn-default">Cancel</a>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            {{ Form::close() }}
+                        @endif
+
+                        <div class="share_wf mt-30">
+                            <p>Share With Friend</p>
+                            <div class="_icon">
+                                @if($product->link_facebook != null)
+                                    <a class="post_share_facebook external facebook" data-animate-hover="pulse" href="{{ $product->link_facebook }}"><i class="fa fa-facebook"></i></a>
+                                @endif
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                             </div>
-                        {{ Form::close() }}
+                        </div>
 
                         <div id="accordion" role="tablist">
 
