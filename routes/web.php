@@ -128,3 +128,5 @@ Route::post('/seller/reservation', 'SellerShowController@reservation');
 Route::post('/seller/reserve', 'SellerShowController@reserve')->middleware('auth');
 
 $this->get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
+
+Route::post('product.contact', 'ProductShowController@contact');
