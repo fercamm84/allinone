@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use SantiGraviano\LaravelMercadoPago\Facades\MP;
+use MercadoPago;
+// use SantiGraviano\LaravelMercadoPago\Facades\MP;
 
 class PaymentController extends AppBaseController
 {
@@ -157,25 +158,26 @@ class PaymentController extends AppBaseController
     public function getPayments(){
         try {
             //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
-//            $pago = MP::get_payment(3662769330);
-            $pago = MP::get_payment($_GET['id']);
-        }catch (\Exception $exc){
+            $pago = (new MercadoPago\Payment())->find_by_id($_GET['id']);
+        }catch (Exception $exc){
+            header("HTTP/1.1 200 OK");
+            http_response_code(200);
             die;
         }
 
         //Se obtienen los valores del pago.
-        $status = $pago['response']['collection']['status'];
-        $merchant_order_id = $pago['response']['collection']['merchant_order_id'];
-        $total_paid_amount = $pago['response']['collection']['transaction_amount'];
-        $status_detail = $pago['response']['collection']['status_detail'];
-        $payment_type = $pago['response']['collection']['payment_type'];
-        $operation_type = $pago['response']['collection']['operation_type'];
-        $payment_id = $pago['response']['collection']['id'];
-        $external_reference = $pago['response']['collection']['external_reference'];
+        $status = $pago->status;
+        $merchant_order_id = $pago->order->id;
+        $total_paid_amount = $pago->transaction_details->total_paid_amount;
+        $status_detail = $pago->status_detail;
+        $payment_type = $pago->payment_type_id;
+        $operation_type = $pago->operation_type;
+        $payment_id = $pago->id;
+        $external_reference = $pago->external_reference;
         $order_id = $external_reference;
         $order_id = intval(str_replace('order_', '', $order_id));
 
-        $payment = Payment::where([['order_id', '=', $order_id]])->first();
+        $payment = MercadoPago\Payment::where([['order_id', '=', $order_id]])->first();
 
         if(count($payment) > 0){
             $payment->state = $status;
