@@ -111,7 +111,9 @@
                 if (html != '') {
                     var obj = null;
                     try {
+                        console.log(html);
                         obj = JSON.parse(html);
+                        console.log(obj);
                     } catch (err) {
                     }
                     if (obj) {

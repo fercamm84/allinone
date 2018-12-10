@@ -183,7 +183,7 @@ return [
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class,
 
-        SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class,
+        // SantiGraviano\LaravelMercadoPago\Providers\MercadoPagoServiceProvider::class,
 
         App\Providers\ComposerServiceProvider::class,
 
@@ -240,7 +240,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
 
-        'MP' => SantiGraviano\LaravelMercadoPago\Facades\MP::class,
+        // 'MP' => SantiGraviano\LaravelMercadoPago\Facades\MP::class,
 
     ],
 

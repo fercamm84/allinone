@@ -19,9 +19,9 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
-use SantiGraviano\LaravelMercadoPago\Facades\MP;
+// use SantiGraviano\LaravelMercadoPago\Facades\MP;
 use Illuminate\Notifications\Notifiable;
-
+use MercadoPago;
 class BasketController extends FrontController
 {
 
@@ -46,8 +46,6 @@ class BasketController extends FrontController
     }
 
     public function solicitarMercadoPago(Request $request){
-        $myJobPreference = null;
-
         $user = Auth::user();
 
         //obtengo la orden creada
@@ -57,41 +55,71 @@ class BasketController extends FrontController
             //Busco el precio total a pagar para generar la preferencia de pago:
             $total = $order->total();
 
-            //Creo preferencia de Mercadopago:
-            $myJobPreference_data = array(
-                "external_reference" => 'order_' . $order->id,
-                "items" => array(
-                    array(
-                        "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
-                        "quantity" => 1,
-                        "currency_id" => 'ARS',
-                        "unit_price" => $total
-//                        "unit_price" => 1
-                    )
-                ),
-                "back_urls" => array(
-                    'success' => 'http://allinoneportals.local/' . 'basket/success',
-                    'failure' => 'http://allinoneportals.local/' . 'basket/failure',
-                )
-            );
-            try{
-                $myJobPreference = MP::create_preference($myJobPreference_data);
+//             //Creo preferencia de Mercadopago:
+//             $myJobPreference_data = array(
+//                 "external_reference" => 'order_' . $order->id,
+//                 "items" => array(
+//                     array(
+//                         "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
+//                         "quantity" => 1,
+//                         "currency_id" => 'ARS',
+//                         "unit_price" => $total
+// //                        "unit_price" => 1
+//                     )
+//                 ),
+//                 "back_urls" => array(
+//                     'success' => 'http://allinoneportals.local/' . 'basket/success',
+//                     'failure' => 'http://allinoneportals.local/' . 'basket/failure',
+//                 )
+//             );
+//             try{
+//                 $myJobPreference = MP::create_preference($myJobPreference_data);
 
-                $payment = Payment::where([['order_id', '=', $order->id]])->first();
-                if(count($payment) == 0){
-                    $payment = array();
-                    $payment['state'] = 'TO_PAY';
-                    $payment['order_id'] = $order->id;
-                    $payment['amount'] = $total;
-                    $this->paymentRepository->create($payment);
-                }
-            }
-            catch (\Exception $exc){
-                $myJobPreference = null;
+//                 $payment = Payment::where([['order_id', '=', $order->id]])->first();
+//                 if(count($payment) == 0){
+//                     $payment = array();
+//                     $payment['state'] = 'TO_PAY';
+//                     $payment['order_id'] = $order->id;
+//                     $payment['amount'] = $total;
+//                     $this->paymentRepository->create($payment);
+//                 }
+//             }
+//             catch (\Exception $exc){
+//                 $myJobPreference = null;
+//             }
+
+            MercadoPago\SDK::setClientId(env('MP_APP_ID', ''));
+            MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET', ''));
+    
+            # Create a preference object
+            $preference = new MercadoPago\Preference();
+            # Create an item object
+            $item = new MercadoPago\Item();
+            // $item->id = "1234";
+            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
+            $item->quantity = 1;
+            $item->currency_id = "ARS";
+            $item->unit_price = $total;
+            # Create a payer object
+            // $payer = new MercadoPago\Payer();
+            // $payer->email = "rosemarie@hotmail.com";
+            # Setting preference properties
+            $preference->items = array($item);
+            // $preference->payer = $payer;
+            # Save and posting preference
+            $preference->save();
+
+            $payment = Payment::where([['order_id', '=', $order->id]])->first();
+            if(count($payment) == 0){
+                $payment = array();
+                $payment['state'] = 'TO_PAY';
+                $payment['order_id'] = $order->id;
+                $payment['amount'] = $total;
+                $this->paymentRepository->create($payment);
             }
 
             $arrayEnvio = array();
-            $arrayEnvio = array_merge($arrayEnvio, array('preference' => $myJobPreference['response']['init_point']));
+            $arrayEnvio = array_merge($arrayEnvio, array('preference' => $preference->init_point));
             echo json_encode($arrayEnvio);
             exit();
         }
