@@ -63,10 +63,10 @@ class BasketController extends FrontController
             # Create an item object
             $item = new MercadoPago\Item();
             // $item->id = "1234";
-            $item->title = "Utilizacion allinoneportals.tech - Orden ";
+            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
             $item->quantity = 1;
             $item->currency_id = "ARS";
-            $item->unit_price = 19;
+            $item->unit_price = $total;
             # Create a payer object
             // $payer = new MercadoPago\Payer();
             // $payer->email = "rosemarie@hotmail.com";
@@ -77,7 +77,7 @@ class BasketController extends FrontController
             $preference->save();
 
             $payment = Payment::where([['order_id', '=', $order->id]])->first();
-            if(count($payment) == 0){
+            if(!$payment){
                 $payment = array();
                 $payment['state'] = 'TO_PAY';
                 $payment['order_id'] = $order->id;
@@ -191,7 +191,7 @@ class BasketController extends FrontController
         $pago = $this->buscarPago($order->id);
 
         $payment = Payment::where([['order_id', '=', $order->id]])->first();
-        if(count($payment) > 0 && isset($pago['response']['results']['0']['collection']['status'])){
+        if($payment && isset($pago['response']['results']['0']['collection']['status'])){
             $payment->state = $pago['response']['results']['0']['collection']['status'];
             $payment->save();
         }
@@ -214,7 +214,7 @@ class BasketController extends FrontController
         $pago = $this->buscarPago($order->id);
 
         $payment = Payment::where([['order_id', '=', $order->id]])->first();
-        if(count($payment) > 0 && isset($pago['response']['results']['0']['collection']['status'])){
+        if($payment && isset($pago['response']['results']['0']['collection']['status'])){
             $payment->state = $pago['response']['results']['0']['collection']['status'];
             $payment->save();
         }
