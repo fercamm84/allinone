@@ -173,7 +173,46 @@ class BasketController extends FrontController
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        return view('basket.index', array('order' => $order));
+        $urlPayment = null;
+
+        if($order && count($order->orderDetails) > 0){
+            //Busco el precio total a pagar para generar la preferencia de pago:
+            $total = $order->total();
+
+            MercadoPago\SDK::setClientId(env('MP_APP_ID'));
+            MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET'));
+    
+            # Create a preference object
+            $preference = new MercadoPago\Preference();
+            # Create an item object
+            $item = new MercadoPago\Item();
+            // $item->id = "1234";
+            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
+            $item->quantity = 1;
+            $item->currency_id = "ARS";
+            $item->unit_price = $total;
+            # Create a payer object
+            // $payer = new MercadoPago\Payer();
+            // $payer->email = "rosemarie@hotmail.com";
+            # Setting preference properties
+            $preference->items = array($item);
+            // $preference->payer = $payer;
+            # Save and posting preference
+            $preference->save();
+
+            $payment = Payment::where([['order_id', '=', $order->id]])->first();
+            if(!$payment){
+                $payment = array();
+                $payment['state'] = 'TO_PAY';
+                $payment['order_id'] = $order->id;
+                $payment['amount'] = $total;
+                $this->paymentRepository->create($payment);
+            }
+
+            $urlPayment = $preference->init_point;
+        }
+
+        return view('basket.index', array('order' => $order, 'urlPayment' => $urlPayment));
     }
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
