@@ -179,7 +179,7 @@ class PaymentController extends AppBaseController
 
         $payment = MercadoPago\Payment::where([['order_id', '=', $order_id]])->first();
 
-        if(count($payment) > 0){
+        if($payment){
             $payment->state = $status;
             $payment->merchant_order_id = $merchant_order_id;
             $payment->total_paid_amount = $total_paid_amount;
