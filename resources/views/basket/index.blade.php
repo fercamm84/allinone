@@ -66,7 +66,7 @@
 
 @endsection
 
-<script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>
+<script type="text/javascript" src="https://mp-tools.mlstatic.com/buttons/render.js"></script>
 <script type="text/javascript" src="https://www.mercadopago.com/org-img/jsapi/mptools/buttons/render.js"></script>
 <script>
     (function () {
