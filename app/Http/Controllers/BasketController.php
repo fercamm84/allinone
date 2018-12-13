@@ -51,55 +51,22 @@ class BasketController extends FrontController
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        if(count($order) > 0 && count($order->orderDetails) > 0){
+        if($order && count($order->orderDetails) > 0){
             //Busco el precio total a pagar para generar la preferencia de pago:
             $total = $order->total();
 
-//             //Creo preferencia de Mercadopago:
-//             $myJobPreference_data = array(
-//                 "external_reference" => 'order_' . $order->id,
-//                 "items" => array(
-//                     array(
-//                         "title" => "Utilizacion allinoneportals.tech - Orden " . $order->id,
-//                         "quantity" => 1,
-//                         "currency_id" => 'ARS',
-//                         "unit_price" => $total
-// //                        "unit_price" => 1
-//                     )
-//                 ),
-//                 "back_urls" => array(
-//                     'success' => 'http://allinoneportals.local/' . 'basket/success',
-//                     'failure' => 'http://allinoneportals.local/' . 'basket/failure',
-//                 )
-//             );
-//             try{
-//                 $myJobPreference = MP::create_preference($myJobPreference_data);
-
-//                 $payment = Payment::where([['order_id', '=', $order->id]])->first();
-//                 if(count($payment) == 0){
-//                     $payment = array();
-//                     $payment['state'] = 'TO_PAY';
-//                     $payment['order_id'] = $order->id;
-//                     $payment['amount'] = $total;
-//                     $this->paymentRepository->create($payment);
-//                 }
-//             }
-//             catch (\Exception $exc){
-//                 $myJobPreference = null;
-//             }
-
-            MercadoPago\SDK::setClientId(env('MP_APP_ID', ''));
-            MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET', ''));
+            MercadoPago\SDK::setClientId(env('MP_APP_ID'));
+            MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET'));
     
             # Create a preference object
             $preference = new MercadoPago\Preference();
             # Create an item object
             $item = new MercadoPago\Item();
             // $item->id = "1234";
-            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
+            $item->title = "Utilizacion allinoneportals.tech - Orden ";
             $item->quantity = 1;
             $item->currency_id = "ARS";
-            $item->unit_price = $total;
+            $item->unit_price = 19;
             # Create a payer object
             // $payer = new MercadoPago\Payer();
             // $payer->email = "rosemarie@hotmail.com";
