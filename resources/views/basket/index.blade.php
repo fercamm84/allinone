@@ -48,9 +48,8 @@
                                                     &nbsp;
                                                 </div>
                                                 <div class="w-50 text-right coupon-code-area">
-                                                    <a id="boton_pago"  class="btn karl-checkout-btn" 
-                                                    href="{{ $paymentUrl }}"
-                                                        style="width:250px;" name="MP-Checkout" mp-mode="popup" onreturn="execute_my_onreturn">PAGAR</a>
+                                                    <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn karl-checkout-btn" style="width:250px;">PAGAR</a>
+                                                    <div id="divGrisado"></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -117,15 +116,30 @@
             url: urlMercadoPago,
             mode: "modal",
             onreturn: function(data) {
-                execute_my_onreturn();
+                $('#divGrisado').css('background-color', '');
+                $('#divGrisado').css('display', '');
+                $('#divGrisado').css('width', '');
+                $('#divGrisado').css('height', '');
+                $('#divGrisado').css('left', '');
+                $('#divGrisado').css('top', '');
+                $('#divGrisado').css('position', '');
+                $('#divGrisado').css('z-index', '');
+                $('#payment_state').val(json.collection_status);
+                $('#payment_task').val(json.external_reference);
+                $('#formularioMP').submit();
             }
         });
-    }
+        console.log($('#MP-Checkout-dialog'));
+        $('#divGrisado').css('background-color', 'rgba(0, 0, 0, 0.5)');
+        $('#divGrisado').css('display', 'block');
+        $('#divGrisado').css('width', '100%');
+        $('#divGrisado').css('height', '100%');
+        $('#divGrisado').css('left', '0px');
+        $('#divGrisado').css('top', '0px');
+        $('#divGrisado').css('position', 'fixed');
+        $('#divGrisado').css('z-index', '10000');
+        $('#MP-Checkout-dialog').css('z-index', '10000000');
 
-    function execute_my_onreturn(){
-        $('#payment_state').val(json.collection_status);
-        $('#payment_task').val(json.external_reference);
-        $('#formularioMP').submit();
     }
 
 </script>
