@@ -173,7 +173,7 @@ class BasketController extends FrontController
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
 
-        $urlPayment = null;
+        $paymentUrl = null;
 
         if($order && count($order->orderDetails) > 0){
             //Busco el precio total a pagar para generar la preferencia de pago:
@@ -209,10 +209,10 @@ class BasketController extends FrontController
                 $this->paymentRepository->create($payment);
             }
 
-            $urlPayment = $preference->init_point;
+            $paymentUrl = $preference->init_point;
         }
 
-        return view('basket.index', array('order' => $order, 'urlPayment' => $urlPayment));
+        return view('basket.index', array('order' => $order, 'paymentUrl' => $paymentUrl));
     }
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
