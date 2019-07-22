@@ -15,7 +15,7 @@
             </div>
 
             <div class="col-md-6" style=" margin-top:-3%; text-align:right; margin-bottom:7%;">
-                <h4><strong>ARTESANÍAS EN MADERAS</strong></h4>
+                <h4><strong>RESERBEER</strong></h4>
             </div>
 
 

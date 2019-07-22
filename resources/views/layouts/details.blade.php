@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div id="wrapper">
     
     <!-- <<<<<<<<<<<<<<<<<<<< Breadcumb Area Start <<<<<<<<<<<<<<<<<<<< -->
@@ -38,7 +36,7 @@
     </div>
     <!-- <<<<<<<<<<<<<<<<<<<< Breadcumb Area End <<<<<<<<<<<<<<<<<<<< -->
 
-    <section class="shop_grid_area section_padding_100">
+    <section class="shop_grid_area">
         <div class="container">
             <div class="row">
 
@@ -98,9 +96,6 @@
             </div>
         </div>
     </section>
-
-    
-
 
 </div>
 

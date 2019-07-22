@@ -1,3 +1,21 @@
+<section class="top-discount-area d-md-flex align-items-center">
+    <!-- Single Discount Area -->
+    <div class="single-discount-area">
+        <h5>Free Shipping &amp; Returns</h5>
+        <h6><a href="#">BUY NOW</a></h6>
+    </div>
+    <!-- Single Discount Area -->
+    <div class="single-discount-area" style="background:#d8a633 !important;">
+        <h5>20% Discount for all dresses</h5>
+        <h6>USE CODE: Colorlib</h6>
+    </div>
+    <!-- Single Discount Area -->
+    <div class="single-discount-area">
+        <h5>20% Discount for students</h5>
+        <h6>USE CODE: Colorlib</h6>
+    </div>
+</section>
+
 <div id="wrapper">
     <!-- ****** Welcome Slides Area Start ****** -->
     <section class="welcome_area">
@@ -26,6 +44,27 @@
         </div>
     </section>
     <!-- ****** Welcome Slides Area End ****** -->
+
+    <!-- ****** Top Catagory Area Start ****** -->
+    <section class="top_catagory_area d-md-flex clearfix">
+        <!-- Single Catagory -->
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(https://sm.askmen.com/askmen_latam/photo/default/cerveza-hamburguesa-equivalencia_cqdp.jpg);">
+            <div class="catagory-content">
+                <h6>On Accesories</h6>
+                <h2>Sale 30%</h2>
+                <a href="#" class="btn karl-btn">SHOP NOW</a>
+            </div>
+        </div>
+        <!-- Single Catagory -->
+        <div class="single_catagory_area d-flex align-items-center bg-img" style="background-image: url(https://mlm-s1-p.mlstatic.com/684504-MLM25680669188_062017-F.jpg);">
+            <div class="catagory-content">
+                <h6>in Bags excepting the new collection</h6>
+                <h2>Designer bags</h2>
+                <a href="#" class="btn karl-btn">SHOP NOW</a>
+            </div>
+        </div>
+    </section>
+    <!-- ****** Top Catagory Area End ****** -->
 </div>
 
 <div id="hot">
@@ -79,7 +118,7 @@
                                             </div>
                                             <div class="col-12 col-lg-7">
                                                 <div class="quickview_pro_des">
-                                                    <h4 class="title">{{ $entidad->subtitle }}</h4>
+                                                    <h4 class="title">{{ $entidad->title }}</h4>
                                                     <div class="top_seller_product_rating mb-15">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -87,9 +126,22 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </div>
-                                                    <!-- <h5 class="price">$120.99 <span>$130</span></h5> -->
+                                                    <h5 class="price">Birras desde $120.99 <span>$130</span></h5>
                                                     <p>{{ $entidad->description }}</p>
+                                                    
                                                     <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">Entrar a {{ $entidad->title }}</a>
+
+                                                    <p>{{ $entidad->subtitle }}</p>
+
+                                                    <div class="share_wf mt-30">
+                                                        <p>Share With Friend</p>
+                                                        <div class="_icon">
+                                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -163,8 +215,9 @@
                                 
                                 <!-- Product Description -->
                                 <div class="product-description">
-                                    <!-- <h4 class="product-price">Belgrano</h4> -->
-                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}"><p>{{ $entidad->title }}ferfer</p></a>
+                                    <h4 class="product-price">{{ $entidad->title }}</h4>
+                                    <p>Cervezas, hamburguesas y más!</p>
+                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" class="add-to-cart-btn" data-toggle="modal" data-target="#quickview{{ $entidad->id }}">ENTRAR AL BAR</a>
                                 </div>
                             </div>
                         @endforeach

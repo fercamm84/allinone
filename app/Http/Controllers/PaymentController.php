@@ -159,6 +159,7 @@ class PaymentController extends AppBaseController
         try {
             //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
             $pago = (new MercadoPago\Payment())->find_by_id($_GET['id']);
+            MercadoPago\Payment.find_by_id($_GET['id']);
         }catch (Exception $exc){
             header("HTTP/1.1 200 OK");
             http_response_code(200);
@@ -177,7 +178,7 @@ class PaymentController extends AppBaseController
         $order_id = $external_reference;
         $order_id = intval(str_replace('order_', '', $order_id));
 
-        $payment = MercadoPago\Payment::where([['order_id', '=', $order_id]])->first();
+        $payment = Payment::where([['order_id', '=', $order_id]])->first();
 
         if($payment){
             $payment->state = $status;

@@ -30,11 +30,14 @@
     <link href="{{asset('css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
 
+    <link href="{{asset('css/owl.theme.css') }}" rel="stylesheet">
+
     <!-- theme stylesheet -->
     <!-- <link href="{{asset('css/style.default.css') }}" rel="stylesheet" id="theme-stylesheet"> -->
 
     <!-- your stylesheet with modifications -->
     <link href="{{asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{asset('css/jquery-ui.css') }}" rel="stylesheet">
 
     <!-- <link rel="shortcut icon" href="{{asset('favicon.png') }}"> -->
 
@@ -109,7 +112,12 @@ _________________________________________________________ -->
 <div id="top">
     <div class="container">
         <div class="col-md-6 offer" data-animate="fadeInDown">
-
+            <!-- Header Social Area -->
+            <div class="header-social-area">
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            </div>
         </div>
         <div class="col-md-6 offer" data-animate="fadeInDown">
             @if (Route::has('login'))
@@ -306,14 +314,82 @@ _________________________________________________________ -->
         <!-- Top Header Area Start -->
         <div class="top_header_area">
             <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-end">
+                <div class="row h-100 align-items-center justify-content-start">
 
-                    <div class="col-12 col-lg-7">
+                    <div class="col-12 col-lg-12">
                         <div class="top_single_area d-flex align-items-center">
                             <!-- Logo Area -->
                             <div class="top_logo">
-                                <a href="/"><img src="{{ asset('imagenes/logo.png') }}" alt="" width="95" height="30"></a>
+                                <a href="/"><img src="{{ asset('imagenes/logo.png') }}" alt="" width="95" height="30" style="cursor: pointer;"></a>
                             </div>
+
+                            <!-- Top Header Area End -->
+                            <div class="main_header_area">
+                                <div class="container h-100">
+                                    <div class="row h-100">
+                                        <div class="col-12 d-md-flex justify-content-between">
+                                            <!-- Menu Area -->
+                                            <div class="main-menu-area">
+                                                <nav class="navbar navbar-expand-lg align-items-start">
+
+                                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
+
+                                                    <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
+                                                        <ul class="navbar-nav animated" id="nav">
+                                                            <li class="nav-item active"><a class="nav-link" href="/">Reserbeer</a></li>
+                                                            <li class="nav-item dropdown">
+                                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cervecerías</a>
+                                                                <div class="dropdown-menu" aria-labelledby="karlDropdown">
+                                                                    @foreach($sections as $section)
+                                                                        @if($section->type == 'home_principal')
+                                                                            @foreach($section->sectionEntities as $sectionEntity)
+                                                                                <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                                                                                <a class="dropdown-item" href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->title }}</a>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+                                                            </li>
+                                                            <li class="nav-item <?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>">
+                                                                <a class="nav-link" href="/location">Dónde Encontrarnos</a>
+                                                            </li>
+                                                            <li class="nav-item <?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>">
+                                                                <a class="nav-link" href="/contact"><span class="karl-level">Escribinos</span>Contacto</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-6 d-md-flex justify-content-between">
+                                            <div class="navbar-buttons">
+
+                                                <div class="navbar-collapse collapse right" id="search-not-mobile">
+                                                    <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                                                        <span class="sr-only">Toggle search</span>
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="collapse clearfix" id="search">
+
+                                                {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
+                                                <div class="input-group">
+                                                    {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
+                                                    <span class="input-group-btn">
+                                                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                                            </span>
+                                                </div>
+                                                {{ Form::close() }}
+
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Cart & Menu Area -->
                             <div class="header-cart-menu d-flex align-items-center ml-auto">
                                 @if(!empty($order))
@@ -362,83 +438,7 @@ _________________________________________________________ -->
             </div>
         </div>
 
-        <!-- Top Header Area End -->
-        <div class="main_header_area">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-12 d-md-flex justify-content-between">
-                        <!-- Header Social Area -->
-                        <div class="header-social-area">
-                            <a href="#"><span class="karl-level">Share</span> <i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        </div>
-                        <!-- Menu Area -->
-                        <div class="main-menu-area">
-                            <nav class="navbar navbar-expand-lg align-items-start">
-
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#karl-navbar" aria-controls="karl-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
-
-                                <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
-                                    <ul class="navbar-nav animated" id="nav">
-                                        <li class="nav-item active"><a class="nav-link" href="/">Reserbeer</a></li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cervecerías</a>
-                                            <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                @foreach($sections as $section)
-                                                    @if($section->type == 'home_principal')
-                                                        @foreach($section->sectionEntities as $sectionEntity)
-                                                            <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                                                            <a class="dropdown-item" href="/{{ $entidad->url() }}/{{ $entidad->id }}">{{ $entidad->title }}</a>
-                                                        @endforeach
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        </li>
-                                        <li class="nav-item <?php if ($first_part=="location") {echo "active"; } else  {echo "noactive";}?>">
-                                            <a class="nav-link" href="/location">Dónde Encontrarnos</a>
-                                        </li>
-                                        <li class="nav-item <?php if ($first_part=="contact") {echo "active"; } else  {echo "noactive";}?>">
-                                            <a class="nav-link" href="/contact"><span class="karl-level">Escribinos</span>Contacto</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                        <!-- Help Line -->
-                        <div class="help-line">
-                            <a href="tel:+346573556778"><i class="ti-headphone-alt"></i> +34 657 3556 778</a>
-                        </div>
-                    </div>
-                    <div class="col-6 d-md-flex justify-content-between">
-                        <div class="navbar-buttons">
-
-                            <div class="navbar-collapse collapse right" id="search-not-mobile">
-                                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
-                                    <span class="sr-only">Toggle search</span>
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-
-                        </div>
-
-                        <div class="collapse clearfix" id="search">
-
-                            {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
-                            <div class="input-group">
-                                {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
-                                <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                        </span>
-                            </div>
-                            {{ Form::close() }}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </header>
     <!-- ****** Header Area End ****** -->
 
@@ -453,41 +453,6 @@ _________________________________________________________ -->
             @yield('content')
 
         </div>
-
-        <!-- *** FOOTER *** -->
-        <div id="footer" data-animate="fadeInUp">
-
-            <div class="container">
-                
-                <div class="row">
-                    
-                    <div class="col-md-4 col-sm-6">
-                        
-                        <h4>Sección Usuarios</h4>
-
-                        <ul>
-                            <li>&#8226; <a href="#" data-toggle="modal" data-target="#login-modal" style="color:#4fbfa8;">Iniciar Sesión</a>
-                            </li>
-                            <li>&#8226; <a href="#" data-toggle="modal" data-target="#register-modal" style="color:#4fbfa8;">Registrarse</a>
-                            </li>
-                        </ul>
-
-                        <hr class="hidden-md hidden-lg hidden-sm">
-
-                    </div>
-
-                </div>
-                <!-- /.row -->
-
-            </div>
-            <!-- /.container -->
-        </div>
-        <!-- /#footer -->
-
-        <!-- *** FOOTER END *** -->
-
-
-
 
         <!-- *** COPYRIGHT *** -->
         <div id="copyright">
