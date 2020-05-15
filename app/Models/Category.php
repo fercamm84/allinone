@@ -86,6 +86,14 @@ class Category extends Model
         return $this->hasMany(\App\Models\SellerCategory::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function sellerProducts()
+    {
+        return $this->hasMany(\App\Models\SellerProduct::class);
+    }
+
     protected static function boot() {
         parent::boot();
 

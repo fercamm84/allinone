@@ -39,6 +39,16 @@ class SectionsComposer
         $user = Auth::user();
 
         $sections = Section::all();
+        // foreach($sections as $section){
+        //     if($section->type == 'home_principal'){
+        //         foreach($section->sectionEntities as $sectionEntity){
+        //             $entidad = $sectionEntity->entity->entidad();
+        //             print_r($entidad->url());
+        //             print_r('<BR>');
+        //         }
+        //     }
+        // }
+        // die;
 
         $order = null;
         if($user){

@@ -57,7 +57,7 @@ class Seller extends Model
         'id' => 'integer',
         'description' => 'string',
         'order' => 'integer',
-        'reservations' => 'boolean',
+        'reservations' => 'integer',
         'type' => 'string',
         'entity_id' => 'integer'
     ];

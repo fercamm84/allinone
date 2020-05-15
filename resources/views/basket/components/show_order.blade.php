@@ -17,7 +17,7 @@
 
     <td>
         <div class="update-checkout w-50 text-right">
-            {{ Form::open(array('route' => array('basket.delete.item', $orderDetail->id))) }}
+            {{ Form::open(array('route' => array('basket.delete.item', $orderDetail->id), 'onsubmit' => 'return confirm("Do you want to delete this item?")')) }}
                 {{ Form::submit('Eliminar', ['class' => 'btn btn-primary']) }}
             {{ Form::close() }}
         </div>

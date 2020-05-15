@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SellerDay;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Order;
@@ -14,6 +15,8 @@ use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\OrderDetailAttributeValueEntityRepository;
+use App\Repositories\SellerReservationRepository;
+use App\Repositories\SellerReservationProductRepository;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
@@ -37,12 +40,20 @@ class BasketController extends FrontController
     /** @var  OrderDetailAttributeValueEntityRepository */
     private $orderDetailAttributeValueEntityRepository;
 
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo){
+    /** @var  SellerReservationRepository */
+    private $sellerReservationRepository;
+
+    /** @var  SellerReservationProductRepository */
+    private $sellerReservationProductRepository;
+
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo, SellerReservationRepository $sellerReservationRepo, SellerReservationProductRepository $sellerReservationProductRepo){
         parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
         $this->orderDetailAttributeValueEntityRepository = $orderDetailAttributeValueEntityRepo;
+        $this->sellerReservationRepository = $sellerReservationRepo;
+        $this->sellerReservationProductRepository = $sellerReservationProductRepo;
     }
 
     public function solicitarMercadoPago(Request $request){
@@ -123,6 +134,35 @@ class BasketController extends FrontController
         //obtiene al usuario logueado
         $user = Auth::user();
 
+        $stock = $request->input('stock');
+
+        //Solamente cuando se hace la reserva en un seller:
+        if(!empty($request->input('fecha_reserva'))){
+            $fecha_reserva = $request->input('fecha_reserva');
+            $dia_reserva = (new \DateTime($fecha_reserva))->format('Y-m-d');
+            $hora_reserva = intval((new \DateTime($fecha_reserva))->format('H'));
+
+            $seller_id = $request->input('seller_id');
+
+            $stock = $request->input('number_of_reservations');
+
+            $sellerDay = SellerDay::where([['seller_id', '=', $seller_id], ['date', '=', $dia_reserva], ['from_hour', '<=', $hora_reserva], ['to_hour', '>', $hora_reserva], ['available', '=', 1]])->first();
+
+            $sellerReservation = array();
+            $sellerReservation['seller_day_id'] = $sellerDay->id;
+            $sellerReservation['user_id'] = $user->id;
+            $sellerReservation['total'] = $stock;
+            $sellerReservation['from_hour'] = $hora_reserva;
+
+            $sellerReservation = $this->sellerReservationRepository->create($sellerReservation);
+
+            $sellerReservationProduct = array();
+            $sellerReservationProduct['seller_reservation_id'] = $sellerReservation['id'];
+            $sellerReservationProduct['product_id'] = $request->input('product_id');
+
+            $this->sellerReservationProductRepository->create($sellerReservationProduct);
+        }
+
         //obtengo la orden creada, sino, la creo
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
         if(empty($order)){
@@ -138,12 +178,12 @@ class BasketController extends FrontController
 //        if($orderDetail->isEmpty()){//esto es cuando se hace un ->get(); y se quiere ver si el listado obtenido es vacio o no
         if(empty($orderDetail)){
             $orderDetail = array();
-            $orderDetail['volume'] = $request->input('stock');
+            $orderDetail['volume'] = $stock;
             $orderDetail['order_id'] = $order->id;
             $orderDetail['product_id'] = $product->id;
             $orderDetail = $this->orderDetailRepository->create($orderDetail);
         }else{
-            $orderDetail->volume = $orderDetail->volume + $request->input('stock');
+            $orderDetail->volume = $orderDetail->volume + $stock;
             $orderDetail->save();
         }
 

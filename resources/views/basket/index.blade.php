@@ -38,7 +38,7 @@
                                             <p>Total: </p>
                                         </td>
                                         <td class="pull-right">
-                                            <p>{{ $order->total() }}</p>
+                                            <p>${{ $order->total() }}</p>
                                         </td>
                                     </tr>
                                     <tr>

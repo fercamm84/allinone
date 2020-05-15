@@ -6,12 +6,12 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SellerReservation
+ * Class SellerReservationProduct
  * @package App\Models
  * @version September 23, 2018, 5:25 am UTC
  *
- * @property \App\Models\SellerDay sellerDay
- * @property \App\Models\User user
+ * @property \App\Models\SellerReservation sellerReservation
+ * @property \App\Models\Product product
  * @property \Illuminate\Database\Eloquent\Collection attributeEntities
  * @property \Illuminate\Database\Eloquent\Collection brandCategories
  * @property \Illuminate\Database\Eloquent\Collection categories
@@ -25,17 +25,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Database\Eloquent\Collection sectionEntities
  * @property \Illuminate\Database\Eloquent\Collection sellerCategories
  * @property \Illuminate\Database\Eloquent\Collection userAddresses
- * @property integer seller_day_id
- * @property integer user_id
- * @property integer total
- * @property integer from_hour
- * @property integer to_hour
+ * @property integer seller_reservation_id
+ * @property integer product_id
  */
-class SellerReservation extends Model
+class SellerReservationProduct extends Model
 {
     use SoftDeletes;
 
-    public $table = 'seller_reservations';
+    public $table = 'seller_reservation_products';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -45,11 +42,8 @@ class SellerReservation extends Model
 
 
     public $fillable = [
-        'seller_day_id',
-        'user_id',
-        'total',
-        'from_hour',
-        'to_hour'
+        'seller_reservation_id',
+        'product_id',
     ];
 
     /**
@@ -59,11 +53,8 @@ class SellerReservation extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'seller_day_id' => 'integer',
-        'user_id' => 'integer',
-        'total' => 'integer',
-        'from_hour' => 'integer',
-        'to_hour' => 'integer'
+        'seller_reservation_id' => 'integer',
+        'product_id' => 'integer',
     ];
 
     /**
@@ -78,25 +69,16 @@ class SellerReservation extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function sellerDay()
+    public function sellerReservation()
     {
-        return $this->belongsTo(\App\Models\SellerDay::class);
+        return $this->belongsTo(\App\Models\SellerReservation::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function user()
+    public function product()
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(\App\Models\Product::class);
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function sellerReservationProducts()
-    {
-        return $this->hasMany(\App\Models\SellerReservationProduct::class);
-    }
-
 }
