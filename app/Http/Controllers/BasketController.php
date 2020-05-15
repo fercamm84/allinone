@@ -153,6 +153,7 @@ class BasketController extends FrontController
             $sellerReservation['user_id'] = $user->id;
             $sellerReservation['total'] = $stock;
             $sellerReservation['from_hour'] = $hora_reserva;
+            $sellerReservation['product_id'] = $request->input('product_id');
 
             $sellerReservation = $this->sellerReservationRepository->create($sellerReservation);
 
