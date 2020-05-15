@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Seller;
 use App\Models\SellerDay;
+use App\Models\SellerProduct;
 use App\Models\SellerReservation;
 use App\Repositories\SellerDayRepository;
 use App\Repositories\SellerReservationRepository;
@@ -37,11 +38,33 @@ class SellerShowController extends Controller
         foreach ($seller->sellerCategories as $sellerCategory) {
             array_push($entity_children, $sellerCategory->category);
         }
+        
+        $availableDays = array();
+        $sellerDay = null;
+        $sellerProducts = null;
 
-        $sellerDay = SellerDay::where([['seller_id', '=', $id], ['date', '=', DB::raw('CURDATE()')]])->first();
+        if($seller->reservations == 2){
+            $sellerDays = SellerDay::where([['seller_id', '=', $id], ['date', '>=', DB::raw('CURDATE()')], ['date', '<=', DB::raw('CURDATE() + INTERVAL 1 MONTH')], ['available', '=', 1]])
+                ->orderBy('date', 'ASC')->orderBy('from_hour', 'ASC')->get();
+
+            $sellerProducts = SellerProduct::where([['seller_id', '=', $id]])->first();
+    
+            $sellerReservations = null;
+    
+            foreach($sellerDays as $sellerDay){
+                if($sellerDay->date){
+                    $availableDays = $this->agregarDisponibilidad($availableDays, $sellerDay->date, $sellerDay->from_hour, $sellerDay->to_hour, $sellerReservations);
+                }
+            }
+    
+            $availableDays = json_encode($availableDays);
+        }else{
+            $sellerDay = SellerDay::where([['seller_id', '=', $id], ['date', '=', DB::raw('CURDATE()')]])->first();
+        }
 
         return view('seller.seller', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children,
-            'categories' => $entity_children, 'seller' => $seller, 'sellerDay' => $sellerDay));
+            'categories' => $entity_children, 'seller' => $seller, 'availableDays' => $availableDays, 'sellerDay' => $sellerDay,
+            'sellerProducts' => $sellerProducts));
     }
 
     public function reservation(Request $request){
@@ -134,6 +157,26 @@ class SellerShowController extends Controller
         }
 
         return false;
+    }
+
+    private function agregarDisponibilidad($availableDays, $day, $from_hour, $to_hour, $sellerReservations){
+        $day = (new \DateTime($day))->format('Y-m-d');
+
+        //Genera array de horas con from_hour a to_hour
+        $horas = array();
+        for($i = $from_hour; $i < $to_hour;$i++){
+            array_push($horas, str_pad($i, 2, '0', STR_PAD_LEFT).':00');//Formatea las horas de 8 a 08:00
+        }
+
+        if(empty($availableDays[$day])){
+            $availableDays[$day] = array();
+        }
+        
+        foreach($horas as $hora){
+            array_push($availableDays[$day], $hora);
+        }
+        
+        return $availableDays;
     }
 
 }

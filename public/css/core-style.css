@@ -341,6 +341,10 @@ img {
 :: 4.0 Wrapper CSS
 ------------------- */
 
+.header_area{
+    /* background-color: #fff; */
+}
+
 #wrapper {
     position: relative;
     z-index: 1000;

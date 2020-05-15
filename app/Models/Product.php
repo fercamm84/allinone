@@ -123,6 +123,14 @@ class Product extends Model
         return $this->hasMany(\App\Models\OrderDetail::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function sellerReservationProducts()
+    {
+        return $this->hasMany(\App\Models\SellerReservationProduct::class);
+    }
+
     protected static function boot() {
         parent::boot();
 
