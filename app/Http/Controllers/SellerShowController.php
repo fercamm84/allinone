@@ -49,11 +49,17 @@ class SellerShowController extends Controller
 
             $sellerProducts = SellerProduct::where([['seller_id', '=', $id]])->first();
     
-            $sellerReservations = null;
+            $seller_day_ids = array();
+            
+            foreach($sellerDays as $sellerDay){
+                array_push($seller_day_ids ,$sellerDay->id);
+            }
+
+            $sellerReservations = SellerReservation::whereIn('seller_day_id', $seller_day_ids)->orderBy('seller_day_id', 'ASC')->orderBy('from_hour', 'ASC')->get();
     
             foreach($sellerDays as $sellerDay){
                 if($sellerDay->date){
-                    $availableDays = $this->agregarDisponibilidad($availableDays, $sellerDay->date, $sellerDay->from_hour, $sellerDay->to_hour, $sellerReservations);
+                    $availableDays = $this->agregarDisponibilidad($availableDays, $sellerDay->id, $sellerDay->date, $sellerDay->from_hour, $sellerDay->to_hour, $sellerReservations);
                 }
             }
     
@@ -159,22 +165,37 @@ class SellerShowController extends Controller
         return false;
     }
 
-    private function agregarDisponibilidad($availableDays, $day, $from_hour, $to_hour, $sellerReservations){
+    private function agregarDisponibilidad($availableDays, $sellerDayId, $day, $from_hour, $to_hour, $sellerReservations){
         $day = (new \DateTime($day))->format('Y-m-d');
 
         //Genera array de horas con from_hour a to_hour
         $horas = array();
-        for($i = $from_hour; $i < $to_hour;$i++){
-            array_push($horas, str_pad($i, 2, '0', STR_PAD_LEFT).':00');//Formatea las horas de 8 a 08:00
+        for($hora = $from_hour; $hora < $to_hour; $hora++){
+            $horarioReservado = false;
+            foreach($sellerReservations as $sellerReservation){
+                if($sellerReservation->seller_day_id == $sellerDayId){
+                    if($sellerReservation->from_hour == $hora){
+                        $horarioReservado = true;
+                        break;
+                    }
+                }
+            }
+            if(!$horarioReservado){
+                array_push($horas, str_pad($hora, 2, '0', STR_PAD_LEFT).':00');//Formatea las horas de 8 a 08:00
+            }
         }
 
+        //Crea todos los dias
         if(empty($availableDays[$day])){
             $availableDays[$day] = array();
         }
         
+        //agrega las horas en el array de dias
         foreach($horas as $hora){
             array_push($availableDays[$day], $hora);
         }
+
+        //resta las horas ya reservadas del array de dias
         
         return $availableDays;
     }
