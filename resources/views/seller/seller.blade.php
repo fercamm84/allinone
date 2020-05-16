@@ -88,7 +88,7 @@
                                     </div>
                                     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
-                                            @if($seller->reservations == 2)
+                                            @if($seller->reservations == 2 && !empty($sellerProducts))
                                                 <script src="{{asset('js/datetimepicker/jquery.datetimepicker.js') }}"></script>
                                                 <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
                                                 <div class="row">
