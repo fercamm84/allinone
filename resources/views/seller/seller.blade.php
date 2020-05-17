@@ -112,9 +112,13 @@
                                                     let availableDays = <?php echo $availableDays; ?>;
                                                     let allowDates = [];
                                                     let defaultDate = null;
+                                                    let defaultHours = null;
                                                     $.each(availableDays, function( fecha, horas ) {
                                                         if(defaultDate == null){
                                                             defaultDate = fecha
+                                                        }
+                                                        if(defaultHours == null){
+                                                            defaultHours = horas
                                                         }
                                                         allowDates.push(fecha)
                                                     });
@@ -123,9 +127,11 @@
                                                         allowDates:allowDates,
                                                         formatDate:'Y-m-d',
                                                         format:	'Y-m-d H:i',
-                                                        defaultDate: defaultDate
+                                                        defaultDate:defaultDate,
+                                                        allowTimes:defaultHours,
                                                     });
                                                     var logic = function( currentDateTime ){
+                                                        console.log('cambia')
                                                         let datetimepicker = this
                                                         $.each(availableDays, function( fecha, horas ) {
                                                             allowDates.push(fecha)
@@ -141,7 +147,7 @@
                                                     };
                                                     $('#datetimepicker').datetimepicker({
                                                         onSelectDate:logic,
-                                                        onGenerate:logic,
+                                                        // onGenerate:logic,
                                                     });
                                                     // https://xdsoft.net/jqplugins/datetimepicker/
                                                 </script>
