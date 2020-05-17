@@ -1,6 +1,7 @@
 <table class="table table-responsive" id="sellers-table">
     <thead>
         <tr>
+            <th>#Seller ID</th>
             <th>Description</th>
             <th>Order</th>
             <th>Reservations</th>
@@ -12,6 +13,7 @@
     <tbody>
     @foreach($sellers as $seller)
         <tr>
+            <td>{!! $seller->id !!}</td>
             <td>{!! $seller->description !!}</td>
             <td>{!! $seller->reservations !!}</td>
             <td>{!! $seller->order !!}</td>

@@ -68,9 +68,11 @@ class SellerShowController extends Controller
             $sellerDay = SellerDay::where([['seller_id', '=', $id], ['date', '=', DB::raw('CURDATE()')]])->first();
         }
 
+        $sections = array();
+
         return view('seller.seller', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children,
             'categories' => $entity_children, 'seller' => $seller, 'availableDays' => $availableDays, 'sellerDay' => $sellerDay,
-            'sellerProducts' => $sellerProducts));
+            'sellerProducts' => $sellerProducts, 'sections' => $sections));
     }
 
     public function reservation(Request $request){
