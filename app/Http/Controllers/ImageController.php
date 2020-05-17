@@ -132,14 +132,14 @@ class ImageController extends AppBaseController
             return redirect(route('images.index'));
         }
 
-        if(!empty($image['name']) && file_exists($image['name'])){
+        if(!empty($image['name']) && file_exists(env("FOLDER_IMAGES").$image['name'])){
             unlink(env("FOLDER_IMAGES").$image['name']);
         }
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $imagen = $request->file('image');
 
-            $imagen->move(env("FOLDER_IMAGES"), $image['name']);
+            $result = $imagen->move(env("FOLDER_IMAGES"), $image['name']);
         }
 
         $image = $this->imageRepository->update($request->all(), $id);

@@ -2,7 +2,7 @@
 
 @section('details')
 
-    <div class="col-md-9">
+    <div class="col-md-12">
         <section class="single_product_details_area section_padding_0_100">
             <div class="container">
                 <div class="row">
@@ -11,7 +11,7 @@
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
 
                                 <ol class="carousel-indicators">
-                                    @if(sizeof($seller->entity->imageEntities)>0)
+                                    @if(sizeof($seller->entity->imageEntities) > 0)
                                         <?php $i = 0; ?>
                                         @foreach($seller->entity->imageEntities as $imageEntity)
                                             <?php if ($i == 0) { ?>
@@ -27,7 +27,7 @@
                                 </ol>
 
                                 <div class="carousel-inner">
-                                    @if(sizeof($seller->entity->imageEntities)>0)
+                                    @if(sizeof($seller->entity->imageEntities) > 0)
                                         <?php $i = 0; ?>
                                         @foreach($seller->entity->imageEntities as $imageEntity)
                                             <?php if ($i == 0) { ?>
@@ -211,23 +211,25 @@
         </section>
     </div>
 
-    <div class="col-md-9">
-        <section class="new_arrivals_area section_padding_100_0 clearfix">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="section_heading text-center">
-                                <h2>Categorías</h2>
+    @if(sizeof($entity_children)>0)
+        <div class="col-md-9">
+            <section class="new_arrivals_area section_padding_100_0 clearfix">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="section_heading text-center">
+                                    <h2>Categorías</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="row karl-new-arrivals" style="position: relative; height: 1813.5px;">
-                        @include('search.search')
+                    <div class="container">
+                        <div class="row karl-new-arrivals" style="position: relative; height: 1813.5px;">
+                            @include('search.search')
+                        </div>
                     </div>
-                </div>
-        </section>
-    </div>
+            </section>
+        </div>
+    @endif
 
 @endsection
