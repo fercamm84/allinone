@@ -80,6 +80,21 @@
                                     </div>
                                 </div>
 
+                                @if($seller->reservations == 2 && !empty($sellerProducts))
+                                    <div class="card">
+                                        <div class="card-header" role="tab" id="headingTwo">
+                                            <h6 class="mb-0">
+                                                <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" id="cardServicios">Servicios</a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse show" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                                            <div class="card-body">
+                                                {{ Form::select('short_description', $comboSellerProducts, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required', 'id' => 'comboServicio']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="card">
                                     <div class="card-header" role="tab" id="headingThree">
                                         <h6 class="mb-0">
@@ -93,18 +108,16 @@
                                                 <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
                                                 <div class="row">
                                                     <!-- {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve', 'class' => 'col-xs-12')) }} -->
-                                                    {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add', 'class' => 'col-xs-12')) }}
+                                                    {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add', 'class' => 'col-xs-12', 'onsubmit' => 'return reservar()')) }}
                                                         <p class="text-center buttons">
                                                             {{ Form::hidden('seller_id', $seller->id) }}
-                                                            {{ Form::hidden('product_id', $sellerProducts->product_id) }}
+                                                            {{ Form::hidden('product_id', null, ['id' => 'product_id']) }}
                                                             <?php //$max_reservas = $sellerDay!=null ? $sellerDay->total : 10; ?>
                                                             <?php $max_reservas = 1; ?>
                                                             <div style="display: none;">Asientos:&nbsp;{{ Form::number('number_of_reservations', 1, ['class' => 'form-control', 'style' => 'width: 50px !important; display: inline;', 'maxlength' => 2, 'min' => '1', 'max' => $max_reservas, 'required' => true]) }}</div>
                                                             {{ Form::hidden('day_selected', '', ['id' => 'day_selected']) }}
                                                             <input type="text" id="datetimepicker" name="fecha_reserva"/>
-                                                            <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">
-                                                                <i class='fa fa-user'></i> Reservar por ${{$sellerProducts->product->price}}
-                                                            </button>
+                                                            <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">Reservar</button>
                                                         </p>
                                                     {{ Form::close() }}
                                                 </div>
@@ -150,8 +163,22 @@
                                                         // onGenerate:logic,
                                                     });
                                                     // https://xdsoft.net/jqplugins/datetimepicker/
+
+                                                    $( "#comboServicio" ).change(function() {
+                                                        $('#comboServicio').css('color', 'black')
+                                                        $('#product_id').val(this.value)
+                                                    });
+
+                                                    reservar = () => {
+                                                        if($('#product_id').val() == ''){
+                                                            $('#cardServicios').click()
+                                                            $('#comboServicio').css('color', 'red')
+                                                            return false
+                                                        }
+                                                        return true
+                                                    }
                                                 </script>
-                                            @elseif($seller->reservations == 2)
+                                            @elseif($seller->reservations == 1)
                                                 <script src="{{asset('js/datetimepicker/jquery.datetimepicker.js') }}"></script>
                                                 <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
                                                 <div class="row">

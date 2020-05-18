@@ -42,13 +42,19 @@ class SellerShowController extends Controller
         $availableDays = array();
         $sellerDay = null;
         $sellerProducts = null;
+        $comboSellerProducts = null;
 
-        if($seller->reservations == 2){
+        if($seller->reservations == 2){//admite reservas con turnos (ofrecimiento de servicios, por lo que debe haber una relacion sellerProducts)
             $sellerDays = SellerDay::where([['seller_id', '=', $id], ['date', '>=', DB::raw('CURDATE()')], ['date', '<=', DB::raw('CURDATE() + INTERVAL 1 MONTH')], ['available', '=', 1]])
                 ->orderBy('date', 'ASC')->orderBy('from_hour', 'ASC')->get();
 
-            $sellerProducts = SellerProduct::where([['seller_id', '=', $id]])->first();
-    
+            $sellerProducts = SellerProduct::where([['seller_id', '=', $id]])->get();
+            $comboSellerProducts = SellerProduct::where([['seller_id', '=', $id]])
+                                                ->join('products', 'products.id', '=', 'seller_products.product_id')
+                                                ->select('seller_products.*', 'products.*', DB::raw('concat("$", products.price, " - ", products.short_description) as descripcion'))
+                                                ->get()
+                                                ->pluck('descripcion', 'product_id');
+
             $seller_day_ids = array();
             
             foreach($sellerDays as $sellerDay){
@@ -72,7 +78,7 @@ class SellerShowController extends Controller
 
         return view('seller.seller', array('entity_parents' => $entity_parents, 'entity_children' => $entity_children,
             'categories' => $entity_children, 'seller' => $seller, 'availableDays' => $availableDays, 'sellerDay' => $sellerDay,
-            'sellerProducts' => $sellerProducts, 'sections' => $sections));
+            'sellerProducts' => $sellerProducts, 'sections' => $sections, 'comboSellerProducts' => $comboSellerProducts));
     }
 
     public function reservation(Request $request){
