@@ -49,7 +49,8 @@ class SellerReservation extends Model
         'user_id',
         'total',
         'from_hour',
-        'to_hour'
+        'to_hour',
+        'order_detail_id'
     ];
 
     /**
@@ -63,7 +64,8 @@ class SellerReservation extends Model
         'user_id' => 'integer',
         'total' => 'integer',
         'from_hour' => 'integer',
-        'to_hour' => 'integer'
+        'to_hour' => 'integer',
+        'order_detail_id' => 'integer',
     ];
 
     /**
@@ -92,11 +94,11 @@ class SellerReservation extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function sellerReservationProducts()
+    public function orderDetail()
     {
-        return $this->hasMany(\App\Models\SellerReservationProduct::class);
+        return $this->belongsTo(\App\Models\OrderDetail::class);
     }
 
 }

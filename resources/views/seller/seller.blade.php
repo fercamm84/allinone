@@ -103,7 +103,7 @@
                                     </div>
                                     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
-                                            @if($seller->reservations == 2 && !empty($sellerProducts))
+                                            @if($seller->reservations == 2 && !empty($sellerProducts) && !empty(json_decode($availableDays)))
                                                 <script src="{{asset('js/datetimepicker/jquery.datetimepicker.js') }}"></script>
                                                 <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
                                                 <div class="row">
