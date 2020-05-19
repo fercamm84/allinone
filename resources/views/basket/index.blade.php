@@ -41,19 +41,21 @@
                                             <p>${{ $order->total() }}</p>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <div class="cart-footer d-flex mt-30">
-                                                <div class="back-to-shop w-50">
-                                                    &nbsp;
+                                    @if(count($order->orderDetails) > 0)
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="cart-footer d-flex mt-30">
+                                                    <div class="back-to-shop w-50">
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="w-50 text-right coupon-code-area">
+                                                        <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn karl-checkout-btn" style="width:250px;">PAGAR</a>
+                                                        <div id="divGrisado"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="w-50 text-right coupon-code-area">
-                                                    <a id="boton_pago" href="javascript:solicitarMercadoPago();" class="btn karl-checkout-btn" style="width:250px;">PAGAR</a>
-                                                    <div id="divGrisado"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </tfoot>
                             </table>
                         @endif

@@ -75,6 +75,14 @@ class OrderDetail extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     **/
+    public function sellerReservation()
+    {
+        return $this->hasOne(\App\Models\SellerReservation::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
     public function orderDetailAttributeValueEntities()
@@ -88,6 +96,9 @@ class OrderDetail extends Model
         static::deleted(function($orderDetail) {
             foreach($orderDetail->orderDetailAttributeValueEntities as $orderDetailAttributeValueEntity){
                 $orderDetailAttributeValueEntity->delete();
+            }
+            if(!empty($orderDetail->sellerReservation)){
+                $orderDetail->sellerReservation->delete();
             }
         });
     }

@@ -93,4 +93,5 @@ class SellerDay extends Model
     {
         return $this->hasMany(\App\Models\SellerReservation::class);
     }
+    
 }

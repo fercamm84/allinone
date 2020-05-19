@@ -2,9 +2,9 @@
 
 namespace App;
 
+use App\Notifications\MyResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\MyResetPassword;
 
 class User extends Authenticatable
 {

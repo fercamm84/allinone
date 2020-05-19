@@ -16,7 +16,6 @@ use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
 use App\Repositories\OrderDetailAttributeValueEntityRepository;
 use App\Repositories\SellerReservationRepository;
-use App\Repositories\SellerReservationProductRepository;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
@@ -43,17 +42,13 @@ class BasketController extends FrontController
     /** @var  SellerReservationRepository */
     private $sellerReservationRepository;
 
-    /** @var  SellerReservationProductRepository */
-    private $sellerReservationProductRepository;
-
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo, SellerReservationRepository $sellerReservationRepo, SellerReservationProductRepository $sellerReservationProductRepo){
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo, SellerReservationRepository $sellerReservationRepo){
         parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
         $this->orderDetailAttributeValueEntityRepository = $orderDetailAttributeValueEntityRepo;
         $this->sellerReservationRepository = $sellerReservationRepo;
-        $this->sellerReservationProductRepository = $sellerReservationProductRepo;
     }
 
     public function solicitarMercadoPago(Request $request){
@@ -135,33 +130,8 @@ class BasketController extends FrontController
         $user = Auth::user();
 
         $stock = $request->input('stock');
-
-        //Solamente cuando se hace la reserva en un seller:
-        if(!empty($request->input('fecha_reserva'))){
-            $fecha_reserva = $request->input('fecha_reserva');
-            $dia_reserva = (new \DateTime($fecha_reserva))->format('Y-m-d');
-            $hora_reserva = intval((new \DateTime($fecha_reserva))->format('H'));
-
-            $seller_id = $request->input('seller_id');
-
+        if($stock == null){
             $stock = $request->input('number_of_reservations');
-
-            $sellerDay = SellerDay::where([['seller_id', '=', $seller_id], ['date', '=', $dia_reserva], ['from_hour', '<=', $hora_reserva], ['to_hour', '>', $hora_reserva], ['available', '=', 1]])->first();
-
-            $sellerReservation = array();
-            $sellerReservation['seller_day_id'] = $sellerDay->id;
-            $sellerReservation['user_id'] = $user->id;
-            $sellerReservation['total'] = $stock;
-            $sellerReservation['from_hour'] = $hora_reserva;
-            $sellerReservation['product_id'] = $request->input('product_id');
-
-            $sellerReservation = $this->sellerReservationRepository->create($sellerReservation);
-
-            $sellerReservationProduct = array();
-            $sellerReservationProduct['seller_reservation_id'] = $sellerReservation['id'];
-            $sellerReservationProduct['product_id'] = $request->input('product_id');
-
-            $this->sellerReservationProductRepository->create($sellerReservationProduct);
         }
 
         //obtengo la orden creada, sino, la creo
@@ -177,7 +147,7 @@ class BasketController extends FrontController
         $orderDetail = OrderDetail::where([['order_id', '=', $order['id']], ['product_id', '=', $request->input('product_id')]])->first();
 
 //        if($orderDetail->isEmpty()){//esto es cuando se hace un ->get(); y se quiere ver si el listado obtenido es vacio o no
-        if(empty($orderDetail)){
+        if(empty($orderDetail) || !empty($request->input('fecha_reserva'))){//si es una reserva (seller) se crea siempre una nueva orden porque cambia el horario
             $orderDetail = array();
             $orderDetail['volume'] = $stock;
             $orderDetail['order_id'] = $order->id;
@@ -201,6 +171,28 @@ class BasketController extends FrontController
             $orderDetailAttributeValueEntity['order_detail_id'] = $orderDetail->id;
             $orderDetailAttributeValueEntity['attribute_value_entity_id'] = $attribute_value_entity_id;
             $this->orderDetailAttributeValueEntityRepository->create($orderDetailAttributeValueEntity);
+        }
+
+        //Solamente cuando se hace la reserva en un seller:
+        if(!empty($request->input('fecha_reserva'))){
+            $fecha_reserva = $request->input('fecha_reserva');
+            $dia_reserva = (new \DateTime($fecha_reserva))->format('Y-m-d');
+            $hora_reserva = intval((new \DateTime($fecha_reserva))->format('H'));
+
+            $seller_id = $request->input('seller_id');
+
+            $stock = $request->input('number_of_reservations');
+
+            $sellerDay = SellerDay::where([['seller_id', '=', $seller_id], ['date', '=', $dia_reserva], ['from_hour', '<=', $hora_reserva], ['to_hour', '>', $hora_reserva], ['available', '=', 1]])->first();
+
+            $sellerReservation = array();
+            $sellerReservation['seller_day_id'] = $sellerDay->id;
+            $sellerReservation['user_id'] = $user->id;
+            $sellerReservation['total'] = $stock;
+            $sellerReservation['from_hour'] = $hora_reserva;
+            $sellerReservation['order_detail_id'] = $orderDetail->id;
+
+            $sellerReservation = $this->sellerReservationRepository->create($sellerReservation);
         }
 
         Flash::success('Item agregado al carrito.');

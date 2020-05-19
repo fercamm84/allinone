@@ -6,7 +6,11 @@
                 <?php break; ?>
             @endforeach
         </a>
-        <h6>{{ $orderDetail->product->name }}</h6>
+        <h6>{{ $orderDetail->product->name }} - {{ $orderDetail->product->description }}
+            @if(!empty($orderDetail->sellerReservation))
+                - Horario: {{ $orderDetail->sellerReservation->from_hour }}
+            @endif
+        </h6>
     </td>
     <td class="price"><span>${{ $orderDetail->unitPrice() }}</span></td>
     <td class="qty">

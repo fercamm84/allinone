@@ -193,13 +193,12 @@ class SellerShowController extends Controller
             }
         }
 
-        //Crea todos los dias
-        if(empty($availableDays[$day])){
-            $availableDays[$day] = array();
-        }
-        
         //agrega las horas en el array de dias
         foreach($horas as $hora){
+            //Crea el dia
+            if(empty($availableDays[$day])){
+                $availableDays[$day] = array();
+            }
             array_push($availableDays[$day], $hora);
         }
 
