@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\SellerDay;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Process;
+use App\Models\Mailing;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Section;
@@ -14,6 +16,7 @@ use App;
 use App\Repositories\OrderRepository;
 use App\Repositories\OrderDetailRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\ProcessRepository;
 use App\Repositories\OrderDetailAttributeValueEntityRepository;
 use App\Repositories\SellerReservationRepository;
 use Illuminate\Http\Response;
@@ -24,6 +27,8 @@ use Symfony\Component\CssSelector\Exception\InternalErrorException;
 // use SantiGraviano\LaravelMercadoPago\Facades\MP;
 use Illuminate\Notifications\Notifiable;
 use MercadoPago;
+use App\Jobs\SendEmail;
+
 class BasketController extends FrontController
 {
 
@@ -42,13 +47,19 @@ class BasketController extends FrontController
     /** @var  SellerReservationRepository */
     private $sellerReservationRepository;
 
-    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo, SellerReservationRepository $sellerReservationRepo){
+    /** @var  ProcessRepository */
+    private $processRepository;
+
+    public function __construct(OrderRepository $orderRepo, OrderDetailRepository $orderDetailRepo, PaymentRepository $paymentRepo, 
+                                OrderDetailAttributeValueEntityRepository $orderDetailAttributeValueEntityRepo, 
+                                SellerReservationRepository $sellerReservationRepo, ProcessRepository $processRepo){
         parent::__construct();
         $this->orderRepository = $orderRepo;
         $this->orderDetailRepository = $orderDetailRepo;
         $this->paymentRepository = $paymentRepo;
         $this->orderDetailAttributeValueEntityRepository = $orderDetailAttributeValueEntityRepo;
         $this->sellerReservationRepository = $sellerReservationRepo;
+        $this->processRepository = $processRepo;
     }
 
     public function solicitarMercadoPago(Request $request){
@@ -205,6 +216,20 @@ class BasketController extends FrontController
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
+
+        // if(true){
+        //     //creo el objeto mailing
+        //     $mailing = new Mailing;
+        //     $mailing->email         = 'fercamm@gmail.com';
+        //     $mailing->telephone     = 'telefono';
+        //     $mailing->first_name    = 'nombre';
+        //     $mailing->last_name     = 'apellido';
+        //     $mailing->comments      = 'comentarios';
+        //     $mailing->save();
+
+        //     //Genero el job para el email (y genera el process)
+        //     SendEmail::dispatch($mailing);//esto ponerlo en la linea 49 de ContactController
+        // }
 
         return view('basket.index', array('order' => $order));
     }
