@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMailingRequest;
-use App\Http\Helpers\SendMailHelper;
 use App\Repositories\MailingRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use App\Jobs\SendEmail;
 
 class ContactController extends AppBaseController
 {
     /** @var  MailingRepository */
     private $mailingRepository;
 
-    private $SendMailHelper;
-
     public function __construct(MailingRepository $mailingRepo)
     {
         $this->mailingRepository = $mailingRepo;
-        $this->SendMailHelper = new SendMailHelper();
     }
 
     /**
@@ -46,7 +43,7 @@ class ContactController extends AppBaseController
 
         $mailing = $this->mailingRepository->create($input);
 
-        $this->SendMailHelper->sendEmailContactUs($mailing);
+        SendEmail::dispatch($mailing);
 
         Flash::success('Contact saved successfully.');
 

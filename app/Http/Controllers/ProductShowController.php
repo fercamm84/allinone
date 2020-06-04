@@ -9,11 +9,11 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Section;
 use App\Http\Requests\CreateMailingRequest;
-use App\Http\Helpers\SendMailHelper;
 use App\Repositories\MailingRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
+use App\Jobs\SendEmail;
 
 class ProductShowController extends Controller
 {
@@ -21,12 +21,9 @@ class ProductShowController extends Controller
     /** @var  MailingRepository */
     private $mailingRepository;
 
-    private $SendMailHelper;
-
     public function __construct(MailingRepository $mailingRepo)
     {
         $this->mailingRepository = $mailingRepo;
-        $this->SendMailHelper = new SendMailHelper();
     }
 
     public function index($id = null){
@@ -66,7 +63,7 @@ class ProductShowController extends Controller
 
         $mailing = $this->mailingRepository->create($input);
 
-        $this->SendMailHelper->sendEmailContactUs($mailing);
+        SendEmail::dispatch($mailing);
 
         Flash::success('Consulta enviada.');
 

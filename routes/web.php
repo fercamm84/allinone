@@ -33,15 +33,13 @@ Route::resource('orders', 'OrderController');
 
 Route::resource('orderDetails', 'OrderDetailController');
 
-Route::resource('categoryProducts', 'CategoryProductController');
-
 Route::get('/', 'HomePageController@index')->name('index');;
-
-Route::get('/seller/{id}', 'SellerShowController@index');
 
 Route::get('/brand/{id}', 'BrandShowController@index');
 
 Route::get('/cat/{id}', 'CategoryShowController@index');
+
+Route::get('/entity/{id}', 'EntityShowController@index');
 
 Route::get('/prod/{id}', 'ProductShowController@index');
 

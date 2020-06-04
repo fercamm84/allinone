@@ -34,3 +34,9 @@
     <p>{!! $image->deleted_at !!}</p>
 </div>
 
+<!-- Show Image -->
+<div class="form-group">
+    <a class="gallery_img" href="{{ asset('imagenes/'.$image->name) }}" target="_blank">
+        <img class="d-block w-100" src="{{ asset('imagenes/'.$image->name) }}" alt="{{ $image->name }}">
+    </a>
+</div>

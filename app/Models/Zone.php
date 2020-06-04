@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property \App\Models\Country country
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection City
  * @property \Illuminate\Database\Eloquent\Collection imageCategories
  * @property \Illuminate\Database\Eloquent\Collection imageProducts

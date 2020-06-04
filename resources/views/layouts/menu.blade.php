@@ -22,10 +22,6 @@
     <a href="{!! route('orderDetails.index') !!}"><i class="fa fa-edit"></i><span>Order Details</span></a>
 </li>
 
-<li class="{{ Request::is('categoryProducts*') ? 'active' : '' }}">
-    <a href="{!! route('categoryProducts.index') !!}"><i class="fa fa-edit"></i><span>Category Products</span></a>
-</li>
-
 <li class="{{ Request::is('categories*') ? 'active' : '' }}">
     <a href="{!! route('categories.index') !!}"><i class="fa fa-edit"></i><span>Categories</span></a>
 </li>
@@ -90,10 +86,6 @@
     <a href="{!! route('sellers.index') !!}"><i class="fa fa-edit"></i><span>Sellers</span></a>
 </li>
 
-<li class="{{ Request::is('sellerCategories*') ? 'active' : '' }}">
-    <a href="{!! route('sellerCategories.index') !!}"><i class="fa fa-edit"></i><span>Seller Categories</span></a>
-</li>
-
 <li class="{{ Request::is('news*') ? 'active' : '' }}">
     <a href="{!! route('news.index') !!}"><i class="fa fa-edit"></i><span>News</span></a>
 </li>
@@ -108,10 +100,6 @@
 
 <li class="{{ Request::is('brands*') ? 'active' : '' }}">
     <a href="{!! route('brands.index') !!}"><i class="fa fa-edit"></i><span>Brands</span></a>
-</li>
-
-<li class="{{ Request::is('brandCategories*') ? 'active' : '' }}">
-    <a href="{!! route('brandCategories.index') !!}"><i class="fa fa-edit"></i><span>Brand Categories</span></a>
 </li>
 
 <li class="{{ Request::is('sellerDays*') ? 'active' : '' }}">

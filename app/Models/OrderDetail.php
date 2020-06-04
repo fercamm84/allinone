@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \App\Models\Order order
  * @property \App\Models\Product product
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property integer volume
  * @property integer order_id
  * @property integer product_id

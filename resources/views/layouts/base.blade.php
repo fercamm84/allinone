@@ -95,7 +95,9 @@ $first_part = $components[1];
                             @endif
                         @endforeach
                         @foreach($locations as $location)
-                            <li><a href="/search/sellerByLocation/{{ $location->id }}">{{ $location->description }}</a></li>
+                            @if(!empty($location))
+                                <li><a href="/search/sellerByLocation/{{ $location->id }}">{{ $location->description }}</a></li>
+                            @endif
                         @endforeach
 
                     </ul>
@@ -361,31 +363,6 @@ _________________________________________________________ -->
                                                 </nav>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-6 d-md-flex justify-content-between">
-                                            <div class="navbar-buttons">
-
-                                                <div class="navbar-collapse collapse right" id="search-not-mobile">
-                                                    <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
-                                                        <span class="sr-only">Toggle search</span>
-                                                        <i class="fa fa-search"></i>
-                                                    </button>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="collapse clearfix" id="search">
-
-                                                {{ Form::open(array('id' => 'formulario', 'action' => 'SearchController@globalSearch', 'class' => 'navbar-form', 'role' => 'search')) }}
-                                                <div class="input-group">
-                                                    {{ Form::text('global_search',null,['class'=>'form-control','name'=>'global_search', 'placeholder'=>'Search']) }}
-                                                    <span class="input-group-btn">
-                                                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                                            </span>
-                                                </div>
-                                                {{ Form::close() }}
-
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

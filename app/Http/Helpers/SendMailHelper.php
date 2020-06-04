@@ -32,7 +32,7 @@ class SendMailHelper {
 //            $TemplateEmail->outroLines = ['son', 'outro', 'lines'];
         }
 
-        $TemplateEmail->actionText = 'Go home';
+        $TemplateEmail->actionText = 'My account';
         $TemplateEmail->actionUrl = env('APP_URL');
 
         $user->notify($TemplateEmail);

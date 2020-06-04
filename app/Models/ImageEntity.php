@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \App\Models\Image image
  * @property \Illuminate\Database\Eloquent\Collection categories
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection imageCategoriesOLD
  * @property \Illuminate\Database\Eloquent\Collection imageProductsOLD
  * @property \Illuminate\Database\Eloquent\Collection mailings

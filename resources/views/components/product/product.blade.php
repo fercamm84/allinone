@@ -1,0 +1,372 @@
+<!-- <<<<<<<<<<<<<<<<<<<< Single Product Details Area Start >>>>>>>>>>>>>>>>>>>>>>>>> -->
+<section class="single_product_details_area section_padding_0_100">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-md-6">
+                <div class="single_product_thumb">
+                    <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+
+                        <ol class="carousel-indicators">
+                            @if(sizeof($product->entity->imageEntities)>0)
+                                <?php $i = 0; ?>
+                                @foreach($product->entity->imageEntities as $imageEntity)
+                                    <?php if ($i == 0) { ?>
+                                        <li class="active" data-target="#product_details_slider" data-slide-to="{{ $i }}" style="background-image: url({{ asset('imagenes/'.$imageEntity->image->name) }});"></li>
+                                    <?php } else { ?>
+                                        <li data-target="#product_details_slider" data-slide-to="{{ $i }}" style="background-image: url({{ asset('imagenes/'.$imageEntity->image->name) }});"></li>
+                                    <?php } ?>
+                                    <?php $i++; ?>
+                                @endforeach
+                            @else
+                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{ asset('/img/default-no-image.png') }});"></li>
+                            @endif
+                        </ol>
+
+                        <div class="carousel-inner">
+                            @if(sizeof($product->entity->imageEntities)>0)
+                                <?php $i = 0; ?>
+                                @foreach($product->entity->imageEntities as $imageEntity)
+                                    <?php if ($i == 0) { ?>
+                                        <div class="carousel-item active">
+                                            <a class="gallery_img" href="{{ asset('imagenes/'.$imageEntity->image->name) }}">
+                                                <img class="d-block w-100" src="{{ asset('imagenes/'.$imageEntity->image->name) }}" alt="{{ $imageEntity->image->name }}">
+                                            </a>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="carousel-item">
+                                            <a class="gallery_img" href="{{ asset('imagenes/'.$imageEntity->image->name) }}">
+                                                <img class="d-block w-100" src="{{ asset('imagenes/'.$imageEntity->image->name) }}" alt="{{ $imageEntity->image->name }}">
+                                            </a>
+                                        </div>
+                                        <li data-target="#product_details_slider" data-slide-to="{{ $i }}" style="background-image: url({{ asset('imagenes/'.$imageEntity->image->name) }});"></li>
+                                    <?php } ?>
+                                    <?php $i++; ?>
+                                @endforeach
+                            @else
+                                <div class="carousel-item active">
+                                    <a class="gallery_img" href="{{ asset('/img/default-no-image.png') }}">
+                                        <img class="d-block w-100" src="{{ asset('/img/default-no-image.png') }}" alt="First slide">
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="single_product_desc">
+
+                    <h4 class="title"><a href="#">{!! $product->title !!}</a></h4>
+
+                    <!-- <h4 class="price">$ {!! $product->price !!}</h4> -->
+
+                    <p class="available">Available: <span class="text-muted">In Stock</span></p>
+
+                    <div class="single_product_ratings mb-15">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </div>
+
+                    @if(!empty($seller))
+                        @if($seller->reservations == 2 && !empty(json_decode($availableDays)))
+                            <script src="{{asset('js/datetimepicker/jquery.datetimepicker.js') }}"></script>
+                            <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
+                            <div class="row">
+                                <!-- {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reserve', 'class' => 'col-xs-12')) }} -->
+                                {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add', 'class' => 'col-xs-12', 'onsubmit' => 'return reservar()')) }}
+                                    <p class="text-center buttons">
+                                        {{ Form::hidden('seller_id', $seller->id) }}
+                                        {{ Form::hidden('product_id', $product->id, ['id' => 'product_id']) }}
+                                        <?php //$max_reservas = $sellerDay!=null ? $sellerDay->total : 10; ?>
+                                        <?php $max_reservas = 1; ?>
+                                        <div style="display: none;">Asientos:&nbsp;{{ Form::number('number_of_reservations', 1, ['class' => 'form-control', 'style' => 'width: 50px !important; display: inline;', 'maxlength' => 2, 'min' => '1', 'max' => $max_reservas, 'required' => true]) }}</div>
+                                        {{ Form::hidden('day_selected', '', ['id' => 'day_selected']) }}
+                                        <input type="text" id="datetimepicker" name="fecha_reserva"/>
+                                        <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">Reservar</button>
+                                    </p>
+                                {{ Form::close() }}
+                            </div>
+                            <script>
+                                let availableDays = <?php echo $availableDays; ?>;
+                                let allowDates = [];
+                                let defaultDate = null;
+                                let defaultHours = null;
+                                $.each(availableDays, function( fecha, horas ) {
+                                    if(defaultDate == null){
+                                        defaultDate = fecha
+                                    }
+                                    if(defaultHours == null){
+                                        defaultHours = horas
+                                    }
+                                    allowDates.push(fecha)
+                                });
+                                $('#datetimepicker').datetimepicker({
+                                    inline:true,
+                                    allowDates:allowDates,
+                                    formatDate:'Y-m-d',
+                                    format:	'Y-m-d H:i',
+                                    defaultDate:defaultDate,
+                                    allowTimes:defaultHours,
+                                });
+                                var logic = function( currentDateTime ){
+                                    console.log('cambia')
+                                    let datetimepicker = this
+                                    $.each(availableDays, function( fecha, horas ) {
+                                        allowDates.push(fecha)
+                                        if( currentDateTime.getFullYear()+'-'+(currentDateTime.getMonth()+1+'').padStart(2,'0')+'-'+(currentDateTime.getDate()+'').padStart(2,'0') == fecha ){
+                                            datetimepicker.setOptions({
+                                                inline:true,
+                                                allowTimes:horas,
+                                                formatDate:	'Y-m-d',
+                                                format:	'Y-m-d H:i',
+                                            });
+                                        }
+                                    });
+                                };
+                                $('#datetimepicker').datetimepicker({
+                                    onSelectDate:logic,
+                                    // onGenerate:logic,
+                                });
+                                // https://xdsoft.net/jqplugins/datetimepicker/
+
+                                $( "#comboServicio" ).change(function() {
+                                    $('#comboServicio').css('color', 'black')
+                                    $('#product_id').val(this.value)
+                                });
+
+                                reservar = () => {
+                                    // if($('#product_id').val() == ''){
+                                    //     $('#cardServicios').click()
+                                    //     $('#comboServicio').css('color', 'red')
+                                    //     return false
+                                    // }
+                                    // return true
+                                    if($('#datetimepicker').val() == ''){
+                                        alert('Please, select a date and an hour.');
+                                        return false;
+                                    }
+                                    return true;
+                                }
+                            </script>
+                        @elseif($seller->reservations == 1)
+                            <script src="{{asset('js/datetimepicker/jquery.datetimepicker.js') }}"></script>
+                            <link href="{{asset('css/datetimepicker/jquery.datetimepicker.css') }}" rel="stylesheet">
+                            <div class="row">
+                                {{ Form::open(array('id' => 'formulario', 'action' => 'SellerShowController@reservation', 'class' => 'col-xs-6')) }}
+                                    <p class="text-center buttons">
+                                        {{ Form::hidden('seller_id', $seller->id) }}
+                                        <?php $max_reservas = $sellerDay!=null ? $sellerDay->total : 10; ?>
+                                        Cantidad de personas: {{ Form::number('number_of_reservations', 1, ['class' => 'form-control', 'min' => '1', 'max' => $max_reservas, 'required' => true]) }}
+                                        {{ Form::hidden('day_selected', '', ['id' => 'day_selected']) }}
+                                        <div id="datepicker"></div>
+                                        <button class='btn btn-primary' type='submit' value='submit' style="margin-top:3%;">
+                                            <i class='fa fa-user'></i> Reservar
+                                        </button>
+                                    </p>
+                                {{ Form::close() }}
+                            </div>
+                        @else
+                            No hay fechas disponibles de reservas.
+
+                            {{ Form::open(array('id' => 'formularioContacto', 'action' => 'ProductShowController@contact')) }}
+
+                                @include('product.components.attributes')
+
+                                <div class="checkout_area section_padding_100">
+                                    <div class="container">
+                                        <div class="row">            
+                                            <div class="col-12 col-md-6">
+                                            
+                                                <div class="checkout_details_area mt-50 clearfix">
+
+                                                    <div class="cart-page-heading">
+                                                        <h5>Contact</h5>
+                                                        <p>Enter your comments</p>
+                                                    </div>
+
+                                                    
+                                                    {{ Form::hidden('product_id', $product->id) }}
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="comments">Comments <span>*</span></label>
+                                                            {!! Form::textarea('comments', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="first_name">First Name <span>*</span></label>
+                                                            {!! Form::text('first_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="last_name">Last Name <span>*</span></label>
+                                                            {!! Form::text('last_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Email <span>*</span></label>
+                                                            {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Telephone <span>*</span></label>
+                                                            {!! Form::number('telephone', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <div class="custom-control custom-checkbox d-block">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">Subscribe to our newsletter</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-sm-12">
+                                                            {!! Form::submit('Send', ['class' => 'btn btn-primary']) !!}
+                                                            <a href="{{ url('/') }}" class="btn btn-default">Cancel</a>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        @endif
+                    @else
+                        @if($product->buyable)
+
+                            {{ Form::open(array('id' => 'formulario', 'action' => 'BasketController@add')) }}
+                                @include('product.components.attributes')
+
+                                <h2 class="mb-50 price">$<span id="price">{!! $product->price !!}</span></h2>
+
+                                <div class="cart clearfix mb-50 d-flex">
+                                    <p class="text-center buttons">
+                                        {{ Form::hidden('product_id', $product->id) }}
+
+                                        <div class="quantity">
+                                            <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="{{ $product->stock - $stock_solicitado }}" name="stock" value="1">
+                                            <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) && qty < {{ $product->stock - $stock_solicitado }}) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        </div>
+                                        <button type="submit" name="addtocart" value="5" class="btn cart-submit d-block">Add to cart</button>
+                                    </p>
+                                </div>
+                            {{ Form::close() }}
+                        @else
+                            {{ Form::open(array('id' => 'formularioContacto', 'action' => 'ProductShowController@contact')) }}
+
+                                @include('product.components.attributes')
+
+                                <div class="checkout_area section_padding_100">
+                                    <div class="container">
+                                        <div class="row">            
+                                            <div class="col-12 col-md-6">
+                                            
+                                                <div class="checkout_details_area mt-50 clearfix">
+
+                                                    <div class="cart-page-heading">
+                                                        <h5>Contact</h5>
+                                                        <p>Enter your comments</p>
+                                                    </div>
+
+                                                    
+                                                    {{ Form::hidden('product_id', $product->id) }}
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="comments">Comments <span>*</span></label>
+                                                            {!! Form::textarea('comments', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="first_name">First Name <span>*</span></label>
+                                                            {!! Form::text('first_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="last_name">Last Name <span>*</span></label>
+                                                            {!! Form::text('last_name', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Email <span>*</span></label>
+                                                            {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-12 mb-3">
+                                                            <label for="email">Telephone <span>*</span></label>
+                                                            {!! Form::number('telephone', null, ['class' => 'form-control', 'required']) !!}
+                                                        </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <div class="custom-control custom-checkbox d-block">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">Subscribe to our newsletter</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-sm-12">
+                                                            {!! Form::submit('Send', ['class' => 'btn btn-primary']) !!}
+                                                            <a href="{{ url('/') }}" class="btn btn-default">Cancel</a>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        @endif
+                    @endif
+                    
+                    <div class="share_wf mt-30">
+                        <p>Share With Friend</p>
+                        <div class="_icon">
+                            @if($product->link_facebook != null)
+                                <a class="post_share_facebook external facebook" data-animate-hover="pulse" href="{{ $product->link_facebook }}"><i class="fa fa-facebook"></i></a>
+                            @endif
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+                    <div id="accordion" role="tablist">
+
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingOne">
+                                <h6 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Information 1</a>
+                                </h6>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>{{ $product->description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingTwo">
+                                <h6 class="mb-0">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Information 2</a>
+                                </h6>
+                            </div>
+                            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>{{ $product->short_description }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <<<<<<<<<<<<<<<<<<<< Single Product Details Area End >>>>>>>>>>>>>>>>>>>>>>>>> -->

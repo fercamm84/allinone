@@ -11,24 +11,6 @@
                 <div class="col-12">
                     <ol class="breadcrumb d-flex align-items-center">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        @if(isset($seller))
-                            <li class="breadcrumb-item"><a href="/seller/{{ $seller->id }}">{{ $seller->title}}</a></li>
-                            @if(isset($category))
-                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->title}}</a></li>
-                                @if(isset($product))
-                                    <!-- <li class="breadcrumb-item active"><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li> -->
-                                    <li class="breadcrumb-item active">{{ $product->title }}</li>
-                                @endif
-                            @endif
-                        @else
-                            @if(isset($category))
-                                <li class="breadcrumb-item"><a href="/cat/{{ $category->id }}">{{ $category->title}}</a></li>
-                                @if(isset($product))
-                                    <!-- <li class="breadcrumb-item active"><a href="/prod/{{ $product->id }}">{{ $product->description }}</a></li> -->
-                                    <li class="breadcrumb-item active">{{ $product->title }}</li>
-                                @endif
-                            @endif
-                        @endif
                     </ol>
                 </div>
             </div>
@@ -36,7 +18,7 @@
     </div>
     <!-- <<<<<<<<<<<<<<<<<<<< Breadcumb Area End <<<<<<<<<<<<<<<<<<<< -->
 
-    @if((sizeof($categories) > 0) || (sizeof($sections) > 0))
+    @if((isset($categories) && isset($sections)) && ((sizeof($categories) > 0) || (sizeof($sections) > 0)))
         <section class="shop_grid_area">
             <div class="container">
                 <div class="row">
@@ -99,7 +81,15 @@
                 </div>
             </div>
         </section>
-    @endif
+        @else
+            <div class="col-12">
+                <div class="shop_grid_product_area">
+                    <div class="row">
+                        @yield('details')
+                    </div>
+                </div>
+            </div>
+        @endif
 </div>
 
 @endsection

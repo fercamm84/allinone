@@ -141,25 +141,70 @@ class Entity extends Model
         return $this->belongsTo(\App\Models\Location::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function parent_entities()
+    {
+        return $this->hasMany(\App\Models\EntityEntity::class, 'parent_entity_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    private function entity_entities()
+    {
+        return $this->hasMany(\App\Models\EntityEntity::class);
+    }
+    public function child_entities(){
+        return $this->entity_entities();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function entities()
+    {
+        return $this->hasMany(\App\Models\EntityEntity::class);
+    }
+
     public function entidad(){
-        if($this->type == 'category'){
-            return $this->categories[0];
+        switch($this->type){
+            case 'category':
+                return $this->categories[0];
+            case 'product':
+                return $this->products[0];
+            case 'seller':
+                return $this->sellers[0];
+            case 'brand':
+                return $this->brands[0];
+            case 'news':
+                return $this->news[0];
+            case 'event':
+                return $this->events[0];
         }
-        if($this->type == 'product'){
-            return $this->products[0];
-        }
-        if($this->type == 'seller'){
-            return $this->sellers[0];
-        }
-        if($this->type == 'brand'){
-            return $this->brands[0];
-        }
-        if($this->type == 'news'){
-            return $this->news[0];
-        }
-        if($this->type == 'event'){
-            return $this->events[0];
-        }
+    }
+
+    public function url(){
+        // switch($this->type){
+        //     case 'category':
+        //         return 'cat';
+        //     case 'product':
+        //         return 'prod';
+        //     case 'seller':
+        //         return 'seller';
+        //     case 'brand':
+        //         return 'brand';
+        //     case 'news':
+        //         return 'news';
+        //     case 'event':
+        //         return 'event';
+        // }
+        return 'entity';
+    }
+
+    public function getClassType(){
+        return $this->type;
     }
 
 }
