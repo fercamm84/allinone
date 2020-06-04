@@ -2,6 +2,6 @@
 
 @section('details')
 
-    @include('seller.seller_detail')
+    @include('search.search')
 
 @endsection

@@ -37,7 +37,7 @@
 
             <!-- Logo -->
             <a href="#" class="logo">
-                <b>AllInOnePortals</b>
+                <b>{{ env('APP_NAME') }}</b>
             </a>
 
             <!-- Header Navbar -->

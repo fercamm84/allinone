@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property \Illuminate\Database\Eloquent\Collection AttributeEntity
  * @property \Illuminate\Database\Eloquent\Collection AttributeValue
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property string descripcion
  * @property integer order

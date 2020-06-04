@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version June 7, 2018, 2:37 am UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection imageCategories
  * @property \Illuminate\Database\Eloquent\Collection imageProducts
  * @property \Illuminate\Database\Eloquent\Collection orderDetails

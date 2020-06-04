@@ -10,9 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version March 9, 2018, 5:30 am UTC
  *
- * @property \App\Models\User user
+ * @property \App\Models\Seller seller
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection CategoryProduct
  * @property \Illuminate\Database\Eloquent\Collection OrderDetail
  * @property string description
  * @property string short_description
@@ -26,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer order
  * @property boolean visible
  * @property integer stock
- * @property integer user_id
+ * @property integer seller_id
  * @property integer entity_id
  */
 class Product extends Model
@@ -55,7 +54,7 @@ class Product extends Model
         'order',
         'visible',
         'stock',
-        'user_id',
+        'seller_id',
         'entity_id'
     ];
 
@@ -78,7 +77,7 @@ class Product extends Model
         'order' => 'integer',
         'visible' => 'boolean',
         'stock' => 'integer',
-        'user_id' => 'integer',
+        'seller_id' => 'integer',
         'entity_id' => 'integer'
     ];
 
@@ -94,9 +93,9 @@ class Product extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function user()
+    public function seller()
     {
-        return $this->belongsTo(\App\Models\User::class);
+        return $this->belongsTo(\App\Models\Seller::class);
     }
 
     /**
@@ -105,14 +104,6 @@ class Product extends Model
     public function entity()
     {
         return $this->belongsTo(\App\Models\Entity::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function categoryProducts()
-    {
-        return $this->hasMany(\App\Models\CategoryProduct::class);
     }
 
     /**

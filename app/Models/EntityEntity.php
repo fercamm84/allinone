@@ -6,22 +6,20 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class SellerProduct
+ * Class EntityEntity
  * @package App\Models
  * @version March 9, 2018, 5:32 am UTC
  *
- * @property \App\Models\Seller seller
- * @property \App\Models\Product product
- * @property \Illuminate\Database\Eloquent\Collection sellerAttributes
- * @property \Illuminate\Database\Eloquent\Collection orderDetails
- * @property integer seller_id
- * @property integer product_id
+ * @property \App\Models\Entity parent_entity
+ * @property \App\Models\Entity entity
+ * @property integer parent_entity_id
+ * @property integer entity_id
  */
-class SellerProduct extends Model
+class EntityEntity extends Model
 {
     use SoftDeletes;
 
-    public $table = 'seller_products';
+    public $table = 'entity_entities';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -31,8 +29,8 @@ class SellerProduct extends Model
 
 
     public $fillable = [
-        'seller_id',
-        'product_id'
+        'parent_entity_id',
+        'entity_id'
     ];
 
     /**
@@ -42,8 +40,8 @@ class SellerProduct extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'seller_id' => 'integer',
-        'product_id' => 'integer'
+        'parent_entity_id' => 'integer',
+        'entity_id' => 'integer'
     ];
 
     /**
@@ -58,16 +56,20 @@ class SellerProduct extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function seller()
+    public function parent_entity()
     {
-        return $this->belongsTo(\App\Models\Seller::class);
+        return $this->belongsTo(\App\Models\Entity::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function product()
+    private function entity()
     {
-        return $this->belongsTo(\App\Models\Product::class);
+        return $this->belongsTo(\App\Models\Entity::class);
     }
+    public function child_entity(){
+        return $this->entity();
+    }
+
 }

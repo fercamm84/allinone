@@ -131,14 +131,16 @@ class ImageController extends AppBaseController
 
             return redirect(route('images.index'));
         }
-
-        if(!empty($image['name']) && file_exists(env("FOLDER_IMAGES").$image['name'])){
-            unlink(env("FOLDER_IMAGES").$image['name']);
-        }
-
+        
+        //Si se intenta guardar un archivo, se guarda en el servidor y se elimina el anterior, si es que existe:
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            //Si ya existe una imagen asociada y existe el archivo, se elimina del servidor:
+            if(!empty($image['name']) && file_exists(env("FOLDER_IMAGES").$image['name'])){
+                unlink(env("FOLDER_IMAGES").$image['name']);
+            }
+            
+            //Se guarda el nuevo archivo:
             $imagen = $request->file('image');
-
             $result = $imagen->move(env("FOLDER_IMAGES"), $image['name']);
         }
 

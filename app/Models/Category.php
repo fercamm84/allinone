@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version March 9, 2018, 5:33 am UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection CategoryAttribute
- * @property \Illuminate\Database\Eloquent\Collection CategoryProduct
  * @property \Illuminate\Database\Eloquent\Collection orderDetails
  * @property string description
  * @property integer order
@@ -68,30 +67,6 @@ class Category extends Model
     public function entity()
     {
         return $this->belongsTo(\App\Models\Entity::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function categoryProducts()
-    {
-        return $this->hasMany(\App\Models\CategoryProduct::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function sellerCategories()
-    {
-        return $this->hasMany(\App\Models\SellerCategory::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function sellerProducts()
-    {
-        return $this->hasMany(\App\Models\SellerProduct::class);
     }
 
     protected static function boot() {

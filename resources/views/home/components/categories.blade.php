@@ -92,7 +92,7 @@
     @foreach($sections as $section)
         @if($section->type == 'home_principal')
             @foreach($section->sectionEntities as $sectionEntity)
-                <?php $entidad = $sectionEntity->entity->entidad(); ?>
+                <?php $entidad = $sectionEntity->entity; ?>
 
                 <!-- ****** Quick View Modal Area Start ****** -->
                 <div class="modal fade quickview" id="quickview{{ $entidad->id }}" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
@@ -109,8 +109,8 @@
 
                                             <div class="col-12 col-lg-5">
                                                 <div class="quickview_pro_img">
-                                                    @if(sizeof($entidad->entity->imageEntities)>0)
-                                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" alt="">
+                                                    @if(sizeof($entidad->imageEntities)>0)
+                                                        <img src="{{ asset('imagenes/'.$entidad->imageEntities{0}->image->name) }}" alt="">
                                                     @else
                                                         <img src="{{ asset('/img/default-no-image.png')}}" alt="">
                                                     @endif
@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="col-12 col-lg-7">
                                                 <div class="quickview_pro_des">
-                                                    <h4 class="title">{{ $entidad->title }}</h4>
+                                                    <h4 class="title">{{ $entidad->entidad()->title }}</h4>
                                                     <div class="top_seller_product_rating mb-15">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -126,12 +126,12 @@
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                     </div>
-                                                    <h5 class="price">Birras desde $120.99 <span>$130</span></h5>
+                                                    <h5 class="price">{{ $entidad->entidad()->subtitle }}</h5>
                                                     <p>{{ $entidad->description }}</p>
                                                     
-                                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}">Entrar a {{ $entidad->title }}</a>
+                                                    <a href="/entity/{{ $entidad->id }}">Ver más</a>
 
-                                                    <p>{{ $entidad->subtitle }}</p>
+                                                    <p>{{ $entidad->entidad()->description }}</p>
 
                                                     <div class="share_wf mt-30">
                                                         <p>Share With Friend</p>
@@ -165,7 +165,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section_heading text-center">
-                        <h2>Cervecerías artesanales destacadas</h2>
+                        <h2>Servicios y profesionales destacados</h2>
                     </div>
                 </div>
             </div>
@@ -186,7 +186,9 @@
                     @endif
                 @endforeach
                 @foreach($locations as $location)
-                    <button class="btn" data-filter=".filtro_dinamico_{{ $location->id }}">{{ $location->description }}</button>
+                    @if(!empty($location))
+                        <button class="btn" data-filter=".filtro_dinamico_{{ $location->id }}">{{ $location->description }}</button>
+                    @endif
                 @endforeach
             </div>
         </div>
@@ -197,30 +199,32 @@
                 @foreach($sections as $section)
                     @if($section->type == 'home_principal')
                         @foreach($section->sectionEntities as $sectionEntity)
-                            <?php $entidad = $sectionEntity->entity->entidad(); ?>
-                            <div class="col-12 col-sm-6 col-md-4 single_gallery_item filtro_dinamico_{{ $entidad->entity->location->id }} wow fadeInUpBig" data-wow-delay="0.2s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    @if(sizeof($entidad->entity->imageEntities)>0)
-                                        <img src="{{ asset('imagenes/'.$entidad->entity->imageEntities{0}->image->name) }}" alt="">
-                                        <div class="product-quicview">
-                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
-                                        </div>
-                                    @else
-                                        <img src="{{ asset('/img/default-no-image.png')}}" alt="">
-                                        <div class="product-quicview">
-                                            <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
-                                        </div>
-                                    @endif
+                            <?php $entidad = $sectionEntity->entity; ?>
+                            @if(!empty($entidad->location))
+                                <div class="col-12 col-sm-6 col-md-4 single_gallery_item filtro_dinamico_{{ $entidad->location->id }} wow fadeInUpBig" data-wow-delay="0.2s">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        @if(sizeof($entidad->imageEntities)>0)
+                                            <img src="{{ asset('imagenes/'.$entidad->imageEntities{0}->image->name) }}" alt="">
+                                            <div class="product-quicview">
+                                                <a href="/entity/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
+                                            </div>
+                                        @else
+                                            <img src="{{ asset('/img/default-no-image.png')}}" alt="">
+                                            <div class="product-quicview">
+                                                <a href="/entity/{{ $entidad->id }}" data-toggle="modal" data-target="#quickview{{ $entidad->id }}"><i class="ti-plus"></i></a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    
+                                    <!-- Product Description -->
+                                    <div class="product-description">
+                                        <h4 class="product-price">{{ $entidad->entidad()->title }}</h4>
+                                        <p>{{ $entidad->entidad()->description }}</p>
+                                        <a href="/entity/{{ $entidad->id }}" class="add-to-cart-btn" data-toggle="modal" data-target="#quickview{{ $entidad->id }}">Ver más</a>
+                                    </div>
                                 </div>
-                                
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">{{ $entidad->title }}</h4>
-                                    <p>Cervezas, hamburguesas y más!</p>
-                                    <a href="/{{ $entidad->url() }}/{{ $entidad->id }}" class="add-to-cart-btn" data-toggle="modal" data-target="#quickview{{ $entidad->id }}">ENTRAR AL BAR</a>
-                                </div>
-                            </div>
+                            @endif
                         @endforeach
                     @endif
                 @endforeach

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \App\Models\Entity entity
  * @property \Illuminate\Database\Eloquent\Collection attributeEntities
  * @property \Illuminate\Database\Eloquent\Collection categories
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection imageEntities
  * @property \Illuminate\Database\Eloquent\Collection mailings
  * @property \Illuminate\Database\Eloquent\Collection orderDetails

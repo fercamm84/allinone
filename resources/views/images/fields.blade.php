@@ -21,3 +21,9 @@
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('images.index') !!}" class="btn btn-default">Cancel</a>
 </div>
+
+<div class="form-group">
+    <a class="gallery_img" href="{{ asset('imagenes/'.$image->name) }}" target="_blank">
+        <img class="d-block w-100" src="{{ asset('imagenes/'.$image->name) }}" alt="{{ $image->name }}">
+    </a>
+</div>

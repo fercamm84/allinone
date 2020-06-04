@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property \App\Models\User user
  * @property \Illuminate\Database\Eloquent\Collection categoryAttributes
- * @property \Illuminate\Database\Eloquent\Collection categoryProducts
  * @property \Illuminate\Database\Eloquent\Collection OrderDetail
  * @property integer user_id
  * @property string commentary
