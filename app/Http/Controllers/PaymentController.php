@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Repositories\PaymentRepository;
-use App\Models\Payment;
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use MercadoPago;
-// use SantiGraviano\LaravelMercadoPago\Facades\MP;
+use App\Models\Order;
+use App\Models\Payment;
 
 class PaymentController extends AppBaseController
 {
@@ -157,9 +157,24 @@ class PaymentController extends AppBaseController
 
     public function getPayments(){
         try {
-            //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
-            $pago = (new MercadoPago\Payment())->find_by_id($_GET['id']);
-            MercadoPago\Payment.find_by_id($_GET['id']);
+            MercadoPago\SDK::setClientId(env('MP_APP_ID'));
+            MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET'));
+            $filters = array (
+                'id' => $_GET['id']
+            );
+            $pago = MercadoPago\Payment::search($filters);
+            if(count($pago)){
+                $pago = $pago[0];
+            }else{
+                print_r('No hay datos.');
+                die;
+            }
+            // print_r($pago);
+            // die;
+
+            // //Se obtiene el pago desde MercadoPago segun el ID recibido por parametro por MercadoPago
+            // $pago = (new MercadoPago\Payment())->find_by_id($_GET['id']);
+            // MercadoPago\Payment.find_by_id($_GET['id']);
         }catch (Exception $exc){
             header("HTTP/1.1 200 OK");
             http_response_code(200);
@@ -176,7 +191,7 @@ class PaymentController extends AppBaseController
         $payment_id = $pago->id;
         $external_reference = $pago->external_reference;
         $order_id = $external_reference;
-        $order_id = intval(str_replace('order_', '', $order_id));
+        $order_id = intval(str_replace('Order_', '', $order_id));
 
         $payment = Payment::where([['order_id', '=', $order_id]])->first();
 
@@ -191,19 +206,25 @@ class PaymentController extends AppBaseController
             $payment->order_id = $order_id;
             $payment->save();
         }else{
-            $payment = array();
-            $payment['state'] = $status;
-            $payment['merchant_order_id'] = $merchant_order_id;
-            $payment['total_paid_amount'] = $total_paid_amount;
-            $payment['status_detail'] = $status_detail;
-            $payment['payment_type'] = $payment_type;
-            $payment['operation_type'] = $operation_type;
-            $payment['payment_id'] = $payment_id;
-            $payment['order_id'] = $order_id;
+            $payment = new Payment;
+            $payment->state = $status;
+            $payment->merchant_order_id = $merchant_order_id;
+            $payment->total_paid_amount = $total_paid_amount;
+            $payment->status_detail = $status_detail;
+            $payment->payment_type = $payment_type;
+            $payment->operation_type = $operation_type;
+            $payment->payment_id = $payment_id;
+            $payment->order_id = $order_id;
             $this->paymentRepository->create($payment);
         }
 
-        print_r($payment);
+        if($payment->state == 'approved'){
+            $order = Order::find($payment->order_id);
+            $order->state = 2;
+            $order->save();
+        }
+
+        print_r($payment->order_id);
 
         die;
     }

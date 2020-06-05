@@ -24,7 +24,6 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
-// use SantiGraviano\LaravelMercadoPago\Facades\MP;
 use Illuminate\Notifications\Notifiable;
 use MercadoPago;
 use App\Jobs\SendEmail;
@@ -64,6 +63,7 @@ class BasketController extends FrontController
 
     public function solicitarMercadoPago(Request $request){
         $user = Auth::user();
+        
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -80,7 +80,7 @@ class BasketController extends FrontController
             # Create an item object
             $item = new MercadoPago\Item();
             // $item->id = "1234";
-            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
+            $item->title = "Utilizacion " . env('APP_NAME') . " - Orden " . $order->id;
             $item->quantity = 1;
             $item->currency_id = "ARS";
             $item->unit_price = $total;
@@ -89,6 +89,9 @@ class BasketController extends FrontController
             // $payer->email = "rosemarie@hotmail.com";
             # Setting preference properties
             $preference->items = array($item);
+
+            $preference->external_reference = 'Order_'.$order->id;
+
             // $preference->payer = $payer;
             # Save and posting preference
             $preference->save();
@@ -112,8 +115,8 @@ class BasketController extends FrontController
     public function paymentResult(Request $request){
         $user = Auth::user();
 
-        if (strpos($request->input('payment_task'), 'order_')!== false){
-            $order_id = str_replace("order_", "", $request->input('payment_task'));
+        if (strpos($request->input('payment_task'), 'Order_')!== false){
+            $order_id = str_replace("Order_", "", $request->input('payment_task'));
         }
 
         $order = $this->orderRepository->findWithoutFail($order_id);
@@ -129,6 +132,12 @@ class BasketController extends FrontController
             }
             $payment->state = $request->input('payment_state');
             $payment->save();
+
+            if($payment->state == 'approved'){
+                $order = Order::find($payment->order_id);
+                $order->state = 2;
+                $order->save();
+            }
         }
 
         return redirect(route('basket.index'));
@@ -212,6 +221,17 @@ class BasketController extends FrontController
     }
 
     public function index(){
+        // MercadoPago\SDK::setClientId(env('MP_APP_ID'));
+        // MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET'));
+        // $filters = array (
+        //     'external_reference' => 'Order_8'
+        // );
+        // // $filters = array (
+        // //     'id' => '6979100951'
+        // // );
+        // $pago = MercadoPago\Payment::search($filters);
+        // print_r($pago);
+        // die;
         $user = Auth::user();
 
         //obtengo la orden creada
@@ -236,7 +256,7 @@ class BasketController extends FrontController
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
         $filters = array (
-            $field => 'order_'.$valor
+            $field => 'Order_'.$valor
         );
 
         return MP::search_payment($filters, 0, 1000);

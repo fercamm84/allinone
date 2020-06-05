@@ -4,8 +4,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{ Form::open(array('id'=>'formularioMP', 'route' => array('basket.paymentResult'))) }}
-    {!! Form::hidden('payment_state', false, array('id' => 'payment_state')) !!}
-    {!! Form::hidden('payment_task', false, array('id' => 'payment_task')) !!}
+        {!! Form::hidden('payment_state', false, array('id' => 'payment_state')) !!}
+        {!! Form::hidden('payment_task', false, array('id' => 'payment_task')) !!}
     {{ Form::close() }}
 
     <!-- ****** Cart Area Start ****** -->
@@ -117,7 +117,9 @@
         $MPC.openCheckout({
             url: urlMercadoPago,
             mode: "modal",
-            onreturn: function(data) {
+            onreturn: function(json) {
+                console.log('va al onreturn');
+                alert(json);
                 $('#divGrisado').css('background-color', '');
                 $('#divGrisado').css('display', '');
                 $('#divGrisado').css('width', '');

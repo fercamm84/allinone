@@ -171,7 +171,7 @@
             </div>
         </div>
 
-        <!-- FILTRO por BARRIOS (location) -->
+        <!-- FILTRO por ZONAS (location) -->
         <div class="karl-projects-menu mb-100">
             <div class="text-center portfolio-menu">
                 <button class="btn active" data-filter="*">TODAS</button>
