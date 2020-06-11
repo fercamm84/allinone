@@ -63,7 +63,7 @@ class ProductShowController extends Controller
 
         $mailing = $this->mailingRepository->create($input);
 
-        SendEmail::dispatch($mailing);
+        SendEmail::dispatch($mailing, 'sendEmailContactUs');
 
         Flash::success('Consulta enviada.');
 

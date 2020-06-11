@@ -12,6 +12,8 @@ use Response;
 use MercadoPago;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Process;
+use App\Jobs\SendEmail;
 
 class PaymentController extends AppBaseController
 {
@@ -218,11 +220,43 @@ class PaymentController extends AppBaseController
             $this->paymentRepository->create($payment);
         }
 
+        $order = Order::find($payment->order_id);
         if($payment->state == 'approved'){
-            $order = Order::find($payment->order_id);
             $order->state = 2;
             $order->save();
+
+            //Envio mail a cada seller de la orden de compra para avisarle que tiene una venta:
+            $sellerUsers = array();
+            foreach($order->orderDetails as $orderDetail){
+                $existe = false;
+                foreach($sellerUsers as $sellerUserId){
+                    if($sellerUserId == $orderDetail->product->seller->user->id){
+                        $existe = true;
+                        break;
+                    }
+                }
+                if(!$existe){
+                    array_push($sellerUsers, $orderDetail->product->seller->user->id);
+                }
+            }
+            foreach($sellerUsers as $sellerUserId){
+                //creo el objeto process
+                $process = new Process;
+                $process->user_id = $sellerUserId;
+                $process->process = 'successfulSale';
+                $process->comment = 'Order_' . $order->id;
+                //Genero el job para enviar el process (por email)
+                SendEmail::dispatch($process);
+            }
         }
+
+        //creo el objeto process para enviarle al cliente que pudo realizar la compra:
+        $process = new Process;
+        $process->user_id = $user->id;
+        $process->process = 'paymentProcessed';
+        $process->comment = 'Order_' . $order->id;
+        //Genero el job para enviar el process (por email)
+        SendEmail::dispatch($process);
 
         print_r($payment->order_id);
 

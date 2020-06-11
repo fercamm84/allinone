@@ -43,7 +43,7 @@ class ContactController extends AppBaseController
 
         $mailing = $this->mailingRepository->create($input);
 
-        SendEmail::dispatch($mailing);
+        SendEmail::dispatch($mailing, 'sendEmailContactUs');
 
         Flash::success('Contact saved successfully.');
 

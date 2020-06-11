@@ -134,7 +134,6 @@ class BasketController extends FrontController
             $payment->save();
 
             if($payment->state == 'approved'){
-                $order = Order::find($payment->order_id);
                 $order->state = 2;
                 $order->save();
             }
@@ -221,35 +220,37 @@ class BasketController extends FrontController
     }
 
     public function index(){
-        // MercadoPago\SDK::setClientId(env('MP_APP_ID'));
-        // MercadoPago\SDK::setClientSecret(env('MP_APP_SECRET'));
-        // $filters = array (
-        //     'external_reference' => 'Order_8'
-        // );
-        // // $filters = array (
-        // //     'id' => '6979100951'
-        // // );
-        // $pago = MercadoPago\Payment::search($filters);
-        // print_r($pago);
-        // die;
+        $user = Auth::user();
+        $order = Order::find(7);
+
+        $sellerUsers = array();
+        foreach($order->orderDetails as $orderDetail){
+            $existe = false;
+            foreach($sellerUsers as $sellerUserId){
+                if($sellerUserId == $orderDetail->product->seller->user->id){
+                    $existe = true;
+                    break;
+                }
+            }
+            if(!$existe){
+                array_push($sellerUsers, $orderDetail->product->seller->user->id);
+            }
+        }
+        foreach($sellerUsers as $sellerUserId){
+            //creo el objeto process
+            $process = new Process;
+            $process->user_id = $sellerUserId;
+            $process->process = 'successfulSale';
+            $process->comment = 'Order_' . $order->id;
+            //Genero el job para enviar el process (por email)
+            SendEmail::dispatch($process);
+            // $resultado = call_user_func_array(array($SendMailHelper, $process->process), array($process));
+        }
+        die;
         $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
-
-        // if(true){
-        //     //creo el objeto mailing
-        //     $mailing = new Mailing;
-        //     $mailing->email         = 'fercamm@gmail.com';
-        //     $mailing->telephone     = 'telefono';
-        //     $mailing->first_name    = 'nombre';
-        //     $mailing->last_name     = 'apellido';
-        //     $mailing->comments      = 'comentarios';
-        //     $mailing->save();
-
-        //     //Genero el job para el email (y genera el process)
-        //     SendEmail::dispatch($mailing);//esto ponerlo en la linea 49 de ContactController
-        // }
 
         return view('basket.index', array('order' => $order));
     }
