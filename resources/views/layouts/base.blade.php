@@ -11,7 +11,7 @@
     <meta name="keywords" content="beer craft artesanal cerveza biere birra reserbeer reservas bar bares">
 
     <title>
-        Reserbeer
+        {{ env('APP_NAME') }}
     </title>
 
     <meta name="keywords" content="">
@@ -77,11 +77,11 @@ $first_part = $components[1];
     <!--  Side Nav  -->
     <div class="nav-side-menu">
         <div class="menu-list">
-            <h6>Cervecerías</h6>
+            <h6>Profesiones</h6>
             <ul id="menu-content" class="menu-content collapse out">
                 <!-- Single Item -->
                 <li data-toggle="collapse" data-target="#women" class="collapsed active">
-                    <a href="#">Barrio<span class="arrow"></span></a>
+                    <a href="#">Zona<span class="arrow"></span></a>
                     <ul class="sub-menu collapse" id="women">
                     
                         <?php $locations = array(); ?>
@@ -338,9 +338,9 @@ _________________________________________________________ -->
 
                                                     <div class="collapse navbar-collapse align-items-start collapse" id="karl-navbar">
                                                         <ul class="navbar-nav animated" id="nav">
-                                                            <li class="nav-item active"><a class="nav-link" href="/">Reserbeer</a></li>
+                                                            <li class="nav-item active"><a class="nav-link" href="/">{{ env('APP_NAME') }}</a></li>
                                                             <li class="nav-item dropdown">
-                                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cervecerías</a>
+                                                                <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profesionales/Servicios</a>
                                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
                                                                     @foreach($sections as $section)
                                                                         @if($section->type == 'home_principal')
@@ -435,7 +435,7 @@ _________________________________________________________ -->
         <div id="copyright">
             <div class="container">
                 <div class="col-md-6">
-                    © 2018 <a href="https://www.reserbeer.com" class="" style="color:#fff !important;" >Reserbeer</a>
+                    © 2018 <a href="/" class="" style="color:#fff !important;" >{{ env('APP_NAME') }}</a>
                 </div>
                 <div class="col-md-6">
                     <p class="pull-right">

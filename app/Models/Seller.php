@@ -44,6 +44,7 @@ class Seller extends Entity
         'order',
         'type',
         'entity_id',
+        'user_id',
         'reservations',
     ];
 
@@ -54,6 +55,7 @@ class Seller extends Entity
      */
     protected $casts = [
         'id' => 'integer',
+        'user_id' => 'integer',
         'description' => 'string',
         'order' => 'integer',
         'reservations' => 'integer',
@@ -76,6 +78,14 @@ class Seller extends Entity
     public function entity()
     {
         return $this->belongsTo(\App\Models\Entity::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
     }
 
     protected static function boot() {

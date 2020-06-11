@@ -24,7 +24,6 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Laracasts\Flash\Flash;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
-// use SantiGraviano\LaravelMercadoPago\Facades\MP;
 use Illuminate\Notifications\Notifiable;
 use MercadoPago;
 use App\Jobs\SendEmail;
@@ -64,6 +63,7 @@ class BasketController extends FrontController
 
     public function solicitarMercadoPago(Request $request){
         $user = Auth::user();
+        
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -80,7 +80,7 @@ class BasketController extends FrontController
             # Create an item object
             $item = new MercadoPago\Item();
             // $item->id = "1234";
-            $item->title = "Utilizacion allinoneportals.tech - Orden " . $order->id;
+            $item->title = "Utilizacion " . env('APP_NAME') . " - Orden " . $order->id;
             $item->quantity = 1;
             $item->currency_id = "ARS";
             $item->unit_price = $total;
@@ -89,6 +89,9 @@ class BasketController extends FrontController
             // $payer->email = "rosemarie@hotmail.com";
             # Setting preference properties
             $preference->items = array($item);
+
+            $preference->external_reference = 'Order_'.$order->id;
+
             // $preference->payer = $payer;
             # Save and posting preference
             $preference->save();
@@ -112,8 +115,8 @@ class BasketController extends FrontController
     public function paymentResult(Request $request){
         $user = Auth::user();
 
-        if (strpos($request->input('payment_task'), 'order_')!== false){
-            $order_id = str_replace("order_", "", $request->input('payment_task'));
+        if (strpos($request->input('payment_task'), 'Order_')!== false){
+            $order_id = str_replace("Order_", "", $request->input('payment_task'));
         }
 
         $order = $this->orderRepository->findWithoutFail($order_id);
@@ -129,6 +132,11 @@ class BasketController extends FrontController
             }
             $payment->state = $request->input('payment_state');
             $payment->save();
+
+            if($payment->state == 'approved'){
+                $order->state = 2;
+                $order->save();
+            }
         }
 
         return redirect(route('basket.index'));
@@ -213,30 +221,43 @@ class BasketController extends FrontController
 
     public function index(){
         $user = Auth::user();
+        $order = Order::find(7);
+
+        $sellerUsers = array();
+        foreach($order->orderDetails as $orderDetail){
+            $existe = false;
+            foreach($sellerUsers as $sellerUserId){
+                if($sellerUserId == $orderDetail->product->seller->user->id){
+                    $existe = true;
+                    break;
+                }
+            }
+            if(!$existe){
+                array_push($sellerUsers, $orderDetail->product->seller->user->id);
+            }
+        }
+        foreach($sellerUsers as $sellerUserId){
+            //creo el objeto process
+            $process = new Process;
+            $process->user_id = $sellerUserId;
+            $process->process = 'successfulSale';
+            $process->comment = 'Order_' . $order->id;
+            //Genero el job para enviar el process (por email)
+            SendEmail::dispatch($process);
+            // $resultado = call_user_func_array(array($SendMailHelper, $process->process), array($process));
+        }
+        die;
+        $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
-
-        // if(true){
-        //     //creo el objeto mailing
-        //     $mailing = new Mailing;
-        //     $mailing->email         = 'fercamm@gmail.com';
-        //     $mailing->telephone     = 'telefono';
-        //     $mailing->first_name    = 'nombre';
-        //     $mailing->last_name     = 'apellido';
-        //     $mailing->comments      = 'comentarios';
-        //     $mailing->save();
-
-        //     //Genero el job para el email (y genera el process)
-        //     SendEmail::dispatch($mailing);//esto ponerlo en la linea 49 de ContactController
-        // }
 
         return view('basket.index', array('order' => $order));
     }
 
     public function buscarPago($valor = 0, $field = 'external_reference'){
         $filters = array (
-            $field => 'order_'.$valor
+            $field => 'Order_'.$valor
         );
 
         return MP::search_payment($filters, 0, 1000);

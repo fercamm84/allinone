@@ -112,10 +112,12 @@
     </section>
 </div>
 
-<div class="col-12">
-    <h3>Servicios / Productos</h3>
-    <BR>
-</div>
+@if(!empty($products))
+
+    <div class="col-12">
+        <h3>Servicios / Productos</h3>
+        <BR>
+    </div>
 
     @foreach($products as $product)
         <?php $entity = $product->entity; ?>
@@ -222,3 +224,5 @@
         <!-- ****** Quick View Modal Area End ****** -->
 
     @endforeach
+
+@endif
