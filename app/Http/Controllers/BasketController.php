@@ -221,33 +221,6 @@ class BasketController extends FrontController
 
     public function index(){
         $user = Auth::user();
-        $order = Order::find(7);
-
-        $sellerUsers = array();
-        foreach($order->orderDetails as $orderDetail){
-            $existe = false;
-            foreach($sellerUsers as $sellerUserId){
-                if($sellerUserId == $orderDetail->product->seller->user->id){
-                    $existe = true;
-                    break;
-                }
-            }
-            if(!$existe){
-                array_push($sellerUsers, $orderDetail->product->seller->user->id);
-            }
-        }
-        foreach($sellerUsers as $sellerUserId){
-            //creo el objeto process
-            $process = new Process;
-            $process->user_id = $sellerUserId;
-            $process->process = 'successfulSale';
-            $process->comment = 'Order_' . $order->id;
-            //Genero el job para enviar el process (por email)
-            SendEmail::dispatch($process);
-            // $resultado = call_user_func_array(array($SendMailHelper, $process->process), array($process));
-        }
-        die;
-        $user = Auth::user();
 
         //obtengo la orden creada
         $order = Order::where([['user_id', '=', $user->id], ['state', '=', 1]])->first();
@@ -344,6 +317,8 @@ class BasketController extends FrontController
 
         //obtengo la orden creada
         $orders = Order::where([['user_id', '=', $user->id], ['state', '<>', 1]])->get();
+        $orders[0]->orderDetails;
+        $orders[0]->payments;
 
         return view('basket.history', array('orders' => $orders));
     }
