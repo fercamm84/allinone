@@ -13,6 +13,14 @@
                                 <table class="table table-responsive">
                                     <thead>
                                         <tr>
+                                            <th colspan="1">
+                                                Estado de orden de compra: {{ $order->state == 2 ? 'PAGADO' : 'CANCELADO' }}
+                                            </th>
+                                            <th colspan="3">
+                                                {{ (new DateTime($order->updated_at))->format('d/m/Y H:i') }}
+                                            </th>
+                                        </tr>
+                                        <tr>
                                             <th>Nombre</th>
                                             <th>Precio Unitario</th>
                                             <th>Cantidad</th>
@@ -23,7 +31,7 @@
                                         @foreach($order->orderDetails as $orderDetail)
                                             <tr>
                                                 <td class="cart_product_img d-flex align-items-center">
-                                                    <a href="#">
+                                                    <a href="/entity/{{$orderDetail->product->entity->id}}">
                                                         @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
                                                             <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" width="100px" height="100px" alt="Product">
                                                             <?php break; ?>

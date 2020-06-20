@@ -79,6 +79,14 @@ class Order extends Model
         return $this->hasMany(\App\Models\OrderDetail::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function payments()
+    {
+        return $this->hasMany(\App\Models\Payment::class);
+    }
+
     public function total(){
         $total = 0;
         foreach($this->orderDetails as $orderDetail){

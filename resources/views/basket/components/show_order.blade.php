@@ -1,6 +1,6 @@
 <tr>
     <td class="cart_product_img d-flex align-items-center">
-        <a href="#">
+        <a href="/entity/{{$orderDetail->product->entity->id}}">
             @foreach($orderDetail->product->entity->imageEntities as $imageEntity)
                 <img src="{{ asset('imagenes/'.$imageEntity->image->name) }}" width="100px" height="100px">
                 <?php break; ?>
